@@ -2,6 +2,51 @@
 layout: default
 ---
 
-<div class="container py-4 py-md-5">
-    <h1>Neighbourhood Warmth</h1>
+<div class="bg-gray-100 border-top py-4 py-md-5">
+    <div class="container" style="max-width: 44em">
+
+        <div class="container py-4 py-md-5">
+            <div class="mb-3">
+                <label class="form-label" for="postcode">See what's happening in your neighbourhood:</label>
+                <input class="form-control" type="text" id="postcode" name="postcode" placeholder="Your postcode">
+            </div>
+
+            <div class="mb-3">
+                <a class="btn btn-primary" href="{{ '/neighbourhood' | relative_url }}" role="button">Search</a>
+            </div>
+        </div>
+
+        <div class="container py-4 py-md-5">
+            <h2>What is this?</h2>
+
+            <p>
+            Join together with people in your neighbourhood to take steps to improve energy use in your home.
+            </p>
+
+            <p>
+            Start with a simple thermal imaging survey to see where your home is losing heat and go from there!
+            </p>
+        </div>
+
+
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
+            <div class="feature-col">
+                <h2 class="feature-title">237</h2>
+
+                <p>
+                Neighbourhoods have signed up so far.
+                </p>
+            </div>
+
+            <div class="feature-col">
+                <h2 class="feature-title">116</h2>
+
+                <p>
+                Neighbourhoods have completed surveys.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
 </div>
