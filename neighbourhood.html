@@ -2,89 +2,137 @@
 layout: default
 ---
 <div class="bg-gray-100 border-top py-4 py-md-5">
-    <div class="container" style="max-width: 44em">
+    <div class="container">
 
-        <div class="container py-4 py-md-5">
-            <h1>Your Neighbourhood: ZZ1 1ZZ</h1>
-        </div>
-
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
-            <div class="feature-col">
-                <img src="static/img/map.png" height="200" width="200">
+        <div class="row">
+            <div class="col-md-7 d-flex mb-3 mb-md-0">
+                <div class="flex-grow-1 me-md-3" style="background: url({{ '/static/img/map.png' | relative_url }}) 50% 50% no-repeat; background-size: cover; min-height: 12rem;"></div>
             </div>
+            <div class="col-md-5">
+                <h1 class="h3">
+                    <small class="d-block fs-6 mb-2 text-gray-800">Your neighbourhood</small>
+                    Slade Walk
+                </h1>
 
-            <div class="feature-col">
-                <h2 class="feature-title">16</h2>
-
-                <p>
-                Neighbours have signed up so far.
-                </p>
-
-                <p>
-                Six weeks to go.
-                </p>
-
-                <p>
-                    <a href="#signup">Sign up now</a>
-                </p>
-            </div>
-        </div>
-
-        <div class="container py-4 py-md-5">
-            <h2>Why Thermal imaging?</h2>
-
-            <p>
-            Thermal Imaging Surveys save on costs, as the specific area leaking can be located through thermographic inspection and thus repaired without having to disrupt the rest of the roof or replace the roof unnecessarily.
-            </p>
-
-            <ul>
-                <li>Cost savings; leaks, missing or slipped insulation, electrical problems, damp zones and thermal bridging, can all be detected without having to disrupt the property.</li>
-                <li>Cost savings on energy bills once the Infrared Thermographer has established and demonstrated where heat energy is escaping and where drafts are getting in.</li>
-                <li>Accurate mapping through thermographic inspection, providing intelligence on the makeup of the clients property/ structure; roof, walls, ceiling, floor, basement, etc..</li>
-                <li>Pre-emptive diagnostics through thermographic inspection and visual inspection; information on where things could go wrong before they do.</li>
-                <li>The ability to note areas of potential concern and monitor areas of deterioration via non invasive thermographic inspection.</li>
-                <!-- from https://www.buildingresponse.co.uk/thermal-imaging-surveys/thermal-imaging-benefits/ -->
-            </ul>
-        </div>
-
-        <div class="container py-4 py-md-5">
-            <h2>Timeline</h2>
-            <ul>
-                <li>Sign up for this year by September 31st (6 weeks)</li>
-                <li>Thermal imaging survey day sometime between November and February</li>
-                <li>Initial recomendations and quick improvements from February</li>
-                <li>Your community retrofit day next Summer</li>
-            </ul>
-        </div>
-
-        <div class="container py-4 py-md-5">
-            <h2 id="signup">Sign me up</h2>
-
-            <div class="mb-3">
-                <label class="form-label">Name</label>
-                <input class="form-control" type="text">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input class="form-control" type="text">
-            </div>
-
-            <fieldset class="mb-3">
-                <legend>Do you own or rent?</legend>
-
-                <div class="form-check">
-                    <input id="own" type="radio">
-                    <label for="own">Own</label>
+                <div class="progress mt-4">
+                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="16" aria-valuemin="0" aria-valuemax="20"></div>
                 </div>
+                <h2 class="h3 mt-2">16 neighbours so far</h2>
+                <p>Only 4 more to go until XXXXX XXXXX</p>
 
-                <div class="form-check">
-                    <input id="rent" type="radio">
-                    <label for="rent">Rent</label>
-                </div>
-            </fieldset>
+                <h2 class="h3 mt-4">9 weeks to go</h2>
+                <p>Until closing date for thermal imaging scan</p>
 
-            <a class="btn btn-primary" role="button" href="{{ '/logged_in' | relative_url }}">Sign up</a>
+                <a href="#signup" class="btn btn-lg btn-primary d-block mt-4">Join this neighbourhood</a>
+
+                <a href="#" class="btn btn-outline-secondary d-block mt-3">Share this page</a>
+            </div>
         </div>
-</div>
+
+        <div class="my-5 py-4 border-top border-bottom border-2">
+            <div class="row mb-n4">
+                <div class="col-sm-6 px-4 col-lg-3 mb-4 text-center text-muted">
+                    Sign up at least 20 neighbours by 31st Sept
+                </div>
+                <div class="col-sm-6 px-4 col-lg-3 mb-4 text-center text-muted">
+                    Thermal imaging at a time to suit you, Nov–Feb
+                </div>
+                <div class="col-sm-6 px-4 col-lg-3 mb-4 text-center text-muted">
+                    Initial recommendations for quick improvements 
+                </div>
+                <div class="col-sm-6 px-4 col-lg-3 mb-4 text-center text-muted">
+                    Optional community retrofit day next Summer
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 col-xl-7 mb-5">
+                <h2>Why Thermal imaging?</h2>
+
+                <p>
+                Thermal Imaging Surveys save on costs, as the specific area leaking can be located through thermographic inspection and thus repaired without having to disrupt the rest of the roof or replace the roof unnecessarily.
+                </p>
+        
+                <ul>
+                    <li>Cost savings; leaks, missing or slipped insulation, electrical problems, damp zones and thermal bridging, can all be detected without having to disrupt the property.</li>
+                    <li>Cost savings on energy bills once the Infrared Thermographer has established and demonstrated where heat energy is escaping and where drafts are getting in.</li>
+                    <li>Accurate mapping through thermographic inspection, providing intelligence on the makeup of the clients property/ structure; roof, walls, ceiling, floor, basement, etc..</li>
+                    <li>Pre-emptive diagnostics through thermographic inspection and visual inspection; information on where things could go wrong before they do.</li>
+                    <li>The ability to note areas of potential concern and monitor areas of deterioration via non invasive thermographic inspection.</li>
+                    <!-- from https://www.buildingresponse.co.uk/thermal-imaging-surveys/thermal-imaging-benefits/ -->
+                </ul>
+            </div>
+            <div class="col-lg-4 offset-xl-1 mb-5">
+                <h2 class="h4">Neighbourhood organiser</h2>
+                <div class="bg-white p-3 rounded my-3 d-flex align-items-center justify-content-center">
+                    <img src="{{ '/static/img/kareem.jpg' | relative_url }}" width="50" height="50" class="me-3 rounded-circle">
+                    <div class="flex-grow-1">
+                        <p class="h5 mb-0">Kareem Rahman</p>
+                        <p class="mb-0">from number 15</p>
+                    </div>
+                </div>
+                <h2 class="h4 mt-5">Local councillors</h2>
+                <div class="bg-white p-3 rounded my-3 d-flex align-items-center justify-content-center">
+                    <img src="https://ui-avatars.com/api/?name=J+S&background=0D8ABC&color=fff&size=100&format=svg" width="50" height="50" class="me-3 rounded-circle">
+                    <div class="flex-grow-1">
+                        <p class="h5 mb-0">Jessica Smith</p>
+                        <p class="mb-0">supports this project</p>
+                    </div>
+                </div>
+                <div class="bg-white p-3 rounded my-3 d-flex align-items-center justify-content-center">
+                    <img src="https://ui-avatars.com/api/?name=H+W&background=0D8ABC&color=fff&size=100&format=svg" width="50" height="50" class="me-3 rounded-circle">
+                    <div class="flex-grow-1">
+                        <p class="h5 mb-0">Harry Winthorpe</p>
+                        <p class="mb-0">supports this project</p>
+                    </div>
+                </div>
+                <div class="bg-gray-200 p-3 rounded my-3 d-flex align-items-center justify-content-center">
+                    <img src="https://ui-avatars.com/api/?name=C+T&background=0D8ABC&color=fff&size=100&format=svg" width="50" height="50" class="me-3 rounded-circle">
+                    <div class="flex-grow-1">
+                        <p class="mb-0 h5 text-muted">Ciaron Trejo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 col-xl-7">
+                <form id="signup">
+                    <h2>Sign me up</h2>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" type="text">
+                    </div>
+        
+                    <div class="mb-3">
+                        <label class="form-label">Email address</label>
+                        <input class="form-control" type="text">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">Property name/number</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">Ownership</label>
+                                <select class="form-select">
+                                    <option>I own this property</option>
+                                    <option>I rent this property from someone else</option>
+                                    <option>I’m a social tenant</option>
+                                    <option>I’m not sure</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <a class="btn btn-primary" role="button" href="{{ '/logged_in' | relative_url }}">Join this neighbourhood</a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
