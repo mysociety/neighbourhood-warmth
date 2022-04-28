@@ -3,49 +3,100 @@ layout: default
 ---
 
 <div class="bg-gray-100 border-top py-4 py-md-5">
-    <div class="container" style="max-width: 44em">
+    <div class="container">
 
-        <div class="container py-4 py-md-5">
-            <div class="mb-3">
-                <label class="form-label" for="postcode">See what's happening in your neighbourhood:</label>
-                <input class="form-control" type="text" id="postcode" name="postcode" placeholder="Your postcode">
+        <div class="row">
+
+            <div class="col-lg-6">
+                <h1 style="max-width: 17em">Bringing neighbours together to&nbsp;unlock home energy improvements</h1>
+                <p class="lead" style="max-width: 32em">Neighbourhood Warmth helps you explore and unlock home energy improvements by bringing neighbours together to coordinate action, access support and reduce costs.</p>
             </div>
 
-            <div class="mb-3">
-                <a class="btn btn-primary" href="{{ '/neighbourhood' | relative_url }}" role="button">Search</a>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="bg-yellow-500 p-4 rounded shadow-lg mt-4 me-xl-4 position-lg-relative" style="top: 50%">
+                    <h2 class="mb-4">Find out what’s already happening in your neighbourhood</h2>
+                    <label class="form-label" for="postcode">Your postcode</label>
+                    <div class="d-flex">
+                        <input class="form-control form-control-lg" type="text">
+                        <a href="{{ '/neighbourhood' | relative_url }}" role="button" class="btn btn-lg btn-danger ms-3">Search</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="my-5 py-4 border-top border-bottom border-2">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row mb-n4">
+                        <div class="col-sm-6 px-4 mb-4 text-center text-muted">
+                            <p class="h2 mb-2">134</p>
+                            <p class="mb-0">neighbourhoods signed up so&nbsp;far</p>
+                        </div>
+                        <div class="col-sm-6 px-4 mb-4 text-center text-muted">
+                            <p class="h2 mb-2">92</p>
+                            <p class="mb-0">completed thermal imaging&nbsp;surveys</p>
+                        </div>
+                        <div class="col-sm-6 px-4 mb-4 text-center text-muted">
+                            <p class="h2 mb-2">£55 a year</p>
+                            <p class="mb-0">estimated household energy&nbsp;savings</p>
+                        </div>
+                        <div class="col-sm-6 px-4 mb-4 text-center text-muted">
+                            <p class="h2 mb-2">5890 tonnes</p>
+                            <p class="mb-0">estimated national CO2&nbsp;savings</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="container py-4 py-md-5">
-            <h2>What is this?</h2>
-
-            <p>
-            Join together with people in your neighbourhood to take steps to improve energy use in your home.
-            </p>
-
-            <p>
-            Start with a simple thermal imaging survey to see where your home is losing heat and go from there!
-            </p>
-        </div>
-
-
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
-            <div class="feature-col">
-                <h2 class="feature-title">237</h2>
-
-                <p>
-                Neighbourhoods have signed up so far.
-                </p>
+        <h2 class="text-center">How does it work?</h2>
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <div class="bg-white p-4 mt-4">
+                    <h3 class="h4">
+                        <small class="d-block mb-2 fs-6 text-muted">Level 1:</small>
+                        Someone in your neighbourhood signs up to be an Organiser.
+                    </h3>
+                    <p class="mb-0">This person sets up your neighbourhood page on Neighbourhood Warmth with local information. Based on this a goal is created - the group size needed to complete Level&nbsp;2.</p>
+                </div>
             </div>
-
-            <div class="feature-col">
-                <h2 class="feature-title">116</h2>
-
-                <p>
-                Neighbourhoods have completed surveys.
-                </p>
+            <div class="col-md-7 offset-md-3">
+                <div class="bg-white p-4 mt-4">
+                    <h3 class="h4">
+                        <small class="d-block mb-2 fs-6 text-muted">Level 2:</small>
+                        A group of neighbours sign up for home energy assessments.
+                    </h3>
+                    <p class="mb-0">Depending on your personal and local situation, the cost of this may be reduced or completely covered by the council. Completing these assessments unlocks three pathways at Level&nbsp;3.</p>
+                </div>
             </div>
-
+            <div class="col-md-7 offset-md-2">
+                <div class="bg-white p-4 mt-4">
+                    <h3 class="h4">
+                        <small class="d-block mb-2 fs-6 text-muted">Level 3:</small>
+                        Neighbours opt in to a home energy improvement pathway: minor, major or deep retrofit.
+                    </h3>
+                    <p class="mb-0">The cost and timescales of these could vary depending on your situation and how many neighbours choose to collaborate.</p>
+                </div>
+            </div>
+            <div class="col-md-7 offset-md-3">
+                <div class="bg-white p-4 mt-4">
+                    <h3 class="h4">
+                        <small class="d-block mb-2 fs-6 text-muted">Level 4:</small>
+                        Neighbours sign up to be Organisers for one or more pathways.
+                    </h3>
+                    <p class="mb-0">Many hands make light work, and each pathway needs at least two Organisers signed up to unlock Level&nbsp;5.</p>
+                </div>
+            </div>
+            <div class="col-md-7 offset-md-2">
+                <div class="bg-white p-4 mt-4">
+                    <h3 class="h4">
+                        <small class="d-block mb-2 fs-6 text-muted">Level 5:</small>
+                        Organisers get the ball rolling on specific pathways.
+                    </h3>
+                    <p class="mb-0">For example, the first step on a deep retrofit pathway involves hiring a retrofit coordinator to guide neighbours through next steps. Organisers can access support from a national network of Organisers and trusted organisations to help navigate these final steps towards becoming a warmer neighbourhood.</p>
+                </div>
+            </div>
         </div>
 
     </div>
