@@ -52,20 +52,42 @@ layout: default
 
         <div class="row">
             <div class="col-lg-8 col-xl-7 mb-5">
-                <h2>Why Thermal imaging?</h2>
+                <form id="signup">
+                    <h2>Sign me up</h2>
+                    <p class="mb-4">Start your journey towards a warmer, more efficient home. Join your neighbours in identifying improvements you can all make to your homes, to save money and do your bit for the environment.</p>
 
-                <p>
-                Thermal Imaging Surveys save on costs, as the specific area leaking can be located through thermographic inspection and thus repaired without having to disrupt the rest of the roof or replace the roof unnecessarily.
-                </p>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" type="text">
+                    </div>
         
-                <ul>
-                    <li>Cost savings; leaks, missing or slipped insulation, electrical problems, damp zones and thermal bridging, can all be detected without having to disrupt the property.</li>
-                    <li>Cost savings on energy bills once the Infrared Thermographer has established and demonstrated where heat energy is escaping and where drafts are getting in.</li>
-                    <li>Accurate mapping through thermographic inspection, providing intelligence on the makeup of the clients property/ structure; roof, walls, ceiling, floor, basement, etc..</li>
-                    <li>Pre-emptive diagnostics through thermographic inspection and visual inspection; information on where things could go wrong before they do.</li>
-                    <li>The ability to note areas of potential concern and monitor areas of deterioration via non invasive thermographic inspection.</li>
-                    <!-- from https://www.buildingresponse.co.uk/thermal-imaging-surveys/thermal-imaging-benefits/ -->
-                </ul>
+                    <div class="mb-3">
+                        <label class="form-label">Email address</label>
+                        <input class="form-control" type="text">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">Property name/number</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">Ownership</label>
+                                <select class="form-select">
+                                    <option>I own this property</option>
+                                    <option>I rent this property from someone else</option>
+                                    <option>I’m a social tenant</option>
+                                    <option>I’m not sure</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <a class="btn btn-primary" role="button" href="{{ '/logged_in' | relative_url }}">Join this neighbourhood</a>
+                </form>
             </div>
             <div class="col-lg-4 offset-xl-1 mb-5">
                 <h2 class="h4">Neighbourhood organiser</h2>
@@ -101,41 +123,46 @@ layout: default
         </div>
 
         <div class="row">
-            <div class="col-lg-8 col-xl-7">
-                <form id="signup">
-                    <h2>Sign me up</h2>
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input class="form-control" type="text">
-                    </div>
-        
-                    <div class="mb-3">
-                        <label class="form-label">Email address</label>
-                        <input class="form-control" type="text">
-                    </div>
+            <div class="col-lg-5 mb-5">
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label">Property name/number</label>
-                                <input class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label">Ownership</label>
-                                <select class="form-select">
-                                    <option>I own this property</option>
-                                    <option>I rent this property from someone else</option>
-                                    <option>I’m a social tenant</option>
-                                    <option>I’m not sure</option>
-                                </select>
-                            </div>
-                        </div>
+                <h2 class="mb-4">What do people say?</h2>
+
+                <div class="d-flex align-items-end mb-5">
+                    <img src="{{ '/static/img/dom.jpg' | relative_url }}" alt="" class="rounded-circle me-3" width="80" height="80">
+                    <div class="bg-white p-3" style="border-radius: 1rem 1rem 1rem 0;">
+                        <p>You don’t find yourself grabbing a sweater quite as often and knowing you are saving energy and saving money is obviously a pleasant feeling.</p>
+                        <p class="mb-0"><strong>Dom, Prestwich</strong></p>
                     </div>
+                </div>
+
+                <div class="d-flex align-items-end mb-5">
+                    <img src="{{ '/static/img/rachel.jpg' | relative_url }}" alt="" class="rounded-circle ms-3 order-1" width="80" height="80">
+                    <div class="bg-white p-3" style="border-radius: 1rem 1rem 0 1rem;">
+                        <p>We now have a more comfortable house. There was a big reduction in how much gas and electric we used.</p>
+                        <p class="mb-0"><strong>Rachel, Bolton</strong></p>
+                    </div>
+                </div>
+
+                <p><a href="https://retrofit.coop/guides/why-retrofit">Read more about the benefits of retrofit</a>,<br>on People Powered Retrofit.</p>
+
+            </div>
+            <div class="col-lg-7 col-xl-6 offset-xl-1 mb-5">
+
+                <h2 class="mb-4">Why Thermal imaging?</h2>
+
+                <p>
+                Thermal Imaging Surveys save on costs, as the specific area leaking can be located through thermographic inspection and thus repaired without having to disrupt the rest of the roof or replace the roof unnecessarily.
+                </p>
         
-                    <a class="btn btn-primary" role="button" href="{{ '/logged_in' | relative_url }}">Join this neighbourhood</a>
-                </form>
+                <ul>
+                    <li>Cost savings; leaks, missing or slipped insulation, electrical problems, damp zones and thermal bridging, can all be detected without having to disrupt the property.</li>
+                    <li>Cost savings on energy bills once the Infrared Thermographer has established and demonstrated where heat energy is escaping and where drafts are getting in.</li>
+                    <li>Accurate mapping through thermographic inspection, providing intelligence on the makeup of the clients property/ structure; roof, walls, ceiling, floor, basement, etc..</li>
+                    <li>Pre-emptive diagnostics through thermographic inspection and visual inspection; information on where things could go wrong before they do.</li>
+                    <li>The ability to note areas of potential concern and monitor areas of deterioration via non invasive thermographic inspection.</li>
+                    <!-- from https://www.buildingresponse.co.uk/thermal-imaging-surveys/thermal-imaging-benefits/ -->
+                </ul>
+
             </div>
         </div>
     </div>
