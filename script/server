@@ -24,12 +24,12 @@ case "$ACTION" in
         fi
         ;;
     --development)
-        # TODO: run migrations
-        # TODO: run server
+        ./manage.py migrate
+        ./manage.py runsslserver 0.0.0.0:8000
         ;;
     --staging)
-        # TODO: run migrations
-        # TODO: run server
+        ./manage.py migrate
+        ./manage.py runserver 0.0.0.0:8000 --insecure
         ;;
     *)
         echo "Error: Unknown argument, ${ACTION}."

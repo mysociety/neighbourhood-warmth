@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# check that we are in the expected directory
+cd `dirname $0`/..
+
+script/dev-command ./manage.py "$@"
