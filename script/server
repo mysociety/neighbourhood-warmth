@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# abort on any errors
+set -e
+
+# check that we are in the expected directory
+cd `dirname $0`/..
+
+ACTION=$1
+[ -n "$ACTION" ] || ACTION="--local"
+
+case "$ACTION" in
+    --local)
+        script/bootstrap
+        source .env
+        if [ "$DEVENV" == "docker" ] ; then
+            echo "==> Removing any stopped or crashed containers..."
+            docker-compose rm
+            echo "==> Starting development environment, hit ^C to stop..."
+            docker-compose up
+        else
+            echo "==> Starting development server..."
+            script/server --development
+        fi
+        ;;
+    --development)
+        # TODO: run migrations
+        # TODO: run server
+        ;;
+    --staging)
+        # TODO: run migrations
+        # TODO: run server
+        ;;
+    *)
+        echo "Error: Unknown argument, ${ACTION}."
+        echo "Usage: script/server [ --local ] | --development | --staging"
+        exit 1
+        ;;
+esac
+
