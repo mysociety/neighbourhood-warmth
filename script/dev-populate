@@ -1,6 +1,0 @@
-#!/bin/bash
-
-script/setup
-./manage.py import_areas
-./manage.py import_mps
-script/createsuperuser
