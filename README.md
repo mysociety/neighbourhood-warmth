@@ -17,7 +17,7 @@ Then start the server:
 
     script/server
 
-This will create a `.env` file (from `.env-example`) if one doesn’t already exist, and then run `script/server` again _inside_ a Docker container. You’ll be able to view the site at <http://localhost:8000>.
+This will create a `.env` file (from `.env-example`) if one doesn’t already exist, and then run `script/server` again _inside_ a Docker container. You’ll be able to view the site at <https://localhost:8000>.
 
 You may want to add your own `SECRET_KEY` and `MAPIT_API_KEY` to `.env`. You can get the latter from https://mapit.mysociety.org/account/signup/
 

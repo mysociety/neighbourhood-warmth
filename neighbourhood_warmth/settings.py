@@ -50,6 +50,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "compressor",
+    "django_bootstrap5",
+    "sslserver",
+    "neighbourhood",
 ]
 
 MIDDLEWARE = [
@@ -125,7 +129,36 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATIC_ROOT = BASE_DIR / ".static"
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
+)
+
+STATICFILES_DIRS = [
+    BASE_DIR / "neighbourhood" / "static",
+    ("bootstrap", BASE_DIR / "vendor" / "bootstrap" / "scss"),
+    ("bootstrap", BASE_DIR / "vendor" / "bootstrap" / "js"),
+    ("popper", BASE_DIR / "vendor" / "popper" / "js"),
+    ("jquery", BASE_DIR / "vendor" / "jquery" / "js"),
+]
+
+COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
+COMPRESS_CSS_HASHING_METHOD = "content"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# django-bootstrap5 settings
+# https://django-bootstrap5.readthedocs.io/en/latest/settings.html
+BOOTSTRAP5 = {
+    "set_placeholder": False,
+    "server_side_validation": True,
+    "field_renderers": {
+        "default": "neighbourhood.renderers.CustomFieldRenderer",
+    },
+}
