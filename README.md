@@ -1,32 +1,26 @@
 # Neighbourhood Warmth
 
-A prototype built as part of mySociety’s April 2022 prototyping week exploring conditional commitment services around home energy.
+An Alpha version of a tool to help neighbours signal their interest in exploring home energy efficiency improvements (“retrofit”) and leading them through those first steps, together.
 
-## Use it online
+The [original static prototype](https://github.com/mysociety/neighbourhood-warmth/tree/7be3169f2d647856ff882364d7413225192c60ee) was built as part of mySociety’s April 2022 prototyping week exploring how digital services might enable local climate action on energy through conditional commitment.
 
-Visit <https://mysociety.github.io/neighbourhood-warmth>.
+## Development install
 
-All modern browsers are supported. Internet Explorer is not. See `.browserlistrc` for details.
+You will need [Docker](https://docs.docker.com/desktop/) installed.
 
-## Running locally
+Clone the repository:
 
-Requirements:
+    git clone git@github.com:mysociety/neighbourhood-warmth.git
+    cd neighbourhood-warmth
 
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
-- [Bundler](https://bundler.io/#getting-started)
-
-Install all dependencies and get a local server running immediately, in one command:
+Then start the server:
 
     script/server
 
-The site will be available at both <http://localhost:4000> and <http://0.0.0.0:4000>.
+This will create a `.env` file (from `.env-example`) if one doesn’t already exist, and then run `script/server` again _inside_ a Docker container. You’ll be able to view the site at <http://localhost:8000>.
 
-If you want to serve locally over SSL (recommended) then generate self-signed SSL certificates with:
+You may want to add your own `SECRET_KEY` and `MAPIT_API_KEY` to `.env`. You can get the latter from https://mapit.mysociety.org/account/signup/
 
-    script/generate-ssl-certificates
+If Python complains about missing libraries, chances are the Python requirements have changed since your Docker image was last built. You can rebuild it with, eg: `docker-compose build web`.
 
-Once the SSL certificates are in place, `script/server` will serve the site over HTTPS, at both <https://localhost:4000> and <https://0.0.0.0:4000>. (You will need to tell your web browser to accept the self-signed certificate.)
-
-You can build the site to `_site` (without serving it) with:
-
-    script/build
+You can run Django management commands inside the Docker container with `script/manage`, and you can create your first Django superuser with `script/createsuperuser` (which will use the `DJANGO_SUPERUSER_*` environment variables from `docker-compose.yml`).
