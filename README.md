@@ -1,5 +1,9 @@
 # Neighbourhood Warmth
 
+An Alpha version of a tool to help neighbours signal their interest in exploring home energy efficiency improvements (“retrofit”) and leading them through those first steps, together.
+
+The [original static prototype](https://github.com/mysociety/neighbourhood-warmth/tree/7be3169f2d647856ff882364d7413225192c60ee) was built as part of mySociety’s April 2022 prototyping week exploring how digital services might enable local climate action on energy through conditional commitment.
+
 ## Development install
 
 You will need [Docker](https://docs.docker.com/desktop/) installed.
