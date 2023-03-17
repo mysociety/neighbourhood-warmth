@@ -18,5 +18,7 @@ from django.urls import path
 from neighbourhood import views
 
 urlpatterns = [
+    path("", views.HomePageView.as_view(), name="home"),
+    path("style/", views.StyleView.as_view(), name="style"),
     path("admin/", admin.site.urls),
 ]
