@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom py-md-4">
+    <div class="container">
+        <a class="navbar-brand me-auto" href="{% url 'home' %}" aria-label="Neighbourhood Warmth">
+            {% include "neighbourhood/includes/logo.html" with classes="d-block text-red-500" %}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                {% include "neighbourhood/includes/nav_item.html" with view_name="home" link_text="Find your street" %}
+                {% include "neighbourhood/includes/nav_item.html" with view_name="about" link_text="About" %}
+            </ul>
+        </div>
+    </div>
+</nav>

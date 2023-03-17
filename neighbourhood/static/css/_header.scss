@@ -1,0 +1,18 @@
+.navbar-brand {
+    max-width: 75%;
+
+    svg {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.navbar-nav {
+    margin-left: $navbar-nav-link-padding-x * -1;
+    margin-right: $navbar-nav-link-padding-x * -1;
+
+    .nav-link {
+        padding-left: $navbar-nav-link-padding-x;
+        padding-right: $navbar-nav-link-padding-x;
+    }
+}

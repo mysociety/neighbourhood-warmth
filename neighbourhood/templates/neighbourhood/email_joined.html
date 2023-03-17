@@ -1,0 +1,16 @@
+{% extends "neighbourhood/email_base.html" %}
+
+{% block page_title %}
+  Email preview:
+    {% block subject %}
+      A new neighbour has joined {{ street.name }} on Neighbourhood Warmth
+  {% endblock %}
+{% endblock %}
+
+{% block content %}
+  <h1>[[ new neighbour has joined email text here ]]</h1>
+{% endblock %}
+
+{% block after_content %}
+  <a href="{% url 'street' street.slug %}" class="d-block mt-4">Back to {{ street.name }}</a>
+{% endblock %}

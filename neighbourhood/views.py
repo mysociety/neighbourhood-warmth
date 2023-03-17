@@ -2,12 +2,71 @@ from django.shortcuts import render
 
 from django.views.generic import TemplateView
 
-from neighbourhood.mixins import TitleMixin
+from neighbourhood.mixins import StreetMixin, TitleMixin
+from neighbourhood.example_data import example_streets
+from neighbourhood.utils import find_where
 
 
 class HomePageView(TitleMixin, TemplateView):
-    page_title = ""
     template_name = "neighbourhood/home.html"
+
+
+class DisambiguationView(TitleMixin, TemplateView):
+    page_title = "Choose your street"
+    template_name = "neighbourhood/disambiguation.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["streets"] = example_streets
+        return context
+
+
+class StreetView(StreetMixin, TitleMixin, TemplateView):
+    page_title = "Example Avenue"
+    template_name = "neighbourhood/street.html"
+
+
+class StreetJoinView(StreetMixin, TitleMixin, TemplateView):
+    page_title = "Join | Example Avenue"
+    template_name = "neighbourhood/street_join.html"
+
+
+class StreetActionsView(StreetMixin, TitleMixin, TemplateView):
+    page_title = "Actions | Example Avenue"
+    template_name = "neighbourhood/street_actions.html"
+
+
+class StreetUpdateView(StreetMixin, TitleMixin, TemplateView):
+    page_title = "Update | Example Avenue"
+    template_name = "neighbourhood/street_update.html"
+
+
+class AreaView(TitleMixin, TemplateView):
+    page_title = "Exampleshire County Council"
+    template_name = "neighbourhood/area.html"
+
+
+class AboutView(TitleMixin, TemplateView):
+    page_title = "About"
+    template_name = "neighbourhood/about.html"
+
+
+class EmailView(TemplateView):
+    def get_template_names(self):
+        if self.kwargs["layout"] == "welcome":
+            return "neighbourhood/email_welcome.html"
+        elif self.kwargs["layout"] == "joined":
+            return "neighbourhood/email_joined.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["street"] = find_where(
+            example_streets,
+            {
+                "slug": self.request.GET.get("street", {})
+            }
+        )
+        return context
 
 
 class StyleView(TitleMixin, TemplateView):

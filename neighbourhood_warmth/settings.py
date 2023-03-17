@@ -136,6 +136,8 @@ STATICFILES_DIRS = [
     ("bootstrap", BASE_DIR / "vendor" / "bootstrap" / "js"),
     ("popper", BASE_DIR / "vendor" / "popper" / "js"),
     ("jquery", BASE_DIR / "vendor" / "jquery" / "js"),
+    ("party", BASE_DIR / "vendor" / "party" / "js"),
+    ("typewriter-effect", BASE_DIR / "vendor" / "typewriter-effect" / "js"),
 ]
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)

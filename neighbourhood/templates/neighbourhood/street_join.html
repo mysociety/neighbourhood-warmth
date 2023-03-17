@@ -1,0 +1,14 @@
+{% extends "neighbourhood/base.html" %}
+
+{% block content %}
+
+<div class="py-4 py-lg-5">
+    <div class="container">
+        <h1 class="mb-5">[[ join street page content ]]</h1>
+        <p class="mb-5">[[ form to collect user’s details ]]</p>
+        <p>Are you interested in…? [ list of street-level measures – get solar for your street, get thermal imaging for your street ]</p>
+        <a href="{% url 'street_actions' street.slug %}?congrats=true" class="btn btn-primary">Join street</a>
+    </div>
+</div>
+
+{% endblock %}

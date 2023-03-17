@@ -1,0 +1,21 @@
+{% extends "neighbourhood/base.html" %}
+
+{% block content %}
+
+<div class="py-4 py-lg-5">
+    <div class="container {% if request.GET.congrats %}js-confetti{% endif %}">
+        <h1 class="mb-5">[[ street actions page content ]]</h1>
+
+        <p>Retrofit Balsall Health will do surveys if you get 10 people signed up</p>
+
+        <p>Share this on your local Nextdoor community</p>
+
+        <p>Print this flyer and post it in your neighbours’ letterboxes</p>
+
+        <p><a href="{% url 'street_update' street.slug %}">Post an update</a></p>
+        <p class="mt-5"><a href="{% url 'email_preview' 'welcome' %}?street={{ street.slug|urlencode }}">Preview email #1: Welcome</a></p>
+        <p><a href="{% url 'email_preview' 'joined' %}?street={{ street.slug|urlencode }}">Preview email #2: Neighbour joined</a></p>
+    </div>
+</div>
+
+{% endblock %}

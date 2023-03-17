@@ -1,0 +1,29 @@
+{% load static compress %}
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="initial-scale=1, viewport-fit=cover">
+    <title>{% block page_title %}Email preview{% endblock %}</title>
+    {% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'css/main.scss' %}">
+    {% endcompress %}
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+</head>
+<body class="{% block body_classes %}bg-gray-100{% endblock %}">
+    <div class="mx-auto my-sm-4 my-md-5" style="max-width: 700px">
+        <div class="p-3 p-md-4 bg-white shadow-lg">
+            <dl class="row mb-n2">
+                <dt class="col-3 col-sm-2">From</dt>
+                <dd class="col-9 col-sm-10">Neighbourhood Warmth</dd>
+                <dt class="col-3 col-sm-2">Subject</dt>
+                <dd class="col-9 col-sm-10">{% block subject %}{% endblock %}</dd>
+            </dl>
+            <hr class="text-muted my-3 my-md-4">
+            {% block content %}{% endblock %}
+        </div>
+        {% block after_content %}{% endblock %}
+    </div>
+</body>

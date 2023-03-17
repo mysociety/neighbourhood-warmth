@@ -1,10 +1,45 @@
 {% extends "neighbourhood/base.html" %}
 
+{% block body_classes %}bg-gray-100{% endblock %}
+
 {% block content %}
 
 <div class="py-4 py-lg-5">
     <div class="container">
-        <h1 class="mb-5">Hello World</h1>
+        <h1 class="mb-5 display-2">
+            We’re connecting
+            <span class="d-block position-relative">neighbours to</span>
+            <span class="mark" data-typewriter='["stay warm", "save energy", "save money", "save the planet"]'>stay warm</span>
+        </h1>
+
+        <!-- 
+
+            Three priorities: 1) understand the house, 2) reduce energy use, 3) decarbonise energy supply
+
+            Why understand the house together? – 1) small cost savings out of efficiency of multiple surveys in one go, 2) discussing and understanding the surveys together, with people in houses like yours, 3) potential future group buying discounts on retrofit actions/supplies
+
+            Can we evidence why it’s better to not go alone?
+
+        -->
+
+        <p class="h4 mb-5">See how much you could save, together</p>
+
+        {% include 'neighbourhood/includes/postcode_search_form.html' %}
+
+
+        <!-- TODO: better testimonials – emphasise togetherness (for cost savings, comparisons between houses), trustworthiness -->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="bg-white p-3 p-sm-4 rounded">
+                    <p class="fs-5 fs-sm-4 mb-0">“We signed up to thermal imaging scans, and now I understand much more about how my home works.”</p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="bg-white p-3 p-sm-4 rounded">
+                    <p class="fs-5 fs-sm-4 mb-0">“It was great to get impartial, fact-based advice on the improvements we could make to our homes, so we could compare next steps, together.”</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
