@@ -1,0 +1,51 @@
+{% extends "neighbourhood/base.html" %}
+
+{% load static %}
+
+{% block body_classes %}bg-gray-100{% endblock %}
+
+{% block content %}
+
+<div class="py-4 py-lg-5">
+    <div class="container">
+        <h1 class="mb-4">
+            There
+            {{ teams|pluralize:'is,are'}}
+            {{ teams|length }}
+            {{ teams|pluralize:"team,teams" }}
+            near
+            {{ request.GET.pc|upper|default:"you" }}
+        </h1>
+
+        <p>Not all teams will be open to accepting new members right now, but if there are any <strong>very near you</strong>, you can contact them to see.</p>
+
+        <div class="row my-4">
+            <div class="col-sm-6">
+              {% for team in teams %}
+                <a href="{% url 'team' team.slug %}" class="p-3 p-md-4 bg-white rounded d-block mb-3 mb-md-4">
+                    <h2 class="mb-2">{{ team.name }}</h2>
+                    <p class="mb-0 d-inline-block text-decoration-none text-black">{{ team.members_count }} {{ team.members_count|pluralize:"member,members" }}</p>
+                </a>
+            {% endfor %}
+            </div>
+            <div class="col-sm-6 d-flex">
+                <div class="rounded border mb-3 mb-md-4 flex-grow-1 d-flex align-items-center justify-content-center" style="min-height: 10rem; background-image: url('{% static 'img/map.svg' %}'); background-size: cover;">
+                    {% include 'neighbourhood/icons/pin.html' with width="3rem" height="auto" classes="text-danger" %}
+                </div>
+            </div>
+        </div>
+
+        <p>Become a local legend! You can also start your own team, and invite your friends and neighbours to join.</p>
+
+        <p>There are already <strong>2 people</strong> waiting for a team to start near here – you can invite them to your team if you like!</p>
+
+        <p><a href="{% url 'create_team' %}?pc={{ request.GET.pc }}" class="btn btn-primary btn-lg">Start a team</a></p>
+
+        <p>Or you can create an account, and we’ll notify you when new teams are created near you, so you can join them.</p>
+
+        <p><a href="#" class="btn btn-outline-secondary btn-lg">Sign up and wait</a></p>
+
+    </div>
+</div>
+
+{% endblock %}

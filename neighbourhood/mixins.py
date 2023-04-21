@@ -14,6 +14,18 @@ class StreetMixin:
         return context
 
 
+class TeamMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["team"] = find_where(
+            example_teams,
+            {
+                "slug": self.kwargs["team"]
+            }
+        )
+        return context
+
+
 class TitleMixin:
     site_title = "Neighbourhood Warmth"
 

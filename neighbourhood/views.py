@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 from django.views.generic import TemplateView
 
-from neighbourhood.mixins import StreetMixin, TitleMixin
-from neighbourhood.example_data import example_streets
+from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
+from neighbourhood.example_data import example_streets, example_teams
 from neighbourhood.utils import find_where
 
 
@@ -11,14 +11,24 @@ class HomePageView(TitleMixin, TemplateView):
     template_name = "neighbourhood/home.html"
 
 
-class DisambiguationView(TitleMixin, TemplateView):
-    page_title = "Choose your street"
-    template_name = "neighbourhood/disambiguation.html"
+class SearchView(TitleMixin, TemplateView):
+    page_title = "Find a team near you"
+    template_name = "neighbourhood/search_results.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["streets"] = example_streets
+        context["teams"] = example_teams
         return context
+
+
+class TeamView(TeamMixin, TitleMixin, TemplateView):
+    page_title = "Team profile"
+    template_name = "neighbourhood/team.html"
+
+
+class CreateTeamView(TitleMixin, TemplateView):
+    page_title = "Create a team"
+    template_name = "neighbourhood/create_team.html"
 
 
 class StreetView(StreetMixin, TitleMixin, TemplateView):
