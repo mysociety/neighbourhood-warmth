@@ -1,4 +1,4 @@
-from neighbourhood.example_data import example_streets
+from neighbourhood.example_data import example_streets, example_teams
 from neighbourhood.utils import find_where
 
 

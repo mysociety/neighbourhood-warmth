@@ -16,17 +16,17 @@ example_streets = [{
 }]
 
 example_teams = [{
-    "slug": "100001",
+    "slug": "warmer-mornington-road-100001",
     "name": "Warmer Mornington Road",
     "area": "Madeupton",
     "members_count": 2,
 }, {
-    "slug": "100002",
+    "slug": "irwin-street-insulators-100002",
     "name": "Irwin Street Insulators",
     "area": "Madeupton",
     "members_count": 8,
 }, {
-    "slug": "100003",
+    "slug": "halton-park-heroes-100003",
     "name": "Halton Park Heroes",
     "area": "Madeupton",
     "members_count": 1,

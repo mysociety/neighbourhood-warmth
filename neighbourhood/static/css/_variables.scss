@@ -16,9 +16,38 @@ $blue: #1D70B8;
 $red: #D62828;
 $orange: #F77F00;
 $yellow: #FCBF49;
+$green: #198754;
+$teal: #20c997;
+$cyan: #0dcaf0;
 
-$primary: $yellow;
-$secondary: $orange;
+$color-facebook-blue: #3b5998;
+$color-twitter-blue: #1da1f2;
+$color-whatsapp-green: #25d366;
+$color-gmail-red: #ea4335;
+
+$primary:       $yellow;
+$secondary:     $gray-400;
+$success:       $green;
+$info:          $cyan;
+$warning:       $yellow;
+$danger:        $red;
+$light:         $gray-100;
+$dark:          $gray-900;
+
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark,
+  "facebook":   $color-facebook-blue,
+  "twitter":    $color-twitter-blue,
+  "whatsapp":   $color-whatsapp-green,
+  "gmail":      $color-gmail-red,
+);
 
 // Options
 

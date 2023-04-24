@@ -1,0 +1,112 @@
+{% extends "neighbourhood/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex align-items-center justify-content-center" style="min-height: 10rem; background-image: url('{% static 'img/map.svg' %}'); background-size: cover;">
+    {% include 'neighbourhood/icons/pin.html' with width="3rem" height="auto" classes="text-danger" %}
+</div>
+
+<div class="py-4 py-lg-5">
+    <div class="container {% if request.GET.congrats %}js-confetti{% endif %}">
+        <h1 class="mb-5">{{ team.name }}</h1>
+
+      {% if request.GET.mine %}
+
+        <div class="mb-4 p-4 border rounded">
+            <p class="h4 mb-0 text-success d-flex align-items-center justify-content-between">
+                Step 1: Create a team
+                <span class="badge bg-success fs-7">Completed</span>
+            </p>
+        </div>
+
+        <div class="mb-4 p-5 border rounded shadow-lg">
+            <h2 class="h4 mb-3">Step 2: Recruit at least one more team member from your neighbourhood</h2>
+    
+            <p>It takes two to tango! Remember, team members should live in the same type of home. But don’t worry if you’re not sure when inviting someone as we can check that when they sign up.</p>
+        
+            <p>Use the share buttons below to inspire more community-based action on home energy!</p>
+        
+            <ul class="my-4 list-inline">
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-facebook d-flex align-items-center justify-content-center">
+                        {% include 'neighbourhood/icons/facebook.html' with classes="me-2" %}
+                        Facebook
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-whatsapp d-flex align-items-center justify-content-center">
+                        {% include 'neighbourhood/icons/whatsapp.html' with classes="me-2" %}
+                        WhatsApp
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-gmail text-white d-flex align-items-center justify-content-center">
+                        {% include 'neighbourhood/icons/gmail.html' with classes="me-2" %}
+                        Gmail
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center">
+                        {% include 'neighbourhood/icons/link.html' with classes="me-2" %}
+                        Copy invite link
+                    </a>
+                </li>
+            </ul>
+        
+            <p>Or print out, display, and share our exclusive designer posters and flyers:</p>
+
+            <p class="my-4">
+                <a href="#" class="btn btn-secondary">Download goodies</a>
+            </p>
+
+            <h3 class="h5 text-muted mt-5 mb-4">By the way, your group is open to join requests</h3>
+
+            <p>You only need one neighbour to join your team before moving on with the next challenge, but at any time you can change your team status setting to be either:</p>
+        
+            <div class="my-4">
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="state" id="open" checked>
+                    <label class="form-check-label" for="open">
+                        <strong>Open</strong> – allows anyone to send your team a new member request
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="state" id="closed">
+                    <label class="form-check-label" for="closed">
+                        <strong>Closed</strong> – blocks new member requests, but allows you to send private invitations
+                    </label>
+                </div>
+            </div>
+        
+            <h3 class="h5 text-muted mt-5 mb-4">TIPS: Not sure who to invite?</h3>
+
+            <ul>
+                <li>Try sharing in your neighbourhood WhatsApp or Nextdoor group</li>
+                <li>Or maybe with your friends from the gym</li>
+                <li>You could even <a href="#">ask your local councillor</a> for help</li>
+            </ul>
+        </div>
+
+        <div class="mb-4 p-4 border rounded">
+            <p class="h4 mb-0 text-muted">Step 3: Research your energy-saving options together</p>
+        </div>
+
+      {% else %}
+
+        <h2>This team is currently open to new members.</h2>
+
+        <p>[more text here about benefits]</p>
+  
+        <p><a href="#" class="btn btn-primary">Ask to join this team</a></p>
+    
+      {% endif %}
+
+    </div>
+</div>
+
+<p class="mt-5"><a href="{% url 'email_preview' 'welcome' %}?team={{ team.slug|urlencode }}">Preview email #1: Welcome</a></p>
+<p><a href="{% url 'email_preview' 'joined' %}?team={{ team.slug|urlencode }}">Preview email #2: Neighbour joined</a></p>
+
+{% endblock %}

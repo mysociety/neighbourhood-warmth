@@ -1,50 +1,56 @@
 {% extends "neighbourhood/base.html" %}
 
+{% block body_classes %}bg-gray-100{% endblock %}
+
 {% block content %}
 
 <div class="py-4 py-lg-5">
     <div class="container">
 
-        <h1 class="mb-4">Create a team</h1>
+        <div style="max-width: 30em">
 
-        <h2>Your personal account</h2>
+            <h1 class="mb-4">Create a team</h1>
 
-        <div class="mb-4">
-            <label for="full_name" class="form-label">Your name</label>
-            <input type="text" id="full_name" class="form-control">
-            <div id="emailHelp" class="form-text">This will only ever be shared with other members of your team</div>
+            <h2>Your personal account</h2>
+
+            <div class="mb-4">
+                <label for="full_name" class="form-label">Your name</label>
+                <input type="text" id="full_name" class="form-control">
+                <div id="emailHelp" class="form-text">This will only ever be shared with other members of your team</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="form-label">Your email address</label>
+                <input type="email" id="email" class="form-control">
+                <div id="emailHelp" class="form-text">This won’t be shared with anyone</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="address_line_1" class="form-label">Your address</label>
+                <input type="text" id="address_line_1" class="form-control mb-2">
+                <input type="text" id="address_line_2" class="form-control mb-2">
+                <input type="text" id="address_line_3" class="form-control mb-2">
+                <input type="text" id="address_line_4" class="form-control" value="{{ request.GET.pc|upper }}">
+            </div>
+
+            <h2>Your team</h2>
+
+            <p>We’ve randomly generated a name for your team, but you can change it if you’d like – pick something your friends and neighbours will recognise! If you change your mind, you can edit your team name at any time.</p>
+
+            <div class="mb-4">
+                <label for="team_name" class="form-label">Team name</label>
+                <input type="text" id="team_name" class="form-control mb-2" value="Park Lane Pioneers">
+                <button type="button" class="btn btn-sm btn-secondary d-flex align-items-center">
+                    {% include 'neighbourhood/icons/fa-rotate-solid.html' with classes="me-2" %}
+                    Randomise
+                </button>
+            </div>
+
+            <p>
+                <a href="{% url 'team' 'halton-park-heroes-100003' %}?mine=1&amp;congrats=1" class="btn btn-lg btn-primary">Create team</a>
+            </p>
+
         </div>
-
-        <div class="mb-4">
-            <label for="email" class="form-label">Your email address</label>
-            <input type="email" id="email" class="form-control">
-            <div id="emailHelp" class="form-text">This won’t be shared with anyone</div>
-        </div>
-
-        <div class="mb-4">
-            <label for="address_line_1" class="form-label">Your address</label>
-            <input type="text" id="address_line_1" class="form-control mb-2">
-            <input type="text" id="address_line_2" class="form-control mb-2">
-            <input type="text" id="address_line_3" class="form-control mb-2">
-            <input type="text" id="address_line_4" class="form-control" value="{{ request.GET.pc|upper }}">
-        </div>
-
-        <h2>Your team</h2>
-
-        <p>We’ve randomly generated a name for your team, but you can change it if you’d like – pick something your friends and neighbours will recognise! If you change your mind, you can edit your team name at any time.</p>
-
-        <div class="mb-4">
-            <label for="team_name" class="form-label">Team name</label>
-            <input type="text" id="team_name" class="form-control mb-2" value="Park Lane Pioneers">
-            <button type="button" class="btn btn-sm btn-secondary d-flex align-items-center">
-                {% include 'neighbourhood/icons/fa-rotate-solid.html' with classes="me-2" %}
-                Randomise
-            </button>
-        </div>
-
-        <p>
-            <a href="#" class="btn btn-lg btn-primary">Create team</a>
-        </p>
 
     </div>
 </div>
