@@ -1,24 +1,24 @@
 // Color system
 
 $white: #FFFFFF;
-$gray-100: #FAF8ED;
-$gray-200: #F5F2E0;
-$gray-300: #F0EACA;
+$gray-100: mix(#EAE2B7, #fff, 15%);
+$gray-200: mix(#EAE2B7, #fff, 30%);
+$gray-300: mix(#EAE2B7, #fff, 75%);
 $gray-400: #EAE2B7;
-$gray-500: #C7BF98;
-$gray-600: #9B967D;
-$gray-700: #455658;
-$gray-800: #003049;
-$gray-900: #002233;
+$gray-500: mix(desaturate(#EAE2B7, 15%), #000, 90%);
+$gray-600: mix(desaturate(#EAE2B7, 30%), #000, 75%);
+$gray-700: mix(desaturate(#EAE2B7, 45%), #000, 50%);
+$gray-800: mix(desaturate(#EAE2B7, 65%), #000, 25%);
+$gray-900: mix(desaturate(#EAE2B7, 85%), #000, 10%);
 $black: #000000;
 
-$blue: #1D70B8;
+$blue: #0d6efd !default;
 $red: #D62828;
-$orange: #F77F00;
+$orange: #fd7e14 !default;
 $yellow: #FCBF49;
-$green: #198754;
-$teal: #20c997;
-$cyan: #0dcaf0;
+$green: #198754 !default;
+$teal: #20c997 !default;
+$cyan: #0dcaf0 !default;
 
 $color-facebook-blue: #3b5998;
 $color-twitter-blue: #1da1f2;
@@ -75,11 +75,13 @@ $spacers: (
 
 // Body
 
+$body-color: $black; // rather than $gray-900
+
 // Utilities maps
 
 // Links
 
-$link-color: $blue;
+$link-color: $blue; // rather than $primary
 
 // Paragraphs
 
@@ -107,6 +109,8 @@ $container-max-widths: (
 // Container padding
 
 // Components
+
+$border-color: $gray-500;
 
 // Typography
 
@@ -140,6 +144,8 @@ $display-font-weight: 800;
 
 $lead-font-weight: 500;
 
+$text-muted: $gray-700;
+
 $legend-font-size: 1rem;
 
 $mark-padding: 0;
@@ -156,6 +162,13 @@ $btn-font-weight: bold;
 // Forms
 
 $form-label-font-weight: bold;
+
+$input-disabled-bg: desaturate($gray-200, 50%);
+$input-disabled-border-color: desaturate($border-color, 25%);
+
+$input-border-color: $gray-600;
+
+$input-focus-border-color: $primary;
 
 // Form validation
 

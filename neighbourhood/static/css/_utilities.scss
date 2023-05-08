@@ -21,6 +21,15 @@ $all-colors: map-merge-multiple($blues, $indigos, $purples, $pinks, $reds, $oran
 $utilities: map-merge(
     $utilities,
     (
+        "border-color": map-merge(
+            map-get($utilities, "border-color"),
+            (
+                values: map-merge(
+                    map-get(map-get($utilities, "border-color"), "values"),
+                    $all-colors,
+                ),
+            ),
+        ),
         "color": map-merge(
             map-get($utilities, "color"),
             (
