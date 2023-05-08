@@ -20,14 +20,17 @@ example_teams = [{
     "name": "Warmer Mornington Road",
     "area": "Madeupton",
     "members_count": 2,
+    "status": "researching assessment options",
 }, {
     "slug": "irwin-street-insulators-100002",
     "name": "Irwin Street Insulators",
     "area": "Madeupton",
     "members_count": 8,
+    "status": "recruiting neighbours for October retrofit assessment"
 }, {
     "slug": "halton-park-heroes-100003",
     "name": "Halton Park Heroes",
     "area": "Madeupton",
     "members_count": 1,
+    "status": "recruiting neighbours",
 }]

@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="py-4 py-lg-5">
+<div class="py-4 py-lg-5 border-bottom">
     <div class="container">
         <h1 class="mb-5 display-2">
             We’re connecting
@@ -23,41 +23,36 @@
         -->
 
         <h2 class="h4 mb-3">Find out what’s going on in your area</h2>
-        {% include 'neighbourhood/includes/postcode_search_form.html' %}
+        {% include 'neighbourhood/includes/postcode_search_form.html' with default='' %}
+    </div>
+</div>
 
-        <p>Home energy can be complicated, especially if you’re trying to figure it out alone.</p>
+<div class="py-4 py-lg-5 bg-white border-bottom">
+    <div class="container">
+        {% include 'neighbourhood/includes/generic_promo.html' %}
+    </div>
+</div>
 
-        <p>Neighbourhood Warmth helps people to form teams around shared home energy challenges, such as these: [youtube video]</p>
+<div class="py-4 py-lg-5 bg-white border-bottom">
+    <div class="container">
+        <div class="mw-40rem">
+            <h2>It starts with understanding your&nbsp;home</h2>
 
-        <p>Each challenge is broken down into simple steps, with personalised advice.</p>
+            <p>Whether it’s a whole house assessment, thermal imaging, or something else – knowing more about your home and how you use it will help you make an informed decision on the right way forward for you and your household.</p>
 
-        <p>The first challenge involves getting to know your home. Once completed you should have a clearer idea of:</p>
+            <p>Neighbourhood Warmth guides you through the process via a series of simple steps, with personalised advice. By the end of the process, you’ll have a clearer idea of:</p>
 
-        <ul>
-            <li>home energy improvements you could make</li>
-            <li>ways to prioritise and plan these</li>
-            <li>how long they typically take</li>
-            <li>what they might cost</li>
-        </ul>
+            <ul>
+                <li>the home energy improvements you could make</li>
+                <li>the ways to prioritise and plan them</li>
+                <li>how long they typically take</li>
+                <li>and what they might cost</li>
+            </ul>
 
-        <p>See for example: [youtube video]</p>
+            <p>See for example: <a href="https://www.youtube.com/watch?v=gS2Iq-7ZAsM">CSE Bristol Retrofit Stories 1950 detached</a></p>
 
-        <p>We ask you to complete our challenges with a team of people who live near you, in houses similar to yours, because that way you’re more likely to share common problems and solutions. Plus, it’s more fun!</p>
-
-        <h2 class="h4 mb-3">Find or start a team in your area</h2>
-        {% include 'neighbourhood/includes/postcode_search_form.html' %}
-
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="bg-white p-3 p-sm-4 rounded">
-                    <p class="fs-5 fs-sm-4 mb-0">“We signed up to thermal imaging scans, and now I understand much more about how my home works.”</p>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="bg-white p-3 p-sm-4 rounded">
-                    <p class="fs-5 fs-sm-4 mb-0">“It was great to get impartial, fact-based advice on the improvements we could make to our homes, so we could compare next steps, together.”</p>
-                </div>
-            </div>
+            <h2 class="h4 mt-5 mb-3">Find or start a team in your area</h2>
+            {% include 'neighbourhood/includes/postcode_search_form.html' with default='' %}
         </div>
     </div>
 </div>
