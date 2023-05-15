@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     "compressor",
     "django_bootstrap5",
     "sslserver",
@@ -84,6 +85,7 @@ WSGI_APPLICATION = "neighbourhood_warmth.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {"default": env.db()}
+DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
 
 
 # Password validation
