@@ -1,0 +1,32 @@
+[
+  {
+    "model": "neighbourhood.team",
+    "pk": 1,
+    "fields": {
+      "name": "scottish parliament",
+      "base_pc": "sp1 1sp",
+      "centroid": "SRID=4326;POINT (-3.174673318421379 55.95194509015482)",
+      "slug": "scottish-parliament"
+    }
+  },
+  {
+    "model": "neighbourhood.team",
+    "pk": 2,
+    "fields": {
+      "name": "Holyrood palace",
+      "base_pc": "sp1 1pa",
+      "centroid": "SRID=4326;POINT (-3.171958922898396 55.95270796489685)",
+      "slug": "holyrood-palace"
+    }
+  },
+  {
+    "model": "neighbourhood.team",
+    "pk": 3,
+    "fields": {
+      "name": "edinburgh castle",
+      "base_pc": "sp1 1ca",
+      "centroid": "SRID=4326;POINT (-3.200368880780104 55.94862310599335)",
+      "slug": "edinburgh-castle"
+    }
+  }
+]

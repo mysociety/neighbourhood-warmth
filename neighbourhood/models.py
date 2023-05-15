@@ -19,7 +19,7 @@ class Team(models.Model):
     slug = models.CharField(max_length=100, blank=True, null=True, default="")
 
     @classmethod
-    def find_nearest_groups(self, latitude=None, longitude=None, distance=5):
+    def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
         if latitude is None or longitude is None:
             return []
 

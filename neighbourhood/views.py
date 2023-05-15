@@ -1,9 +1,12 @@
 from django.shortcuts import render
-
 from django.views.generic import TemplateView
 
-from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
 from neighbourhood.example_data import example_streets, example_teams
+from neighbourhood.mapit import (BadRequestException, ForbiddenException,
+                                 InternalServerErrorException, MapIt,
+                                 NotFoundException)
+from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
+from neighbourhood.models import Team
 from neighbourhood.utils import find_where
 
 
@@ -17,7 +20,29 @@ class SearchView(TitleMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["teams"] = example_teams
+        postcode = self.request.GET.get("pc")
+
+        mapit = MapIt()
+        context["postcode"] = postcode
+        try:
+            if postcode:
+                lat_lon = mapit.postcode_point_to_centroid(postcode)
+            else:
+                return context
+
+            nearest = Team.find_nearest_teams(
+                latitude=lat_lon["lat"], longitude=lat_lon["lon"]
+            )
+            context["teams"] = nearest
+            return context
+        except (
+            NotFoundException,
+            BadRequestException,
+            InternalServerErrorException,
+            ForbiddenException,
+        ) as error:
+            context["error"] = error
+
         return context
 
 
