@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     "neighbourhood",
 ]
 
+AUTH_USER_MODEL = "neighbourhood.User"
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
