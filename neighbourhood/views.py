@@ -2,9 +2,13 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from neighbourhood.example_data import example_streets, example_teams
-from neighbourhood.mapit import (BadRequestException, ForbiddenException,
-                                 InternalServerErrorException, MapIt,
-                                 NotFoundException)
+from neighbourhood.mapit import (
+    BadRequestException,
+    ForbiddenException,
+    InternalServerErrorException,
+    MapIt,
+    NotFoundException,
+)
 from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
 from neighbourhood.models import Team
 from neighbourhood.utils import find_where
@@ -96,10 +100,7 @@ class EmailView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["street"] = find_where(
-            example_streets,
-            {
-                "slug": self.request.GET.get("street", {})
-            }
+            example_streets, {"slug": self.request.GET.get("street", {})}
         )
         return context
 
