@@ -11,6 +11,8 @@ psycopg2 = "^2.9.5"
 django-environ = "^0.10.0"
 django-bootstrap5 = "^22.2"
 django-libsass = "^0.9"
+requests = "^2.30.0"
+requests-cache = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 black = "^23.1.0"
