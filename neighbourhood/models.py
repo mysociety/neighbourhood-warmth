@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis import measure
 from django.contrib.gis.db import models
@@ -17,6 +18,16 @@ class Team(models.Model):
     base_pc = models.CharField(max_length=10)
     centroid = models.PointField()
     slug = models.CharField(max_length=100, blank=True, null=True, default="")
+
+    address_1 = models.CharField(max_length=300, blank=True, null=True)
+    address_2 = models.CharField(max_length=300, blank=True, null=True)
+    address_3 = models.CharField(max_length=300, blank=True, null=True)
+
+    # we don't want the team to vanish if we remove the creator so allow it to be
+    # set to null
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, models.SET_NULL, blank=True, null=True
+    )
 
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
