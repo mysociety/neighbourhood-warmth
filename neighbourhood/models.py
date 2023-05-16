@@ -1,3 +1,5 @@
+from random import randrange
+
 from django.conf import settings
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
@@ -114,6 +116,8 @@ class Team(models.Model):
 @receiver(pre_save, sender=Team)
 def generate_team_slug(sender, instance, raw, using, update_fields, **kwargs):
     slug = instance.slug
-    if slug is None:
+    if slug is None or slug == "":
         slug = slugify(instance.name)
+        postfix = randrange(100000)
+        slug = f"{slug}-{postfix}"
         instance.slug = slug
