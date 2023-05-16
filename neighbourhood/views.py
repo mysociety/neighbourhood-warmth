@@ -1,9 +1,14 @@
+from django.contrib.auth import get_user_model
+from django.contrib.gis.geos import Point
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.urls import reverse
+from django.views.generic import DetailView, TemplateView
+from django.views.generic.edit import CreateView
 
 from neighbourhood.example_data import example_streets, example_teams
+from neighbourhood.forms import NewTeamForm
 from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
-from neighbourhood.models import Team
+from neighbourhood.models import Team, User
 from neighbourhood.utils import find_where, get_postcode_centroid
 
 
@@ -32,14 +37,39 @@ class SearchView(TitleMixin, TemplateView):
         return context
 
 
-class TeamView(TeamMixin, TitleMixin, TemplateView):
+class TeamView(TitleMixin, DetailView):
+    model = Team
+    context_object_name = "team"
     page_title = "Team profile"
     template_name = "neighbourhood/team.html"
 
 
-class CreateTeamView(TitleMixin, TemplateView):
+class CreateTeamView(TitleMixin, CreateView):
     page_title = "Create a team"
+    form_class = NewTeamForm
     template_name = "neighbourhood/create_team.html"
+    success_url = "/team/halton-park-heroes-100003/"
+
+    def get_initial(self):
+        return {"base_pc": self.request.GET.get("pc", "")}
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+
+        um = get_user_model()
+        u, _ = um.objects.get_or_create(email=data["email"])
+        u.full_name = data["creator_name"]
+        u.save()
+
+        form.instance.creator = u
+
+        location = Point(form.lat_lon["lon"], form.lat_lon["lat"], srid=4326)
+        form.instance.centroid = location
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("team", args=(self.object.slug,))
 
 
 class StreetView(StreetMixin, TitleMixin, TemplateView):

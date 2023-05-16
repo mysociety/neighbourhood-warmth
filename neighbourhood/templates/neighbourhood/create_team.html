@@ -1,5 +1,7 @@
 {% extends "neighbourhood/base.html" %}
 
+{% load django_bootstrap5 %}
+
 {% block body_classes %}bg-gray-100{% endblock %}
 
 {% block content %}
@@ -11,26 +13,28 @@
 
             <h1 class="mb-4">Create a team</h1>
 
+            <form method="POST" action="">
+            {% csrf_token %}
             <h2>Your personal account</h2>
 
             <div class="mb-4">
-                <label for="full_name" class="form-label">Your name</label>
-                <input type="text" id="full_name" class="form-control">
+                <label for="creator_name" class="form-label">Your name</label>
+                {% bootstrap_field form.creator_name show_label=False %}
                 <div id="emailHelp" class="form-text">This will only ever be shared with other members of your team</div>
             </div>
 
             <div class="mb-4">
                 <label for="email" class="form-label">Your email address</label>
-                <input type="email" id="email" class="form-control">
+                {% bootstrap_field form.email show_label=False %}
                 <div id="emailHelp" class="form-text">This won’t be shared with anyone</div>
             </div>
 
             <div class="mb-4">
                 <label for="address_line_1" class="form-label">Your address</label>
-                <input type="text" id="address_line_1" class="form-control mb-2">
-                <input type="text" id="address_line_2" class="form-control mb-2">
-                <input type="text" id="address_line_3" class="form-control mb-2">
-                <input type="text" id="address_line_4" class="form-control" value="{{ request.GET.pc|upper }}">
+                {% bootstrap_field form.address_1 show_label=False %}
+                {% bootstrap_field form.address_2 show_label=False %}
+                {% bootstrap_field form.address_3 show_label=False %}
+                {% bootstrap_field form.base_pc show_label=False %}
             </div>
 
             <h2>Your team</h2>
@@ -38,8 +42,8 @@
             <p>We’ve randomly generated a name for your team, but you can change it if you’d like – pick something your friends and neighbours will recognise! If you change your mind, you can edit your team name at any time.</p>
 
             <div class="mb-4">
-                <label for="team_name" class="form-label">Team name</label>
-                <input type="text" id="team_name" class="form-control mb-2" value="Park Lane Pioneers">
+                <label for="name" class="form-label">Team name</label>
+                {% bootstrap_field form.name show_label=False %}
                 <button type="button" class="btn btn-sm btn-secondary d-flex align-items-center">
                     {% include 'neighbourhood/icons/fa-rotate-solid.html' with classes="me-2" %}
                     Randomise
@@ -47,8 +51,9 @@
             </div>
 
             <p>
-                <a href="{% url 'team' 'halton-park-heroes-100003' %}?mine=1&amp;congrats=1" class="btn btn-lg btn-primary">Create team</a>
+                <button type="submit" class="btn btn-lg btn-primary">Create team</button>
             </p>
+            </form>
 
         </div>
 

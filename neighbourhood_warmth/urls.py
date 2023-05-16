@@ -22,7 +22,7 @@ from neighbourhood import views
 urlpatterns = [
     path("", views.HomePageView.as_view(), name="home"),
     path("search/", views.SearchView.as_view(), name="search_results"),
-    path("team/<slug:team>/", views.TeamView.as_view(), name="team"),
+    path("team/<slug:slug>/", views.TeamView.as_view(), name="team"),
     path("create_team/", views.CreateTeamView.as_view(), name="create_team"),
     path("street/<slug:street>/", views.StreetView.as_view(), name="street"),
     path(
