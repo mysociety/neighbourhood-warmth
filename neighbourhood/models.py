@@ -72,7 +72,9 @@ class Team(models.Model):
     name = models.CharField(max_length=100)
     base_pc = models.CharField(max_length=10)
     centroid = models.PointField()
-    slug = models.CharField(max_length=100, blank=True, null=True, default="")
+    slug = models.CharField(
+        max_length=100, blank=True, null=True, default="", unique=True
+    )
 
     address_1 = models.CharField(max_length=300, blank=True, null=True)
     address_2 = models.CharField(max_length=300, blank=True, null=True)
