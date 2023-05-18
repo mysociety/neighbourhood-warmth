@@ -88,6 +88,8 @@ class Team(models.Model):
         settings.AUTH_USER_MODEL, models.SET_NULL, blank=True, null=True
     )
 
+    status = models.CharField(max_length=300, blank=True, null=True)
+
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
         if latitude is None or longitude is None:
