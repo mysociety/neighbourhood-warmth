@@ -90,6 +90,10 @@ class Team(models.Model):
 
     status = models.CharField(max_length=300, blank=True, null=True)
 
+    members = models.ManyToManyField(
+        User, related_name="teams", related_query_name="team"
+    )
+
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
         if latitude is None or longitude is None:
