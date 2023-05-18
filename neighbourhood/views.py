@@ -65,6 +65,7 @@ class CreateTeamView(TitleMixin, CreateView):
 
         location = Point(form.lat_lon["lon"], form.lat_lon["lat"], srid=4326)
         form.instance.centroid = location
+        form.instance.status = "Newly created"
 
         return super().form_valid(form)
 
