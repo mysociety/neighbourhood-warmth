@@ -67,7 +67,12 @@ class CreateTeamView(TitleMixin, CreateView):
         form.instance.centroid = location
         form.instance.status = "Newly created"
 
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+        # add to members too as makes counting easier
+        form.instance.members.add(u)
+
+        return response
 
     def get_success_url(self):
         return reverse("team", args=(self.object.slug,))

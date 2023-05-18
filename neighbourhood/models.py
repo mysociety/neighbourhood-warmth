@@ -94,6 +94,9 @@ class Team(models.Model):
         User, related_name="teams", related_query_name="team"
     )
 
+    def members_count(self):
+        return self.members.count()
+
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
         if latitude is None or longitude is None:
