@@ -109,7 +109,7 @@ class Team(models.Model):
         location = Point(longitude, latitude, srid=4326)
         nearest = (
             self.objects.annotate(distance=Distance("centroid", location))
-            .filter(distance__lte=max_distance.m)
+            .filter(distance__lte=max_distance.m, confirmed=True)
             .order_by("distance")
         )
 

@@ -1,0 +1,8 @@
+{% autoescape off %}
+Hi {{ user.username }},
+
+Please click on the link to complete your request for a Neighbourhood Warmth account:
+
+https://{{ domain }}{% url 'confirm_email' token=token %}
+
+{% endautoescape %}

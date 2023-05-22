@@ -1,6 +1,6 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 from django.contrib.gis.geos import Point
-from django.shortcuts import render
+from django.shortcuts import redirect, render, reverse
 from django.urls import reverse
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import CreateView
@@ -9,6 +9,7 @@ from neighbourhood.example_data import example_streets, example_teams
 from neighbourhood.forms import NewTeamForm
 from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
 from neighbourhood.models import Team, User
+from neighbourhood.tokens import get_user_for_token
 from neighbourhood.utils import find_where, get_postcode_centroid
 
 
@@ -39,6 +40,7 @@ class SearchView(TitleMixin, TemplateView):
 
 class TeamView(TitleMixin, DetailView):
     model = Team
+    queryset = Team.objects.filter(confirmed=True)
     context_object_name = "team"
     page_title = "Team profile"
     template_name = "neighbourhood/team.html"
@@ -48,7 +50,6 @@ class CreateTeamView(TitleMixin, CreateView):
     page_title = "Create a team"
     form_class = NewTeamForm
     template_name = "neighbourhood/create_team.html"
-    success_url = "/team/halton-park-heroes-100003/"
 
     def get_initial(self):
         return {"base_pc": self.request.GET.get("pc", "")}
@@ -72,10 +73,12 @@ class CreateTeamView(TitleMixin, CreateView):
         # add to members too as makes counting easier
         form.instance.members.add(u)
 
+        form.send_confirmation_email(request=self.request, user=u)
+
         return response
 
     def get_success_url(self):
-        return reverse("team", args=(self.object.slug,))
+        return reverse("confirmation_sent")
 
 
 class StreetView(StreetMixin, TitleMixin, TemplateView):
@@ -106,6 +109,42 @@ class AreaView(TitleMixin, TemplateView):
 class AboutView(TitleMixin, TemplateView):
     page_title = "About"
     template_name = "neighbourhood/about.html"
+
+
+class ConfirmEmailView(TitleMixin, TemplateView):
+    page_title = "Email Confirmation"
+    template_name = "neighbourhood/accounts/email_confirmation.html"
+
+    def get(self, request, token=None):
+        if token is not None:
+            t, user = get_user_for_token(token)
+            if t is None or user is None:
+                return redirect(reverse("bad_token"))
+
+            if not user.email_confirmed:
+                user.email_confirmed = True
+                user.save()
+
+            # just log them in
+            login(request, user)
+
+            if t.domain == "new_team":
+                team = Team.objects.get(id=t.domain_id)
+                team.confirmed = True
+                team.save()
+                return redirect(reverse("team", args=(team.slug,)))
+
+        return super().get(request)
+
+
+class ConfirmationSentView(TitleMixin, TemplateView):
+    page_title = "Verify your email"
+    template_name = "neighbourhood/accounts/confirmation_sent.html"
+
+
+class BadTokenView(TitleMixin, TemplateView):
+    page_title = "Bad Token"
+    template_name = "neighbourhood/accounts/bad_token.html"
 
 
 class EmailView(TemplateView):

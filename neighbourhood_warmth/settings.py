@@ -90,6 +90,10 @@ WSGI_APPLICATION = "neighbourhood_warmth.wsgi.application"
 DATABASES = {"default": env.db()}
 DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
 
+# Sending messages
+EMAIL_HOST = env.str("EMAIL_HOST", "localhost")
+EMAIL_PORT = env.str("EMAIL_PORT", 1025)
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

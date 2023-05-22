@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from neighbourhood import views
 
 urlpatterns = [
@@ -42,6 +42,21 @@ urlpatterns = [
     path("about/", views.AboutView.as_view(), name="about"),
     path(
         "email-preview/<slug:layout>/", views.EmailView.as_view(), name="email_preview"
+    ),
+    path(
+        "confirmation_sent/",
+        views.ConfirmationSentView.as_view(),
+        name="confirmation_sent",
+    ),
+    path(
+        "bad_token/",
+        views.BadTokenView.as_view(),
+        name="bad_token",
+    ),
+    re_path(
+        "activate/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,40})/",
+        views.ConfirmEmailView.as_view(),
+        name="confirm_email",
     ),
     path("style/", views.StyleView.as_view(), name="style"),
     path("admin/", admin.site.urls),
