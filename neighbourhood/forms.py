@@ -7,8 +7,14 @@ from neighbourhood.utils import get_postcode_centroid
 
 
 class NewTeamForm(ModelForm):
-    email = EmailField()
-    creator_name = CharField()
+    email = EmailField(
+        label="Your email address",
+        help_text="This won’t be shared with anyone"
+    )
+    creator_name = CharField(
+        label="Your name",
+        help_text="This will only ever be shared with other members of your team"
+    )
 
     def clean_base_pc(self):
         data = self.cleaned_data
@@ -25,3 +31,10 @@ class NewTeamForm(ModelForm):
     class Meta:
         model = Team
         fields = ["name", "base_pc", "address_1", "address_2", "address_3"]
+        labels = {
+            "address_1": "Address line 1",
+            "address_2": "Address line 2",
+            "address_3": "Address line 3",
+            "base_pc": "Postcode",
+            "name": "Team name",
+        }

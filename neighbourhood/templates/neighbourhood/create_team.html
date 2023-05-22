@@ -18,32 +18,27 @@
             <h2>Your personal account</h2>
 
             <div class="mb-4">
-                <label for="creator_name" class="form-label">Your name</label>
-                {% bootstrap_field form.creator_name show_label=False %}
-                <div id="emailHelp" class="form-text">This will only ever be shared with other members of your team</div>
+                {% bootstrap_field form.creator_name %}
             </div>
 
             <div class="mb-4">
-                <label for="email" class="form-label">Your email address</label>
-                {% bootstrap_field form.email show_label=False %}
-                <div id="emailHelp" class="form-text">This won’t be shared with anyone</div>
+                {% bootstrap_field form.email %}
             </div>
 
-            <div class="mb-4">
-                <label for="address_line_1" class="form-label">Your address</label>
-                {% bootstrap_field form.address_1 show_label=False %}
-                {% bootstrap_field form.address_2 show_label=False %}
-                {% bootstrap_field form.address_3 show_label=False %}
-                {% bootstrap_field form.base_pc show_label=False %}
-            </div>
+            <fieldset class="mb-4">
+                <legend class="form-label text-muted">Your address</legend>
+                {% bootstrap_field form.address_1 %}
+                {% bootstrap_field form.address_2 %}
+                {% bootstrap_field form.address_3 %}
+                {% bootstrap_field form.base_pc %}
+            </fieldset>
 
             <h2>Your team</h2>
 
             <p>We’ve randomly generated a name for your team, but you can change it if you’d like – pick something your friends and neighbours will recognise! If you change your mind, you can edit your team name at any time.</p>
 
-            <div class="mb-4">
-                <label for="name" class="form-label">Team name</label>
-                {% bootstrap_field form.name show_label=False %}
+            <div class="mb-5">
+                {% bootstrap_field form.name %}
                 <button type="button" class="btn btn-sm btn-secondary d-flex align-items-center">
                     {% include 'neighbourhood/icons/fa-rotate-solid.html' with classes="me-2" %}
                     Randomise
