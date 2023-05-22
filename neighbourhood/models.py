@@ -122,6 +122,14 @@ class Team(models.Model):
         ]
 
 
+class Token(models.Model):
+    DOMAINS = [("user", "User"), ("new_team", "New Team")]
+    token = models.CharField(max_length=300)
+    domain = models.CharField(max_length=50, choices=DOMAINS)
+    user_id = models.IntegerField()
+    domain_id = models.IntegerField(null=True, blank=True)
+
+
 @receiver(pre_save, sender=Team)
 def generate_team_slug(sender, instance, raw, using, update_fields, **kwargs):
     slug = instance.slug

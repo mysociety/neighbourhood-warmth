@@ -7,7 +7,12 @@ from django.contrib.auth.models import Group
 from django.contrib.gis.admin import OSMGeoAdmin
 from django.core.exceptions import ValidationError
 
-from .models import Team, User
+from .models import Team, Token, User
+
+
+@admin.register(Token)
+class TokenAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Team)
