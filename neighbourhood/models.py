@@ -90,6 +90,7 @@ class Team(models.Model):
         settings.AUTH_USER_MODEL, models.SET_NULL, blank=True, null=True
     )
 
+    confirmed = models.BooleanField(default=False)
     status = models.CharField(max_length=300, blank=True, null=True)
 
     members = models.ManyToManyField(
