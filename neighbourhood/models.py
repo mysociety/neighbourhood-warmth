@@ -94,7 +94,7 @@ class Team(models.Model):
     status = models.CharField(max_length=300, blank=True, null=True)
 
     members = models.ManyToManyField(
-        User, related_name="teams", related_query_name="team"
+        User, related_name="teams", related_query_name="team", through="Membership"
     )
 
     def members_count(self):
@@ -123,6 +123,13 @@ class Team(models.Model):
                 ]
             )
         ]
+
+
+class Membership(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    confirmed = models.BooleanField(default=False)
+    date_joined = models.DateField(auto_now_add=True)
 
 
 class Token(models.Model):
