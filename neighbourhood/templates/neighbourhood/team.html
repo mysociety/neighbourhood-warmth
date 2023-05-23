@@ -102,7 +102,7 @@
         {% if is_team_member %}
         <p>You are a member of this team.</p>
         {% else %}
-        <p><a href="#" class="btn btn-primary btn-lg">Request to join this team</a></p>
+        <p><a href="{% url 'join_team' team.slug %}" class="btn btn-primary btn-lg">Request to join this team</a></p>
         {% endif %}
 
         <hr class="my-5 mw-40rem">

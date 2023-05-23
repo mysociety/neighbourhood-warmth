@@ -2,11 +2,11 @@ from django.contrib.auth import get_user_model, login
 from django.contrib.gis.geos import Point
 from django.shortcuts import redirect, render, reverse
 from django.urls import reverse
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView, UpdateView
 from django.views.generic.edit import CreateView
 
 from neighbourhood.example_data import example_streets, example_teams
-from neighbourhood.forms import NewTeamForm
+from neighbourhood.forms import JoinTeamForm, NewTeamForm
 from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
 from neighbourhood.models import Membership, Team, User
 from neighbourhood.tokens import get_user_for_token
@@ -98,6 +98,35 @@ class CreateTeamView(TitleMixin, CreateView):
         return reverse("confirmation_sent")
 
 
+class JoinTeamView(TitleMixin, UpdateView):
+    page_title = "Create a team"
+    form_class = JoinTeamForm
+    template_name = "neighbourhood/join_team.html"
+    context_object_name = "team"
+
+    def get_object(self):
+        return Team.objects.get(slug=self.kwargs["slug"])
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+
+        um = get_user_model()
+        u, _ = um.objects.get_or_create(email=data["email"])
+        u.full_name = data["name"]
+        u.save()
+
+        response = super().form_valid(form)
+
+        Membership.objects.create(team=form.instance, user=u)
+
+        form.send_confirmation_email(request=self.request, user=u)
+
+        return response
+
+    def get_success_url(self):
+        return reverse("confirmation_sent")
+
+
 class StreetView(StreetMixin, TitleMixin, TemplateView):
     page_title = "Example Avenue"
     template_name = "neighbourhood/street.html"
@@ -150,6 +179,9 @@ class ConfirmEmailView(TitleMixin, TemplateView):
                 team.confirmed = True
                 team.save()
                 return redirect(reverse("team", args=(team.slug,)))
+            elif t.domain == "join_team":
+                # send new member email
+                return redirect(reverse("join_team_queue"))
 
         return super().get(request)
 

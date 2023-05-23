@@ -61,3 +61,37 @@ class NewTeamForm(ModelForm):
             "base_pc": "Postcode",
             "name": "Team name",
         }
+
+
+class JoinTeamForm(ModelForm):
+    email = EmailField(
+        label="Your email address", help_text="This won’t be shared with anyone"
+    )
+    name = CharField(
+        label="Your name",
+        help_text="This will only ever be shared with other members of your team",
+    )
+
+    def send_confirmation_email(self, request=None, user=None):
+        print(self.instance)
+        t = make_token_for_user(user, domain="join_team", obj=self.instance)
+
+        current_site = get_current_site(request)
+        mail_subject = render_to_string(
+            "neighbourhood/accounts/confirmation_email_subject.txt"
+        ).strip()
+        message = render_to_string(
+            "neighbourhood/accounts/confirmation_email.html",
+            {
+                "user": user,
+                "domain": current_site.domain,
+                "token": t.token,
+            },
+        )
+        to_email = user.email
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
+
+    class Meta:
+        fields = []
+        model = Team
