@@ -15,9 +15,16 @@ class TokenAdmin(admin.ModelAdmin):
     pass
 
 
+class MembershipInline(admin.TabularInline):
+    model = Team.members.through
+
+
 @admin.register(Team)
 class TeamAdmin(OSMGeoAdmin):
     list_display = ("name", "centroid")
+    inlines = [
+        MembershipInline,
+    ]
 
 
 class UserCreationForm(forms.ModelForm):
