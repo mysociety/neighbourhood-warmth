@@ -99,7 +99,11 @@
         <h1 class="mb-3">{{ team.name }}</h1>
 
         <p class="h4 mb-3">is currently {{ team.status }}</p>
+        {% if is_team_member %}
+        <p>You are a member of this team.</p>
+        {% else %}
         <p><a href="#" class="btn btn-primary btn-lg">Request to join this team</a></p>
+        {% endif %}
 
         <hr class="my-5 mw-40rem">
 

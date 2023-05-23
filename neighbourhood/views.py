@@ -45,6 +45,16 @@ class TeamView(TitleMixin, DetailView):
     page_title = "Team profile"
     template_name = "neighbourhood/team.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        team = context["team"]
+        user = self.request.user
+        if not user.is_anonymous and team.members.filter(id=user.pk).exists():
+            context["is_team_member"] = True
+
+        return context
+
 
 class CreateTeamView(TitleMixin, CreateView):
     page_title = "Create a team"
