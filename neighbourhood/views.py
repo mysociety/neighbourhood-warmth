@@ -54,7 +54,10 @@ class TeamView(TitleMixin, DetailView):
 
         team = context["team"]
         user = self.request.user
-        if not user.is_anonymous and team.members.filter(id=user.pk).exists():
+        if (
+            not user.is_anonymous
+            and team.members.filter(id=user.pk, confirmed=True).exists()
+        ):
             context["is_team_member"] = True
 
         return context
@@ -85,7 +88,7 @@ class CreateTeamView(TitleMixin, CreateView):
         response = super().form_valid(form)
 
         # add to members too as makes counting easier
-        Membership.objects.create(team=form.instance, user=u)
+        Membership.objects.create(team=form.instance, user=u, confirmed=True)
 
         form.send_confirmation_email(request=self.request, user=u)
 
