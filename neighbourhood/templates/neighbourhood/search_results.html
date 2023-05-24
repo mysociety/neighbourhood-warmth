@@ -11,8 +11,9 @@
         <h1 class="mb-2">Understand your home</h1>
         <p class="mb-4 h4 text-muted">Find teams near you</p>
 
-        {% include 'neighbourhood/includes/postcode_search_form.html' with default='EG1 234' %}
+        {% include 'neighbourhood/includes/postcode_search_form.html' with default='' %}
 
+        {% if not error %}
         <h2 class="mt-6 mb-4">
             There
             {{ teams|pluralize:'is,are'}}
@@ -44,6 +45,7 @@
         <p class="mw-40rem">No team near you? <strong>Become a local legend!</strong> Start your own team, and invite your friends and neighbours to join.</p>
 
         <p><a href="{% url 'create_team' %}?pc={{ request.GET.pc }}" class="btn btn-primary btn-lg">Start a new team</a></p>
+        {% endif %}
 
     </div>
 </div>
