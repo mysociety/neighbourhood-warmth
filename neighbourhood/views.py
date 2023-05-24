@@ -54,11 +54,22 @@ class TeamView(TitleMixin, DetailView):
 
         team = context["team"]
         user = self.request.user
-        if (
-            not user.is_anonymous
-            and team.members.filter(id=user.pk, confirmed=True).exists()
-        ):
-            context["is_team_member"] = True
+        if not user.is_anonymous:
+            membership = Membership.objects.filter(
+                user=user, team=team, confirmed=True
+            ).first()
+            if membership is not None:
+                context["is_team_member"] = True
+                context["is_team_admin"] = membership.is_admin
+
+            context["member_count"] = Membership.objects.filter(
+                team=team, confirmed=True
+            ).count()
+            awaiting_confirmation = Membership.objects.filter(
+                team=team, confirmed=False
+            ).count()
+            if awaiting_confirmation > 0:
+                context["awaiting_confirmation"] = awaiting_confirmation
 
         return context
 

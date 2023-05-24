@@ -11,7 +11,7 @@
 <div class="py-4 py-lg-5">
     <div class="container {% if request.GET.congrats %}js-confetti{% endif %}">
 
-      {% if request.GET.mine %}
+      {% if is_team_admin %}
 
         <h1 class="mb-5">{{ team.name }}</h1>
 
@@ -24,8 +24,16 @@
 
         <div class="mb-4 p-5 border rounded shadow-lg">
             <h2 class="h4 mb-3 mw-40rem">Step 2: Recruit at least one more team member from your neighbourhood</h2>
-    
+
+            {% if member_count > 1 %}
+                <span class="badge bg-success fs-7">Completed</span>
+            {% else %}
             <p class="mw-40rem">It takes two to tango! Remember, team members should live in the same type of home. But don’t worry if you’re not sure when inviting someone as we can check that when they sign up.</p>
+            {% endif %}
+
+            {% if awaiting_confirmation %}
+            <p class="mw-40rem">People are waiting to join. <a href="">Confirm their membership</a>.</p>
+            {% endif %}
         
             <p class="mw-40rem">Use the share buttons below to inspire more community-based action on home energy!</p>
         
