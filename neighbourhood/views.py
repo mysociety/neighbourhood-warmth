@@ -88,7 +88,9 @@ class CreateTeamView(TitleMixin, CreateView):
         response = super().form_valid(form)
 
         # add to members too as makes counting easier
-        Membership.objects.create(team=form.instance, user=u, confirmed=True)
+        Membership.objects.create(
+            team=form.instance, user=u, confirmed=True, is_admin=True
+        )
 
         form.send_confirmation_email(request=self.request, user=u)
 
