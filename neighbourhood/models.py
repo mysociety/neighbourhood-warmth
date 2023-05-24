@@ -130,6 +130,7 @@ class Membership(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     confirmed = models.BooleanField(default=False)
     date_joined = models.DateField(auto_now_add=True)
+    is_admin = models.BooleanField(default=False)
 
 
 class Token(models.Model):
