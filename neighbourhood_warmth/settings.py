@@ -35,6 +35,13 @@ HIDE_DEBUG_TOOLBAR = env("HIDE_DEBUG_TOOLBAR")
 MAPIT_URL = env("MAPIT_URL")
 MAPIT_API_KEY = env("MAPIT_API_KEY")
 
+# make sure CSRF checking still works behind load balancers
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+if env.str("BUGS_EMAIL", None):  # pragma: no cover
+    SERVER_EMAIL = env("BUGS_EMAIL")
+    ADMINS = (("mySociety bugs", env("BUGS_EMAIL")),)
+
 # Application definition
 
 INSTALLED_APPS = [
