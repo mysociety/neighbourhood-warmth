@@ -23,9 +23,13 @@ class SearchView(TitleMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        postcode = self.request.GET.get("pc")
-
+        postcode = self.request.GET.get("pc", None)
         context["postcode"] = postcode
+
+        if postcode is None or postcode == "":
+            context["error"] = "Please provide a postcode"
+            return context
+
         lat_lon = get_postcode_centroid(postcode)
         if "error" in lat_lon:
             context["error"] = lat_lon["error"]
