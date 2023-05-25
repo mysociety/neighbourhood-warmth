@@ -24,6 +24,11 @@ urlpatterns = [
     path("search/", views.SearchView.as_view(), name="search_results"),
     path("team/<slug:slug>/", views.TeamView.as_view(), name="team"),
     path("team/<slug:slug>/join/", views.JoinTeamView.as_view(), name="join_team"),
+    path(
+        "team/<slug:slug>/confirm/",
+        views.ConfirmJoinTeamView.as_view(),
+        name="confirm_join_team",
+    ),
     path("create_team/", views.CreateTeamView.as_view(), name="create_team"),
     path("street/<slug:street>/", views.StreetView.as_view(), name="street"),
     path(
