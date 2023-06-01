@@ -25,15 +25,16 @@
         <div class="mb-4 p-5 border rounded shadow-lg">
             <h2 class="h4 mb-3 mw-40rem">Step 2: Recruit at least one more team member from your neighbourhood</h2>
 
-            {% if member_count > 1 %}
-                <span class="badge bg-success fs-7">Completed</span>
-            {% else %}
+          {% if member_count > 1 %}
+            <span class="badge bg-success fs-7">Completed</span>
+          {% else %}
+
             <p class="mw-40rem">It takes two to tango! Remember, team members should live in the same type of home. But don’t worry if you’re not sure when inviting someone as we can check that when they sign up.</p>
             {% endif %}
 
-            {% if awaiting_confirmation %}
+          {% if applicant_count %}
             <p class="mw-40rem">People are waiting to join. <a href="">Confirm their membership</a>.</p>
-            {% endif %}
+          {% endif %}
         
             <p class="mw-40rem">Use the share buttons below to inspire more community-based action on home energy!</p>
         
@@ -107,19 +108,23 @@
         <h1 class="mb-3">{{ team.name }}</h1>
 
         <p class="h4 mb-3">is currently {{ team.status }}</p>
-        {% if is_team_member %}
-        <p>You are a member of this team.</p>
-        {% else %}
-        <p><a href="{% url 'join_team' team.slug %}" class="btn btn-primary btn-lg">Request to join this team</a></p>
-        {% endif %}
+
+        <div class="mw-40rem">
+          {% if is_team_member %}
+            <p>You are a member of this team.</p>
+          {% elif is_team_applicant %}
+            <p>You have requested to join this team. One of the team’s organisers should approve or reject your request shortly. We’ll email you when this happens.</p>
+          {% else %}
+            <p><a href="{% url 'join_team' team.slug %}" class="btn btn-primary btn-lg">Request to join this team</a></p>
+          {% endif %}
+        </div>
 
         <hr class="my-5 mw-40rem">
 
         <div class="my-5">
             {% include 'neighbourhood/includes/generic_promo.html' %}
         </div>
-  
-    
+
       {% endif %}
 
     </div>

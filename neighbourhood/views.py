@@ -56,20 +56,19 @@ class TeamView(TitleMixin, DetailView):
         user = self.request.user
         if not user.is_anonymous:
             membership = Membership.objects.filter(
-                user=user, team=team, confirmed=True
+                user=user, team=team
             ).first()
             if membership is not None:
-                context["is_team_member"] = True
+                context["is_team_applicant"] = not membership.confirmed
+                context["is_team_member"] = membership.confirmed
                 context["is_team_admin"] = membership.is_admin
 
             context["member_count"] = Membership.objects.filter(
                 team=team, confirmed=True
             ).count()
-            awaiting_confirmation = Membership.objects.filter(
+            context["applicant_count"] = Membership.objects.filter(
                 team=team, confirmed=False
             ).count()
-            if awaiting_confirmation > 0:
-                context["awaiting_confirmation"] = awaiting_confirmation
 
         return context
 
@@ -222,8 +221,9 @@ class ConfirmEmailView(TitleMixin, TemplateView):
                 team.save()
                 return redirect(reverse("team", args=(team.slug,)))
             elif t.domain == "join_team":
-                # send new member email
-                return redirect(reverse("join_team_queue"))
+                team = Team.objects.get(id=t.domain_id)
+                # TODO: send member join request email notification to team organisers
+                return redirect(reverse("team", args=(team.slug,)))
 
         return super().get(request)
 
