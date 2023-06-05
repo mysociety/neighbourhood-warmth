@@ -1,5 +1,4 @@
 import $ from '../jquery/jquery.esm.js'
-import { Modal, Tab } from '../bootstrap/bootstrap.esm.min.js'
 import party from '../party/party.min.js'
 import Typewriter from '../typewriter-effect/core.esm.js'
 

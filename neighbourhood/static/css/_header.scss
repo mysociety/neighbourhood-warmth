@@ -15,4 +15,9 @@
         padding-left: $navbar-nav-link-padding-x;
         padding-right: $navbar-nav-link-padding-x;
     }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+    }
 }

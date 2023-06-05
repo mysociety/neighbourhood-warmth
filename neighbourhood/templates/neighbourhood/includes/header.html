@@ -10,6 +10,21 @@
             <ul class="navbar-nav">
                 {% include "neighbourhood/includes/nav_item.html" with view_name="home" link_text="Find your street" %}
                 {% include "neighbourhood/includes/nav_item.html" with view_name="about" link_text="About" %}
+              {% if request.user %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ request.user.avatar_url|escape }}" width="32" height="32" class="rounded-circle bg-primary" alt="{{ request.user.full_name }}">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><h6 class="dropdown-header">{{ request.user.full_name }}</h6></li>
+                        <!-- TODO: Working links -->
+                        <li><a class="dropdown-item" href="#">My team</a></li>
+                        <li><a class="dropdown-item" href="#">My profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Sign out</a></li>
+                    </ul>
+                </li>
+              {% endif %}
             </ul>
         </div>
     </div>

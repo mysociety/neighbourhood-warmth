@@ -64,6 +64,7 @@ urlpatterns = [
         views.ConfirmEmailView.as_view(),
         name="confirm_email",
     ),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("style/", views.StyleView.as_view(), name="style"),
     path("admin/", admin.site.urls),
 ]
