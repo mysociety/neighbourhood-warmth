@@ -139,33 +139,15 @@ class JoinTeamView(TitleMixin, UpdateView):
         return reverse("confirmation_sent")
 
 
-class ConfirmJoinTeamView(TitleMixin, UpdateView):
-    page_title = "Confirm new members"
-    form_class = JoinTeamForm
-    template_name = "neighbourhood/confirm_join_team.html"
+class ConfirmJoinTeamView(TitleMixin, DetailView):
+    model = Team
+    queryset = Team.objects.filter(confirmed=True)
     context_object_name = "team"
+    page_title = "Confirm new members"
+    template_name = "neighbourhood/confirm_join_team.html" # template doesn’t exist
 
-    def get_object(self):
-        return Team.objects.get(slug=self.kwargs["slug"])
-
-    def form_valid(self, form):
-        data = form.cleaned_data
-
-        um = get_user_model()
-        u, _ = um.objects.get_or_create(email=data["email"])
-        u.full_name = data["name"]
-        u.save()
-
-        response = super().form_valid(form)
-
-        Membership.objects.create(team=form.instance, user=u)
-
-        form.send_confirmation_email(request=self.request, user=u)
-
-        return response
-
-    def get_success_url(self):
-        return reverse("confirmation_sent")
+    # TODO: Include a form for approving join requests for the given team.
+    # TODO: Send email to applicant when their request is approved.
 
 
 class StreetView(StreetMixin, TitleMixin, TemplateView):

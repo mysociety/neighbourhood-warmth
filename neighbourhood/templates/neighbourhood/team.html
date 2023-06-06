@@ -33,7 +33,7 @@
             {% endif %}
 
           {% if applicant_count %}
-            <p class="mw-40rem">You have {{ applicant_count }} pending request{{ applicant_count|pluralize }} from {{ applicant_count|pluralize:"a person","people"}} wanting to join your team. <a href="{% url 'confirm_join_team' team.slug %}">Review and confirm their membership.</a></p>
+            <p class="mw-40rem">You have {{ applicant_count }} pending request{{ applicant_count|pluralize }} from {{ applicant_count|pluralize:"a person,people"}} wanting to join your team. <a href="{% url 'confirm_join_team' team.slug %}">Review and confirm their membership.</a></p>
           {% endif %}
 
             <p class="mw-40rem">Use the share buttons below to inspire more community-based action on home energy!</p>

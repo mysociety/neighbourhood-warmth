@@ -1,0 +1,24 @@
+{% extends "neighbourhood/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex align-items-center justify-content-center border-bottom" style="min-height: 10rem; background-image: url('{% static 'img/map.svg' %}'); background-size: cover;">
+    {% include 'neighbourhood/icons/pin.html' with width="3rem" height="auto" classes="text-danger" %}
+</div>
+
+<div class="py-4 py-lg-5">
+    <div class="container">
+
+        <a class="d-block mb-3 fw-bold text-muted" href="{% url 'team' team.slug %}">{{ team.name }}</a>
+        <h1 class="mb-5">Confirm new members</h1>
+
+        <p class="p-4 rounded bg-gray-100 mw-40rem text-center">
+            (A form will appear here, letting you approve<br>or reject requests to join this team.)
+        </p>
+
+    </div>
+</div>
+
+{% endblock %}
