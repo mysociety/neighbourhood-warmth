@@ -1,0 +1,16 @@
+{% extends "neighbourhood/base.html" %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<div class="py-4 py-lg-5">
+    <div class="container">
+
+        <h1>You have signed out</h1>
+        <p><a href="{% url 'login' %}">Sign in again?</a></p>
+
+    </div>
+</div>
+
+{% endblock %}

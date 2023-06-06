@@ -45,7 +45,6 @@ if env.str("BUGS_EMAIL", None):  # pragma: no cover
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -56,6 +55,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "sslserver",
     "neighbourhood",
+    "django.contrib.admin",
 ]
 
 AUTH_USER_MODEL = "neighbourhood.User"

@@ -1,0 +1,26 @@
+{% extends "neighbourhood/base.html" %}
+
+{% load static django_bootstrap5 %}
+
+{% block content %}
+
+<div class="py-4 py-lg-5">
+    <div class="container">
+
+        <h1 class="mb-4">Sign in</h1>
+
+        <form method="post" action="{% url 'login' %}" class="my-5 mw-30rem">
+            {% csrf_token %}
+            {% bootstrap_label "Email address" label_for="username" label_class="form-label" %}
+            {% bootstrap_field form.username show_label='skip' %}
+            {% bootstrap_form form exclude='username' %}
+            <input type="hidden" name="next" value="{% url 'home' %}">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+
+        <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+    </div>
+</div>
+
+{% endblock %}
