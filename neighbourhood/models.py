@@ -103,6 +103,9 @@ class Team(models.Model):
         User, related_name="teams", related_query_name="team", through="Membership"
     )
 
+    def __str__(self):
+        return self.name
+
     def members_count(self):
         return self.members.count()
 

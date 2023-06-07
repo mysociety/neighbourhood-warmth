@@ -6,6 +6,8 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.models import Group
 from django.contrib.gis.admin import OSMGeoAdmin
 from django.core.exceptions import ValidationError
+from django.urls import reverse
+from django.utils.html import format_html, mark_safe
 
 from .models import Team, Token, User
 
@@ -15,16 +17,20 @@ class TokenAdmin(admin.ModelAdmin):
     pass
 
 
-class MembershipInline(admin.TabularInline):
+class TeamMembershipInline(admin.TabularInline):
     model = Team.members.through
 
 
 @admin.register(Team)
 class TeamAdmin(OSMGeoAdmin):
-    list_display = ("name", "centroid")
+    list_display = ("name", "base_pc", "members_count", "status")
     inlines = [
-        MembershipInline,
+        TeamMembershipInline,
     ]
+
+    @admin.display(description="Members")
+    def members_count(self, obj):
+        return obj.members.count()
 
 
 class UserCreationForm(forms.ModelForm):
@@ -69,12 +75,16 @@ class UserChangeForm(forms.ModelForm):
         ]
 
 
+class UserMembershipInline(admin.TabularInline):
+    model = User.teams.through
+
+
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ["email", "full_name", "is_staff"]
-    list_filter = ["is_staff"]
+    list_display = ["email", "full_name", "is_active", "email_confirmed", "is_staff", "team_names"]
+    list_filter = ["is_active", "email_confirmed", "is_staff"]
     fieldsets = [
         (None, {"fields": ["email", "password"]}),
         ("Personal info", {"fields": ["full_name"]}),
@@ -91,6 +101,28 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
     ]
+    inlines = [
+        UserMembershipInline,
+    ]
+
+    @admin.display(description="Teams")
+    def team_names(self, obj):
+        links = []
+        for team in obj.teams.all():
+            url = reverse(
+                'admin:{}_{}_change'.format(
+                    Team._meta.app_label, Team._meta.model_name
+                ),
+                args=(team.pk,)
+            )
+            html = format_html(
+                '<a href="{url}">{text}</a>'.format(
+                    url=url,
+                    text=team.name
+                )
+            )
+            links.append(html)
+        return mark_safe(', '.join(links))
 
     add_fieldsets = [
         (
