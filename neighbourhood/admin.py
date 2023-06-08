@@ -14,7 +14,8 @@ from .models import Team, Token, User
 
 @admin.register(Token)
 class TokenAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["token", "domain", "user_id", "domain_id"]
+    list_filter = ["domain"]
 
 
 class TeamMembershipInline(admin.TabularInline):
