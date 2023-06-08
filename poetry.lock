@@ -172,6 +172,14 @@ docs = ["furo (>=2021.8.17b43,<2021.9.0)", "sphinx (>=3.5.0)", "sphinx-notfound-
 testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)"]
 
 [[package]]
+name = "django-impersonate"
+version = "1.9.1"
+description = "Django app to allow superusers to impersonate other users."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django-libsass"
 version = "0.9"
 description = "A django-compressor filter to compile SASS files using libsass"
@@ -445,7 +453,7 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d7ebfd3e84a6874cfea97307d7089bdf28b3b6a81e5de16b7418f887e04a6231"
+content-hash = "ae8971665a3d645ed8f04cbbb3ee2fd3228b78774044f9eeba1885b2444957a2"
 
 [metadata.files]
 asgiref = [
@@ -599,6 +607,9 @@ django-debug-toolbar = [
 django-environ = [
     {file = "django-environ-0.10.0.tar.gz", hash = "sha256:b3559a91439c9d774a9e0c1ced872364772c612cdf6dc919506a2b13f7a77225"},
     {file = "django_environ-0.10.0-py2.py3-none-any.whl", hash = "sha256:510f8c9c1d0a38b0815f91504270c29440a0cf44fab07f55942fa8d31bbb9be6"},
+]
+django-impersonate = [
+    {file = "django-impersonate-1.9.1.tar.gz", hash = "sha256:0befdb096198b458507239a6f21574c9e0f608ab01fad352d71eb9284e5bb9c9"},
 ]
 django-libsass = [
     {file = "django-libsass-0.9.tar.gz", hash = "sha256:bfbbb55a8950bb40fa04dd416605f92da34ad1f303b10a41abc3232386ec27b5"},

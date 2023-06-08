@@ -154,6 +154,9 @@ $mark-bg: #fff55a;
 
 // Tables
 
+$table-hover-bg-factor: 0.15;
+$table-hover-bg: rgba($gray-500, $table-hover-bg-factor);
+
 // Buttons + Forms
 
 // Buttons
@@ -176,6 +179,11 @@ $input-focus-border-color: $primary;
 // Z-index master list
 
 // Navs
+
+$nav-tabs-border-color: $border-color;
+$nav-tabs-link-hover-border-color: $gray-500 $gray-500 $border-color $gray-500;
+$nav-tabs-link-active-border-color: $border-color $border-color transparent $border-color;
+
 
 // Navbar
 

@@ -1,0 +1,54 @@
+{% extends "neighbourhood/base.html" %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<div class="py-4 py-lg-5">
+    <div class="container">
+
+        <h1 class="mb-3">Switch user</h1>
+
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'impersonate-list' %}">List all users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'impersonate-search' %}">Search users</a>
+            </li>
+        </ul>
+
+      {% if page.object_list %}
+        <table class="table table-hover my-4">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email address</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for user in page.object_list %}
+                <tr>
+                    <td>{{ user.full_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td><a href="{% url 'impersonate-start' user.pk %}{{redirect}}">Switch</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+      {% endif %}
+
+        <div class="d-sm-flex justify-center">
+          {% if page.has_previous %}
+            <a href="{% url 'impersonate-list' %}?page={{ page.previous_page_number }}" class="me-3">Previous Page</a>
+          {% endif %}
+          {% if page.has_next %}
+            <a href="{% url 'impersonate-list' %}?page={{ page.next_page_number }}">Next Page</a>
+          {% endif %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

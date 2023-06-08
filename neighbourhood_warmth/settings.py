@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "sslserver",
     "neighbourhood",
     "django.contrib.admin",
+    "impersonate",
 ]
 
 AUTH_USER_MODEL = "neighbourhood.User"
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "impersonate.middleware.ImpersonateMiddleware",
 ]
 
 ROOT_URLCONF = "neighbourhood_warmth.urls"
@@ -172,6 +174,14 @@ BOOTSTRAP5 = {
     "field_renderers": {
         "default": "neighbourhood.renderers.CustomFieldRenderer",
     },
+}
+
+LOGIN_REDIRECT_URL = "/"
+
+IMPERSONATE = {
+    "PAGINATE_COUNT": 100,
+    "ALLOW_SUPERUSER": True,
+    "SEARCH_FIELDS": ["email", "full_name"]
 }
 
 if DEBUG and HIDE_DEBUG_TOOLBAR is False:  # pragma: no cover

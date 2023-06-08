@@ -71,6 +71,7 @@ urlpatterns = [
     ),
     path("accounts/", include("django.contrib.auth.urls")),
     path("style/", views.StyleView.as_view(), name="style"),
+    path("impersonate/", include('impersonate.urls')),
     path("admin/", admin.site.urls),
 ]
 
