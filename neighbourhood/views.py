@@ -3,10 +3,10 @@ from django.contrib.gis.geos import Point
 from django.shortcuts import redirect, render, reverse
 from django.urls import reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 
 from neighbourhood.example_data import example_streets, example_teams
-from neighbourhood.forms import JoinTeamForm, NewTeamForm
+from neighbourhood.forms import JoinTeamForm, NewTeamForm, LoginLinkForm
 from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
 from neighbourhood.models import Membership, Team, User
 from neighbourhood.tokens import get_user_for_token
@@ -218,6 +218,43 @@ class ConfirmationSentView(TitleMixin, TemplateView):
 class BadTokenView(TitleMixin, TemplateView):
     page_title = "Bad Token"
     template_name = "neighbourhood/accounts/bad_token.html"
+
+
+class LoginLinkView(TitleMixin, FormView):
+    page_title = "Sign in"
+    template_name = "neighbourhood/accounts/login_link.html"
+    form_class = LoginLinkForm
+    email_sent = False
+
+    def form_valid(self, form):
+        um = get_user_model()
+        u = um.objects.get(email=form.cleaned_data["email"])
+        form.send_login_link_email(request=self.request, user=u)
+        # TODO: Should we handle the case where email fails to send?
+        self.email_sent = True
+        return render(self.request, self.template_name, self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["email_sent"] = self.email_sent
+        return context
+
+    def get(self, request, token=None):
+        if token is not None:
+            t, user = get_user_for_token(token)
+            if t is None or user is None:
+                return redirect(reverse("bad_token"))
+
+            if not user.email_confirmed:
+                user.email_confirmed = True
+                user.save()
+
+            login(request, user)
+
+            # TODO: Send them to their team page if it exists!
+            return redirect(reverse("home"))
+
+        return super().get(request)
 
 
 class EmailView(TemplateView):

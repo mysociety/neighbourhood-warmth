@@ -5,7 +5,7 @@ from django.forms import (CharField, EmailField, HiddenInput, ModelForm,
                           Textarea, TextInput)
 from django.template.loader import render_to_string
 
-from neighbourhood.models import Team
+from neighbourhood.models import Team, User
 from neighbourhood.tokens import make_token_for_user
 from neighbourhood.utils import get_postcode_centroid
 
@@ -95,3 +95,33 @@ class JoinTeamForm(ModelForm):
     class Meta:
         fields = []
         model = Team
+
+
+class LoginLinkForm(ModelForm):
+    def clean(self):
+        if User.objects.filter(email=self.cleaned_data["email"]).exists():
+            return self.cleaned_data
+        else:
+            raise ValidationError('There is no user with that email address. Did you use a different address when signing up?')
+
+    def send_login_link_email(self, request=None, user=None):
+        t = make_token_for_user(user, domain="login", obj=self.instance)
+        current_site = get_current_site(request)
+        mail_subject = render_to_string(
+            "neighbourhood/accounts/login_link_email_subject.txt"
+        ).strip()
+        message = render_to_string(
+            "neighbourhood/accounts/login_link_email.html",
+            {
+                "user": user,
+                "domain": current_site.domain,
+                "token": t.token,
+            },
+        )
+        to_email = user.email
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
+
+    class Meta:
+        model = User
+        fields = ["email"]

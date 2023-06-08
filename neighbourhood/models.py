@@ -143,11 +143,14 @@ class Membership(models.Model):
 
 
 class Token(models.Model):
-    DOMAINS = [("user", "User"), ("new_team", "New Team")]
+    DOMAINS = [("user", "User"), ("new_team", "New Team"), ("login", "Login")]
     token = models.CharField(max_length=300)
     domain = models.CharField(max_length=50, choices=DOMAINS)
     user_id = models.IntegerField()
     domain_id = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.token
 
 
 @receiver(pre_save, sender=Team)

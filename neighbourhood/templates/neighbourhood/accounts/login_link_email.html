@@ -1,0 +1,8 @@
+{% autoescape off %}
+Hi {{ user.full_name }},
+
+Please click on the link to sign in to Neighbourhood Warmth:
+
+https://{{ domain }}{% url 'login_link' %}{{ token }}/
+
+{% endautoescape %}

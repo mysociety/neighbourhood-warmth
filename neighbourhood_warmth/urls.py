@@ -64,6 +64,11 @@ urlpatterns = [
         views.ConfirmEmailView.as_view(),
         name="confirm_email",
     ),
+    re_path(
+        "login-link/((?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,40})/)?",
+        views.LoginLinkView.as_view(),
+        name="login_link",
+    ),
     path("accounts/", include("django.contrib.auth.urls")),
     path("style/", views.StyleView.as_view(), name="style"),
     path("admin/", admin.site.urls),
