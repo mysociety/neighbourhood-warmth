@@ -17,7 +17,7 @@
         </button>
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                {% include "neighbourhood/includes/nav_item.html" with view_name="home" link_text="Find your street" %}
+                {% include "neighbourhood/includes/nav_item.html" with view_name="home" link_text="Join your neighbourhood" %}
                 {% include "neighbourhood/includes/nav_item.html" with view_name="about" link_text="About" %}
               {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown">

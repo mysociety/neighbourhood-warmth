@@ -30,20 +30,6 @@ urlpatterns = [
         name="confirm_join_team",
     ),
     path("create_team/", views.CreateTeamView.as_view(), name="create_team"),
-    path("street/<slug:street>/", views.StreetView.as_view(), name="street"),
-    path(
-        "street/<slug:street>/join/", views.StreetJoinView.as_view(), name="street_join"
-    ),
-    path(
-        "street/<slug:street>/actions/",
-        views.StreetActionsView.as_view(),
-        name="street_actions",
-    ),
-    path(
-        "street/<slug:street>/update/",
-        views.StreetUpdateView.as_view(),
-        name="street_update",
-    ),
     path("area/<slug:gss>/", views.AreaView.as_view(), name="area"),
     path("about/", views.AboutView.as_view(), name="about"),
     path(

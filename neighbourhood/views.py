@@ -5,9 +5,8 @@ from django.urls import reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
 from django.views.generic.edit import CreateView, FormView
 
-from neighbourhood.example_data import example_streets, example_teams
 from neighbourhood.forms import JoinTeamForm, NewTeamForm, LoginLinkForm
-from neighbourhood.mixins import StreetMixin, TeamMixin, TitleMixin
+from neighbourhood.mixins import TitleMixin
 from neighbourhood.models import Membership, Team, User
 from neighbourhood.tokens import get_user_for_token
 from neighbourhood.utils import find_where, get_postcode_centroid
@@ -150,26 +149,6 @@ class ConfirmJoinTeamView(TitleMixin, DetailView):
     # TODO: Send email to applicant when their request is approved.
 
 
-class StreetView(StreetMixin, TitleMixin, TemplateView):
-    page_title = "Example Avenue"
-    template_name = "neighbourhood/street.html"
-
-
-class StreetJoinView(StreetMixin, TitleMixin, TemplateView):
-    page_title = "Join | Example Avenue"
-    template_name = "neighbourhood/street_join.html"
-
-
-class StreetActionsView(StreetMixin, TitleMixin, TemplateView):
-    page_title = "Actions | Example Avenue"
-    template_name = "neighbourhood/street_actions.html"
-
-
-class StreetUpdateView(StreetMixin, TitleMixin, TemplateView):
-    page_title = "Update | Example Avenue"
-    template_name = "neighbourhood/street_update.html"
-
-
 class AreaView(TitleMixin, TemplateView):
     page_title = "Exampleshire County Council"
     template_name = "neighbourhood/area.html"
@@ -266,9 +245,7 @@ class EmailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["street"] = find_where(
-            example_streets, {"slug": self.request.GET.get("street", {})}
-        )
+        # TODO: Pass team etc into template via context
         return context
 
 
