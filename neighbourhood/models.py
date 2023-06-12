@@ -109,6 +109,9 @@ class Team(models.Model):
     def members_count(self):
         return self.members.count()
 
+    def vicinity(self):
+        return self.address_3 if self.address_3 else self.address_2
+
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
         if latitude is None or longitude is None:
