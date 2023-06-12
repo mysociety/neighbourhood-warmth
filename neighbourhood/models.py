@@ -114,6 +114,10 @@ class Team(models.Model):
     def vicinity(self):
         return self.address_3 if self.address_3 else self.address_2
 
+    @property
+    def admins(self):
+        return User.objects.filter(team=self, membership__is_admin=True)
+
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
         if latitude is None or longitude is None:

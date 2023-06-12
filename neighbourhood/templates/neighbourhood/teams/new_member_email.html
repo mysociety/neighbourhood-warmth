@@ -1,0 +1,15 @@
+Congratulations!
+
+{{ user.full_name }} has requested to join your team, {{ team.name }}.
+
+Please visit the admin page for your team to approve or reject the request:
+
+https://{{ domain }}{% url 'team' team.slug %}
+
+Thanks!
+
+Neighbourhood Warmth HQ
+
+P.S. If you want to stop new member requests, please change
+the open/closed group setting on your team’s homepage:
+https://{{ domain }}{% url 'team' team.slug %}

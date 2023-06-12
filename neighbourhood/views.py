@@ -1,13 +1,15 @@
 from django.contrib.auth import get_user_model, login
 from django.contrib.gis.geos import Point
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import redirect, render, reverse
 from django.urls import reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
 from django.views.generic.edit import CreateView, FormView
 
-from neighbourhood.forms import JoinTeamForm, NewTeamForm, LoginLinkForm
+from neighbourhood.forms import JoinTeamForm, LoginLinkForm, NewTeamForm
 from neighbourhood.mixins import TitleMixin
 from neighbourhood.models import Membership, Team, User
+from neighbourhood.services.teams import notify_new_member
 from neighbourhood.tokens import get_user_for_token
 from neighbourhood.utils import find_where, get_postcode_centroid
 
@@ -188,7 +190,8 @@ class ConfirmEmailView(TitleMixin, TemplateView):
                 return redirect(reverse("team", args=(team.slug,)))
             elif t.domain == "join_team":
                 team = Team.objects.get(id=t.domain_id)
-                # TODO: send member join request email notification to team organisers
+                current_site = get_current_site(request)
+                notify_new_member(team, user, current_site)
                 return redirect(reverse("team", args=(team.slug,)))
 
         return super().get(request)
