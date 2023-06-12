@@ -25,10 +25,16 @@
                         <img src="{{ request.user.avatar_url|escape }}" width="32" height="32" class="rounded-circle bg-primary" alt="{{ request.user.full_name }}">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><h6 class="dropdown-header">{{ request.user.full_name }}</h6></li>
-                        <!-- TODO: Working links -->
-                        <li><a class="dropdown-item" href="#">My team</a></li>
-                        <li><a class="dropdown-item" href="#">My profile</a></li>
+                        <li><h6 class="dropdown-header">Signed in as</h6></li>
+                        <!-- TODO: Make this a link, once we have profile pages -->
+                        <li><span class="dropdown-item-text">{{ request.user.full_name }}</span></li>
+                      {% if request.user.teams.all %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><h6 class="dropdown-header">Your team{{ request.user.teams.all|pluralize }}</h6></li>
+                        {% for team in request.user.teams.all %}
+                          <li><a class="dropdown-item" href="{% url 'team' team.slug %}">{{ team.name }}</a></li>
+                        {% endfor %}
+                      {% endif %}
                       {% if request.user.is_superuser %}
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'impersonate-list' %}">Switch user…</a></li>
