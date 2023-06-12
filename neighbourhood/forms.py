@@ -1,8 +1,14 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage
-from django.forms import (CharField, EmailField, HiddenInput, ModelForm,
-                          Textarea, TextInput)
+from django.forms import (
+    CharField,
+    EmailField,
+    HiddenInput,
+    ModelForm,
+    Textarea,
+    TextInput,
+)
 from django.template.loader import render_to_string
 
 from neighbourhood.models import Team, User
@@ -102,7 +108,9 @@ class LoginLinkForm(ModelForm):
         if User.objects.filter(email=self.cleaned_data["email"]).exists():
             return self.cleaned_data
         else:
-            raise ValidationError('There is no user with that email address. Did you use a different address when signing up?')
+            raise ValidationError(
+                "There is no user with that email address. Did you use a different address when signing up?"
+            )
 
     def send_login_link_email(self, request=None, user=None):
         t = make_token_for_user(user, domain="login", obj=self.instance)

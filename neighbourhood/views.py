@@ -56,9 +56,7 @@ class TeamView(TitleMixin, DetailView):
         team = context["team"]
         user = self.request.user
         if not user.is_anonymous:
-            membership = Membership.objects.filter(
-                user=user, team=team
-            ).first()
+            membership = Membership.objects.filter(user=user, team=team).first()
             if membership is not None:
                 context["is_team_applicant"] = not membership.confirmed
                 context["is_team_member"] = membership.confirmed
@@ -145,7 +143,7 @@ class ConfirmJoinTeamView(TitleMixin, DetailView):
     queryset = Team.objects.filter(confirmed=True)
     context_object_name = "team"
     page_title = "Confirm new members"
-    template_name = "neighbourhood/confirm_join_team.html" # template doesn’t exist
+    template_name = "neighbourhood/confirm_join_team.html"  # template doesn’t exist
 
     # TODO: Include a form for approving join requests for the given team.
     # TODO: Send email to applicant when their request is approved.

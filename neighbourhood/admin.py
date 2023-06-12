@@ -24,7 +24,13 @@ class TeamMembershipInline(admin.TabularInline):
 
 @admin.register(Team)
 class TeamAdmin(OSMGeoAdmin):
-    list_display = ("name", "base_pc", "members_count", "confirmed_members_count", "status")
+    list_display = (
+        "name",
+        "base_pc",
+        "members_count",
+        "confirmed_members_count",
+        "status",
+    )
     inlines = [
         TeamMembershipInline,
     ]
@@ -88,7 +94,14 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ["email", "full_name", "is_active", "email_confirmed", "is_staff", "team_names"]
+    list_display = [
+        "email",
+        "full_name",
+        "is_active",
+        "email_confirmed",
+        "is_staff",
+        "team_names",
+    ]
     list_filter = ["is_active", "email_confirmed", "is_staff"]
     fieldsets = [
         (None, {"fields": ["email", "password"]}),
@@ -115,19 +128,16 @@ class UserAdmin(BaseUserAdmin):
         links = []
         for team in obj.teams.all():
             url = reverse(
-                'admin:{}_{}_change'.format(
+                "admin:{}_{}_change".format(
                     Team._meta.app_label, Team._meta.model_name
                 ),
-                args=(team.pk,)
+                args=(team.pk,),
             )
             html = format_html(
-                '<a href="{url}">{text}</a>'.format(
-                    url=url,
-                    text=team.name
-                )
+                '<a href="{url}">{text}</a>'.format(url=url, text=team.name)
             )
             links.append(html)
-        return mark_safe(', '.join(links))
+        return mark_safe(", ".join(links))
 
     add_fieldsets = [
         (

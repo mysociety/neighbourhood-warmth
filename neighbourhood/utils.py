@@ -1,6 +1,10 @@
-from neighbourhood.mapit import (BadRequestException, ForbiddenException,
-                                 InternalServerErrorException, MapIt,
-                                 NotFoundException)
+from neighbourhood.mapit import (
+    BadRequestException,
+    ForbiddenException,
+    InternalServerErrorException,
+    MapIt,
+    NotFoundException,
+)
 
 
 def get_postcode_centroid(postcode):

@@ -2,8 +2,11 @@ from hashlib import sha256
 from random import randrange
 
 from django.conf import settings
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
-                                        PermissionsMixin)
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.contrib.gis import measure
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models.functions import Distance
@@ -74,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def avatar_url(self):
-        colours = ['fcbf49', 'eae2b7', '198754', 'd62828', 'ccc7ab']
+        colours = ["fcbf49", "eae2b7", "198754", "d62828", "ccc7ab"]
         return f"https://source.boringavatars.com/beam/120/{sha256(self.email.encode('utf-8')).hexdigest()}?square&colors={','.join(colours)}"
 
 
