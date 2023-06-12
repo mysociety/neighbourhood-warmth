@@ -11,10 +11,10 @@
 
         <ul class="nav nav-tabs mb-4">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'impersonate-list' %}">List all users</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'impersonate-list' %}{{redirect}}">List all users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'impersonate-search' %}">Search users</a>
+                <a class="nav-link" href="{% url 'impersonate-search' %}{{redirect}}">Search users</a>
             </li>
         </ul>
 

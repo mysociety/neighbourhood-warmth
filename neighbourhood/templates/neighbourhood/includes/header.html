@@ -37,13 +37,13 @@
                       {% endif %}
                       {% if request.user.is_superuser %}
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'impersonate-list' %}">Switch user…</a></li>
+                        <li><a class="dropdown-item" href="{% url 'impersonate-list' %}?next={{ request.get_full_path }}">Switch user…</a></li>
                         <li><a class="dropdown-item" href="{% url 'admin:index' %}">Django admin</a></li>
                       {% endif %}
                       {% if request.impersonator %}
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'impersonate-stop' %}">Switch back to {{ request.impersonator.full_name }}</a></li>
-                        <li><a class="dropdown-item" href="{% url 'impersonate-list' %}">Switch to another user…</a></li>
+                        <li><a class="dropdown-item" href="{% url 'impersonate-stop' %}?next={{ request.get_full_path }}">Switch back to {{ request.impersonator.full_name }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'impersonate-stop' %}?next={% url 'impersonate-list' %}{{ "?next="|urlencode }}{{ request.get_full_path|urlencode }}">Switch to another user…</a></li>
                       {% endif %}
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Sign out</a></li>

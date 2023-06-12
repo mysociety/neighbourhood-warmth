@@ -181,7 +181,8 @@ LOGIN_REDIRECT_URL = "/"
 IMPERSONATE = {
     "PAGINATE_COUNT": 100,
     "ALLOW_SUPERUSER": True,
-    "SEARCH_FIELDS": ["email", "full_name"]
+    "SEARCH_FIELDS": ["email", "full_name"],
+    "REDIRECT_FIELD_NAME": "next",
 }
 
 if DEBUG and HIDE_DEBUG_TOOLBAR is False:  # pragma: no cover
