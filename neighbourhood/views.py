@@ -6,7 +6,8 @@ from django.urls import reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
 from django.views.generic.edit import CreateView, FormView
 
-from neighbourhood.forms import JoinTeamForm, LoginLinkForm, NewTeamForm
+from neighbourhood.forms import (ApproveMembershipFormSet, JoinTeamForm,
+                                 LoginLinkForm, NewTeamForm)
 from neighbourhood.mixins import TitleMixin
 from neighbourhood.models import Membership, Team, User
 from neighbourhood.services.teams import notify_new_member
@@ -66,7 +67,7 @@ class TeamView(TitleMixin, DetailView):
                 team=team, confirmed=True
             ).count()
             context["applicant_count"] = Membership.objects.filter(
-                team=team, confirmed=False
+                team=team, confirmed=False, rejected=False
             ).count()
 
         return context
@@ -138,14 +139,21 @@ class JoinTeamView(TitleMixin, UpdateView):
         return reverse("confirmation_sent")
 
 
-class ConfirmJoinTeamView(TitleMixin, DetailView):
+class ConfirmJoinTeamView(TitleMixin, UpdateView):
     model = Team
     queryset = Team.objects.filter(confirmed=True)
     context_object_name = "team"
     page_title = "Confirm new members"
-    template_name = "neighbourhood/confirm_join_team.html"  # template doesn’t exist
+    template_name = "neighbourhood/confirm_join_team.html"
+    form_class = ApproveMembershipFormSet
 
-    # TODO: Include a form for approving join requests for the given team.
+    def get_success_url(self):
+        return reverse("confirm_join_team", args=(self.get_object().slug,))
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    # TODO: permissions
     # TODO: Send email to applicant when their request is approved.
 
 

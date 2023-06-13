@@ -1,17 +1,11 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage
-from django.forms import (
-    CharField,
-    EmailField,
-    HiddenInput,
-    ModelForm,
-    Textarea,
-    TextInput,
-)
+from django.forms import (BaseModelFormSet, CharField, EmailField, HiddenInput,
+                          ModelForm, Textarea, TextInput, modelformset_factory)
 from django.template.loader import render_to_string
 
-from neighbourhood.models import Team, User
+from neighbourhood.models import Membership, Team, User
 from neighbourhood.tokens import make_token_for_user
 from neighbourhood.utils import get_postcode_centroid
 
@@ -133,3 +127,30 @@ class LoginLinkForm(ModelForm):
     class Meta:
         model = User
         fields = ["email"]
+
+
+class ApproveMembershipForm(ModelForm):
+    class Meta:
+        model = Membership
+        fields = ["confirmed", "rejected", "is_admin"]
+
+
+class BaseApproveMembershipFormSet(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        team = kwargs["instance"]
+        del kwargs["instance"]
+        super().__init__(*args, **kwargs)
+        self.queryset = Membership.objects.filter(
+            team=team,
+            confirmed=False,
+            rejected=False,
+        )
+
+
+ApproveMembershipFormSet = modelformset_factory(
+    Membership,
+    form=ApproveMembershipForm,
+    edit_only=True,
+    formset=BaseApproveMembershipFormSet,
+    extra=0,
+)

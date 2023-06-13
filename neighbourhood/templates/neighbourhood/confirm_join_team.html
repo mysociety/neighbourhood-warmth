@@ -1,6 +1,7 @@
 {% extends "neighbourhood/base.html" %}
 
 {% load static %}
+{% load django_bootstrap5 %}
 
 {% block content %}
 
@@ -14,10 +15,50 @@
         <a class="d-block mb-3 fw-bold text-muted" href="{% url 'team' team.slug %}">{{ team.name }}</a>
         <h1 class="mb-5">Confirm new members</h1>
 
-        <p class="p-4 rounded bg-gray-100 mw-40rem text-center">
-            (A form will appear here, letting you approve<br>or reject requests to join this team.)
-        </p>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.management_form }}
 
+            {% for user_form in form %}
+                {% if forloop.first %}
+                <table class="table table-striped" >
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                {% endif %}
+                    <tr>
+                        <td>
+                            {{ user_form.instance.user.full_name }}
+                            {% bootstrap_field user_form.id %}
+                        </td>
+                        <td>
+                            {% bootstrap_field user_form.confirmed %}
+                        </td>
+                        <td>
+                            {% bootstrap_field user_form.rejected %}
+                        </td>
+                        <td>
+                            {% bootstrap_field user_form.is_admin %}
+                        </td>
+                    </tr>
+                {% if forloop.last %}
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary">Update team members</button>
+                {% endif %}
+            {% empty %}
+
+            <p class="p-4 rounded bg-gray-100 mw-40rem text-center">
+                No users to confirm
+            </p>
+            {% endfor %}
+        </form>
     </div>
 </div>
 
