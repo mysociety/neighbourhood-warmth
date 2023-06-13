@@ -10,7 +10,9 @@ from neighbourhood.forms import (ApproveMembershipFormSet, JoinTeamForm,
                                  LoginLinkForm, NewTeamForm)
 from neighbourhood.mixins import TitleMixin
 from neighbourhood.models import Membership, Team, User
-from neighbourhood.services.teams import notify_new_member
+from neighbourhood.services.teams import (notify_membership_confirmed,
+                                          notify_membership_rejected,
+                                          notify_new_member)
 from neighbourhood.tokens import get_user_for_token
 from neighbourhood.utils import find_where, get_postcode_centroid
 
@@ -151,10 +153,18 @@ class ConfirmJoinTeamView(TitleMixin, UpdateView):
         return reverse("confirm_join_team", args=(self.get_object().slug,))
 
     def form_valid(self, form):
+        form.save()
+        site = get_current_site(self.request)
+        for membership_form in form:
+            data = membership_form.cleaned_data
+            m = data["id"]
+            if data["confirmed"]:
+                notify_membership_confirmed(m.team, m.user, m, site)
+            elif data["rejected"]:
+                notify_membership_rejected(m.team, m.user, m, site)
         return super().form_valid(form)
 
     # TODO: permissions
-    # TODO: Send email to applicant when their request is approved.
 
 
 class AreaView(TitleMixin, TemplateView):

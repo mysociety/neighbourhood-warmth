@@ -1,0 +1,11 @@
+Congratulations!
+
+{{ team.name }} has approved your request to join. {% if membership.is_admin %}You have also been given permission to approve/reject requests from future applicants to this team.{% endif %}
+
+Visit your new team’s homepage to get involved in the next step on their current neighbourhood challenge:
+
+https://{{ domain }}{% url 'team' team.slug %}
+
+Thanks!
+
+Neighbourhood Warmth HQ
