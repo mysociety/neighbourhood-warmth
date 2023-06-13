@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model, login
 from django.contrib.gis.geos import Point
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render, reverse
 from django.urls import reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
@@ -149,6 +150,21 @@ class ConfirmJoinTeamView(TitleMixin, UpdateView):
     template_name = "neighbourhood/confirm_join_team.html"
     form_class = ApproveMembershipFormSet
 
+    def get_object(self):
+        obj = super().get_object()
+        user = self.request.user
+
+        if user.is_anonymous:
+            raise PermissionDenied
+
+        if (
+            user.is_superuser
+            or Membership.objects.filter(user=user, team=obj, is_admin=True).exists()
+        ):
+            return obj
+
+        raise PermissionDenied
+
     def get_success_url(self):
         return reverse("confirm_join_team", args=(self.get_object().slug,))
 
@@ -163,8 +179,6 @@ class ConfirmJoinTeamView(TitleMixin, UpdateView):
             elif data["rejected"]:
                 notify_membership_rejected(m.team, m.user, m, site)
         return super().form_valid(form)
-
-    # TODO: permissions
 
 
 class AreaView(TitleMixin, TemplateView):
