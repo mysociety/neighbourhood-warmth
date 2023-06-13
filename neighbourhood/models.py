@@ -150,6 +150,7 @@ class Membership(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     confirmed = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
     date_joined = models.DateField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
 
