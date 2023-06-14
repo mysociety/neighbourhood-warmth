@@ -22,6 +22,17 @@ isort = "^5.12.0"
 django-debug-toolbar = "^3.8.1"
 django-sslserver = "^0.22"
 
+[tool.poetry.group.dev.dependencies]
+coverage = "^7.2.7"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+default_section = "THIRDPARTY"
+known_first_party = "neighbourhood"
+known_django = "django"
+sections = ["FUTURE", "STDLIB", "DJANGO", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+extend_skip = ["migrations"]
