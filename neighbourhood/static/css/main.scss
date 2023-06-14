@@ -32,8 +32,8 @@
 // @import "../../../vendor/bootstrap/scss/pagination";
 @import "../../../vendor/bootstrap/scss/badge";
 // @import "../../../vendor/bootstrap/scss/alert";
-// @import "../../../vendor/bootstrap/scss/progress";
-// @import "../../../vendor/bootstrap/scss/list-group";
+@import "../../../vendor/bootstrap/scss/progress";
+@import "../../../vendor/bootstrap/scss/list-group";
 // @import "../../../vendor/bootstrap/scss/close";
 // @import "../../../vendor/bootstrap/scss/toasts";
 // @import "../../../vendor/bootstrap/scss/modal";
@@ -47,3 +47,4 @@
 @import "../../../vendor/bootstrap/scss/utilities/api";
 
 @import "header";
+@import "transitions";

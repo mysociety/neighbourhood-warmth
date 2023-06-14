@@ -2,6 +2,9 @@ import $ from '../jquery/jquery.esm.js'
 import party from '../party/party.min.js'
 import Typewriter from '../typewriter-effect/core.esm.js'
 
+// Make jQuery visible to Bootstrap
+window.jQuery = $;
+
 $(function(){
     $('.js-confetti').each(function(){
         party.confetti(this, {
@@ -18,5 +21,11 @@ $(function(){
             t.deleteAll().typeString(phrase).pauseFor(pause);
         });
         t.start();
+    });
+
+    $(document).on('hide.bs.collapse show.bs.collapse', function(e){
+        var id = $(e.target).attr('id');
+        var $navLinks = $('.nav-link[aria-controls="' + id + '"]');
+        $navLinks.toggleClass('active');
     });
 });

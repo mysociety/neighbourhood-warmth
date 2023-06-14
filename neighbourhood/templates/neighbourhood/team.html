@@ -4,150 +4,35 @@
 
 {% block content %}
 
-<div class="d-flex align-items-center justify-content-center border-bottom" style="min-height: 10rem; background-image: url('{% static 'img/map.svg' %}'); background-size: cover;">
-    {% include 'neighbourhood/icons/pin.html' with width="3rem" height="auto" classes="text-danger" %}
-</div>
-
-<div class="py-4 py-lg-5">
-    <div class="container {% if request.GET.congrats %}js-confetti{% endif %}">
-
-        <h1 class="mb-2">{{ team.name }}</h1>
-        <p class="mb-5 text-muted">{{ team.vicinity }} – {{ team.members_count }} {{ team.members_count|pluralize:"member,members" }}</p>
-
-      {% if is_team_member %}
-
-        <div class="mb-5 border rounded shadow-lg overflow-hidden">
-            <div class="mb-n3 px-5 py-3 fs-7 text-blue-700 bg-blue-100 rounded-top d-flex align-items-center">
-                {% include 'neighbourhood/icons/fa-lightbulb-solid.html' with classes='flex-grow-0 me-3' %}
-                Only members of this team can see this
-            </div>
-            <div class="p-5">
-
-                <div>
-                    <span class="badge bg-success fs-8">Completed step</span>
-                    <p class="h4 mt-2 mb-0 text-success text-decoration-line-through">Step 1: Create a team</p>
-                </div>
-
-                <hr class="my-5">
-
-                <!-- TODO: Customise the current/next step based on member_count etc -->
-                <h2 class="h4 mb-3 mw-40rem">Step 2: Recruit at least one more team member from your neighbourhood</h2>
-
-                <p class="mw-40rem">It takes two to tango! Remember, team members should live in the same type of home. But don’t worry if you’re not sure when inviting someone as we can check that when they sign up.</p>
-
-              {% if applicant_count %}
-                <p class="mw-40rem">You have {{ applicant_count }} pending request{{ applicant_count|pluralize }} from {{ applicant_count|pluralize:"a person,people"}} wanting to join your team. <a href="{% url 'confirm_join_team' team.slug %}">Review and confirm their membership.</a></p>
-              {% endif %}
-
-                <p class="mw-40rem">Use the share buttons below to inspire more community-based action on home energy!</p>
-
-                <ul class="my-4 list-inline">
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-facebook d-flex align-items-center justify-content-center">
-                            {% include 'neighbourhood/icons/facebook.html' with classes="me-2" %}
-                            Facebook
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-whatsapp d-flex align-items-center justify-content-center">
-                            {% include 'neighbourhood/icons/whatsapp.html' with classes="me-2" %}
-                            WhatsApp
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-gmail text-white d-flex align-items-center justify-content-center">
-                            {% include 'neighbourhood/icons/gmail.html' with classes="me-2" %}
-                            Gmail
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center">
-                            {% include 'neighbourhood/icons/link.html' with classes="me-2" %}
-                            Copy invite link
-                        </a>
-                    </li>
-                </ul>
-
-                <p>Or print out, display, and share our exclusive designer posters and flyers:</p>
-
-                <p class="my-4">
-                    <a href="#" class="btn btn-secondary">Download goodies</a>
-                </p>
-
-                <h3 class="h5 text-muted mt-5 mb-4">TIPS: Not sure who to invite?</h3>
-
-                <ul>
-                    <li>Try sharing in your neighbourhood WhatsApp or Nextdoor group</li>
-                    <li>Or maybe with your friends from the gym</li>
-                    <li>You could even <a href="#">ask your local councillor</a> for help</li>
-                </ul>
-
-                <hr class="my-5">
-
-                <div>
-                    <span class="badge bg-gray-700 fs-8">Next step</span>
-                    <p class="h4 mt-2 mb-0 text-muted">Step 3: Research your energy-saving options together</p>
-                </div>
-
-            </div>
+{% if is_team_member %}
+<div class="bg-gray-200 text-gray-700 border-bottom">
+    <div class="container d-md-flex align-items-center justify-content-between">
+        <div class="fs-7 py-3 d-flex align-items-center">
+            {% include 'neighbourhood/icons/fa-lightbulb-solid.html' with classes='flex-grow-0 me-3' %}
+            You are {% if is_team_admin %}an admin for{% else %}a member of{% endif %} this team
         </div>
-
-        {% if is_team_admin %}
-
-        <div class="mb-5 border rounded shadow-lg overflow-hidden">
-            <div class="mb-n3 px-5 py-3 fs-7 text-red-700 bg-red-100 rounded-top d-flex align-items-center">
-                {% include 'neighbourhood/icons/fa-lightbulb-solid.html' with classes='flex-grow-0 me-3' %}
-                Only team admins can see this
-            </div>
-            <div class="p-5">
-
-                <h3 class="h5 text-muted mb-4 mw-40rem">Your group is open to join requests</h3>
-
-                <p class="mw-40rem">At any time you can change your team status setting to be either:</p>
-
-                <div class="mt-4">
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="radio" name="state" id="open" checked>
-                        <label class="form-check-label" for="open">
-                            <strong>Open</strong> – allows anyone to send your team a new member request
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="state" id="closed">
-                        <label class="form-check-label" for="closed">
-                            <strong>Closed</strong> – blocks new member requests, but allows you to send private invitations
-                        </label>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        {% endif %}
-
-      {% endif %}
-
-        <p class="h4 mb-3 mw-40rem">Hello! We are currently {{ team.status }}.</p>
-
-
-      {% if not is_team_member %}
-        <div class="mw-40rem">
-          {% if is_team_applicant %}
-            <p>You have requested to join this team. One of the team’s organisers should approve or reject your request shortly. We’ll email you when this happens.</p>
-          {% else %}
-            <p><a href="{% url 'join_team' team.slug %}" class="btn btn-primary btn-lg">Request to join this team</a></p>
-          {% endif %}
-        </div>
-      {% endif %}
-
-        <hr class="my-5 mw-40rem">
-
-        <div class="my-5">
-            {% include 'neighbourhood/includes/generic_promo.html' %}
-        </div>
-
+        <ul class="nav nav-tabs flex-nowrap pt-md-3" style="position: relative; bottom: -1px;">
+            <li class="nav-item">
+                <a class="nav-link" href="#public" data-bs-toggle="collapse" data-bs-target=".team-page-section" role="button" aria-expanded="false" aria-controls="public">Public page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#private" data-bs-toggle="collapse" data-bs-target=".team-page-section" role="button" aria-expanded="true" aria-controls="private">Team member page</a>
+            </li>
+        </ul>
     </div>
 </div>
+{% endif %}
+
+<div id="public" class="team-page-section {% if is_team_member %}collapse no-transition{% endif %}">
+    {% include 'neighbourhood/team_public.html' %}
+</div>
+
+{% if is_team_member %}
+<div id="private" class="team-page-section collapse no-transition show">
+    {% include 'neighbourhood/team_private.html' %}
+</div>
+
+{% endif %}
 
 <div class="bg-gray-200 py-5 border-top fs-7">
     <div class="container">
