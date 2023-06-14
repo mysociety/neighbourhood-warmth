@@ -1,10 +1,9 @@
 import logging
 
-from django.core import mail
 from django.shortcuts import reverse
 from django.test import TestCase
 
-from neighbourhood.models import Membership, Team, User
+from neighbourhood.models import Team, User
 
 
 class CorePageTest(TestCase):
