@@ -1,4 +1,5 @@
 from django.conf import settings
+
 from requests_cache import CachedSession
 
 session = CachedSession(cache_name=settings.CACHE_FILE, expire_after=86400)

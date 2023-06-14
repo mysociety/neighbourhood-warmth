@@ -1,8 +1,16 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage
-from django.forms import (BaseModelFormSet, CharField, EmailField, HiddenInput,
-                          ModelForm, Textarea, TextInput, modelformset_factory)
+from django.forms import (
+    BaseModelFormSet,
+    CharField,
+    EmailField,
+    HiddenInput,
+    ModelForm,
+    Textarea,
+    TextInput,
+    modelformset_factory,
+)
 from django.template.loader import render_to_string
 
 from neighbourhood.models import Membership, Team, User

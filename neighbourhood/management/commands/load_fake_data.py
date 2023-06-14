@@ -8,7 +8,6 @@ from django.utils.text import slugify
 from neighbourhood.models import Membership, Team
 from neighbourhood.utils import get_postcode_centroid
 
-
 User = get_user_model()
 
 

@@ -2,10 +2,13 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core import mail
 from django.test import TestCase
 from django.test.client import RequestFactory
+
 from neighbourhood.models import Membership, Team, User
-from neighbourhood.services.teams import (notify_membership_confirmed,
-                                          notify_membership_rejected,
-                                          notify_new_member)
+from neighbourhood.services.teams import (
+    notify_membership_confirmed,
+    notify_membership_rejected,
+    notify_new_member,
+)
 
 
 class NotificationEmailTest(TestCase):

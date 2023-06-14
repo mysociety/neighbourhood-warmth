@@ -7,13 +7,19 @@ from django.urls import reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
 from django.views.generic.edit import CreateView, FormView
 
-from neighbourhood.forms import (ApproveMembershipFormSet, JoinTeamForm,
-                                 LoginLinkForm, NewTeamForm)
+from neighbourhood.forms import (
+    ApproveMembershipFormSet,
+    JoinTeamForm,
+    LoginLinkForm,
+    NewTeamForm,
+)
 from neighbourhood.mixins import TitleMixin
 from neighbourhood.models import Membership, Team, User
-from neighbourhood.services.teams import (notify_membership_confirmed,
-                                          notify_membership_rejected,
-                                          notify_new_member)
+from neighbourhood.services.teams import (
+    notify_membership_confirmed,
+    notify_membership_rejected,
+    notify_new_member,
+)
 from neighbourhood.tokens import get_user_for_token
 from neighbourhood.utils import find_where, get_postcode_centroid
 
