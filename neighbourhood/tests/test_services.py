@@ -9,7 +9,7 @@ from neighbourhood.services.teams import (notify_membership_confirmed,
 
 
 class NotificationEmailTest(TestCase):
-    fixtures = ["groups.json", "memberships.json"]
+    fixtures = ["teams.json", "memberships.json"]
 
     def setUp(self):
         self.factory = RequestFactory()
