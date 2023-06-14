@@ -1,0 +1,63 @@
+[
+  {
+    "model": "neighbourhood.user",
+    "pk": 1,
+    "fields": {
+      "email": "holyrood-admin@example.org",
+      "full_name": "Holyrood Admin",
+      "is_active": true,
+      "email_confirmed": true
+    }
+  },
+  {
+    "model": "neighbourhood.user",
+    "pk": 2,
+    "fields": {
+      "email": "new_holyrood_member@example.org",
+      "full_name": "Holyrood New-Member",
+      "is_active": true,
+      "email_confirmed": true
+    }
+  },
+  {
+    "model": "neighbourhood.user",
+    "pk": 3,
+    "fields": {
+      "email": "holyrood-admin-2@example.org",
+      "full_name": "Holyrood Second-Admin",
+      "is_active": true,
+      "email_confirmed": true
+    }
+  },
+  {
+    "model": "neighbourhood.membership",
+    "pk": 1,
+    "fields": {
+      "team_id": 2,
+      "user_id": 1,
+      "confirmed": true,
+      "is_admin": true,
+      "date_joined": "2023-01-01"
+    }
+  },
+  {
+    "model": "neighbourhood.membership",
+    "pk": 2,
+    "fields": {
+      "team_id": 2,
+      "user_id": 2,
+      "date_joined": "2023-01-01"
+    }
+  },
+  {
+    "model": "neighbourhood.membership",
+    "pk": 3,
+    "fields": {
+      "team_id": 2,
+      "user_id": 3,
+      "confirmed": true,
+      "is_admin": true,
+      "date_joined": "2023-01-01"
+    }
+  }
+]
