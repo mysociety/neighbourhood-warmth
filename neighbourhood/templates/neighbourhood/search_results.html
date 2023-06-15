@@ -8,8 +8,7 @@
 
 <div class="py-4 py-lg-5">
     <div class="container">
-        <h1 class="mb-2">Understand your home</h1>
-        <p class="mb-4 h4 text-muted">Find teams near you</p>
+        <h1 class="mb-4">Find teams near you</h1>
 
         {% include 'neighbourhood/includes/postcode_search_form.html' with default='' %}
 
@@ -37,12 +36,8 @@
         <div class="row mb-n3 mb-md-n4">
             <div class="col-sm-6">
               {% for team in teams %}
-                <div class="p-3 p-md-4 bg-white border rounded d-block mb-3 mb-md-4">
-                    <h2 class="mb-3"><a href="{% url 'team' team.slug %}">{{ team.name }}</a></h2>
-                    <p>{{ team.members_count }} {{ team.members_count|pluralize:"member,members" }}, currently {{ team.status }}</p>
-                    <a href="{% url 'team' team.slug %}" class="btn btn-primary">Request to join</a>
-                </div>
-            {% endfor %}
+                {% include 'neighbourhood/includes/search_result.html' with team=team %}
+              {% endfor %}
             </div>
             <div class="col-sm-6 d-flex">
                 <div class="rounded border mb-3 mb-md-4 flex-grow-1 d-flex align-items-center justify-content-center" style="min-height: 10rem; background-image: url('{% static 'img/map.svg' %}'); background-size: cover;">
