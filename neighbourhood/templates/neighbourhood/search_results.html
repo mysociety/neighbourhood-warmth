@@ -23,6 +23,17 @@
             {{ request.GET.pc|upper|default:"you" }}
         </h2>
 
+        <div class="d-flex align-items-center mx-n1 my-4 overflow-auto">
+            <span class="mx-2 fw-bold">Show:</span>
+            <span class="btn btn-success mx-2 flex-shrink-0 d-flex align-items-center">
+                {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2' %}
+                All teams
+            </span>
+            <span class="btn btn-outline-dark mx-2 flex-shrink-0">Biggest impact</span>
+            <span class="btn btn-outline-dark mx-2 flex-shrink-0">Quick &amp; easy</span>
+            <span class="btn btn-outline-dark mx-2 flex-shrink-0">Save the pennies</span>
+        </div>
+
         <div class="row mb-n3 mb-md-n4">
             <div class="col-sm-6">
               {% for team in teams %}
