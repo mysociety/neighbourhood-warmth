@@ -81,6 +81,50 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"https://source.boringavatars.com/beam/120/{sha256(self.email.encode('utf-8')).hexdigest()}?square&colors={','.join(colours)}"
 
 
+class Area(models.Model):
+    AREA_TYPES = {
+        "CTY": "county council",
+        "CED": "county ward",
+        "DIS": "district council",
+        "DIW": "district ward",
+        "LAC": "London Assembly constituency",
+        "LBO": "London borough",
+        "LBW": "London ward",
+        "LGD": "NI council",
+        "LGE": "NI electoral area",
+        "LGW": "NI ward",
+        "MTD": "Metropolitan district",
+        "MTW": "Metropolitan ward",
+        "NIE": "NI Assembly constituency",
+        "OLF": "Lower Layer Super Output Area, Full",
+        "OLG": "Lower Layer Super Output Area, Generalised",
+        "OMF": "Middle Layer Super Output Area, Full",
+        "OMG": "Middle Layer Super Output Area, Generalised",
+        "SPC": "Scottish Parliament constituency",
+        "SPE": "Scottish Parliament region",
+        "UTA": "Unitary authority",
+        "UTE": "Unitary authority electoral division",
+        "UTW": "Unitary authority ward",
+        "WAC": "Welsh Assembly constituency",
+        "WAE": "Welsh Assembly region",
+        "WMC": "UK Parliamentary constituency",
+    }
+
+    code = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=300)
+    area_type = models.CharField(max_length=20)
+    # need this to look up geometry
+    mapit_id = models.IntegerField(null=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["area_type"]),
+        ]
+
+    def __str__(self):
+        return "{} ({} {})".format(self.name, self.area_type, self.mapit_id)
+
+
 class Team(models.Model):
     name = models.CharField(max_length=100)
     base_pc = models.CharField(max_length=10)
@@ -105,6 +149,10 @@ class Team(models.Model):
     # BEWARE! This includes unconfirmed applicants and rejected members!
     members = models.ManyToManyField(
         User, related_name="teams", related_query_name="team", through="Membership"
+    )
+
+    areas = models.ManyToManyField(
+        Area, related_name="teams", related_query_name="teams"
     )
 
     def __str__(self):
