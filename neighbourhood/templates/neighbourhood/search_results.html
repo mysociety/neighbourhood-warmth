@@ -12,7 +12,8 @@
 
         {% include 'neighbourhood/includes/postcode_search_form.html' with default='' %}
 
-        {% if not error %}
+      {% if teams %}
+
         <h2 class="mt-6 mb-4">
             There
             {{ teams|pluralize:'is,are'}}
@@ -46,12 +47,36 @@
             </div>
         </div>
 
-        <h2 class="mt-6">Start a new team in your neighbourhood</h2>
+        <h2 class="mt-6 mw-40rem">All too far away?</h2>
 
-        <p class="mw-40rem">No team near you? <strong>Become a local legend!</strong> Start your own team, and invite your friends and neighbours to join.</p>
+        <p class="fs-5 mb-0">Don’t worry, there are still things you can do…</p>
 
-        <p><a href="{% url 'create_team' %}?pc={{ request.GET.pc }}" class="btn btn-primary btn-lg">Start a new team</a></p>
-        {% endif %}
+      {% else %}
+
+        <h2 class="mt-6 mw-40rem">There aren’t any teams in your neighbourhood yet</h2>
+
+        <p class="fs-5 mb-0">But don’t worry, there are still things you can do…</p>
+
+      {% endif %}
+
+        <div class="row">
+            <div class="col-sm-6 d-flex">
+                <div class="p-3 p-md-4 bg-white border rounded mt-4 mw-40rem">
+                    <h3>Start a team for your neighbourhood</h3>
+                    <p><strong>Become a local legend!</strong> Start your own team, and invite your friends and neighbours to join.</p>
+                    <p class="mb-0"><a href="{% url 'create_team' %}?pc={{ request.GET.pc }}" class="btn btn-primary">Start a new team</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 d-flex">
+                <div class="p-3 p-md-4 bg-white border rounded mt-4 mw-40rem">
+                    <h3>Get notified about changes nearby</h3>
+                    <p>Subscribe for free, and we’ll let you know when new teams or neighbours arrive on Neighbourhood Warmth.</p>
+                    <p class="mb-0"><span class="btn btn-primary">Subscribe</span></p>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
