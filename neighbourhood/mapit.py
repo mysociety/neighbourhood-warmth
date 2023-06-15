@@ -37,6 +37,11 @@ class MapIt(object):
         data = self.get(url)
         return {"lat": data["wgs84_lat"], "lon": data["wgs84_lon"]}
 
+    def postcode_point_to_data(self, pc):
+        url = self.postcode_url % (self.base, pc, settings.MAPIT_API_KEY)
+        data = self.get(url)
+        return data
+
     def get(self, url):
         if url not in self.cache:
             resp = session.get(url)

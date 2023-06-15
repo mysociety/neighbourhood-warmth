@@ -7,6 +7,24 @@ from neighbourhood.mapit import (
 )
 
 
+def get_postcode_data(postcode):
+    if postcode is None:
+        return {"error": "Postcode is blank"}
+
+    mapit = MapIt()
+    try:
+        data = mapit.postcode_point_to_data(postcode)
+
+        return data
+    except (
+        NotFoundException,
+        BadRequestException,
+        InternalServerErrorException,
+        ForbiddenException,
+    ) as error:
+        return {"error": error}
+
+
 def get_postcode_centroid(postcode):
     if postcode is None:
         return {"error": "Postcode is blank"}
