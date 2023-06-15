@@ -7,8 +7,11 @@
             <h1 class="mb-2">{{ team.name }}</h1>
             <p class="text-muted">A Neighbourhood Warmth team in {{ team.vicinity }}</p>
 
-            <div class="my-4 mw-40rem">
-                <p class="h5 lh-sm mb-0">{{ team.members_count }} {{ team.members_count|pluralize:"member,members" }} – currently {{ team.status }}.</p>
+            <div class="my-4 d-flex align-items-center">
+              {% for member in team.members.all %}
+                <img src="{{ member.avatar_url|escape }}" width="32" height="32" class="rounded-circle bg-primary me-n2" alt="" role="presentation" style="border: 2px solid #fff;">
+              {% endfor %}
+                <p class="h5 lh-sm mb-0 ms-3">{{ team.members_count }} {{ team.members_count|pluralize:"member,members" }}</p>
             </div>
 
             <div>

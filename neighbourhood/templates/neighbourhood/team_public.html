@@ -7,14 +7,14 @@
             <h1 class="mb-2">{{ team.name }}</h1>
             <p class="text-muted">A Neighbourhood Warmth team in {{ team.vicinity }}</p>
 
-            <div class="my-5">
-              {% if 'recruiting' in team.status %}
-              <p class="h2 mb-4 border-bottom pb-4 lh-1">{{ team.members_count }} {{ team.members_count|pluralize:"member,members" }} so far…</p>
-                <p class="h4 mb-4 mw-40rem">Hello! We are currently {{ team.status }}.</p>
-              {% else %}
-                <p class="h4 mb-4 mw-40rem">Hello! We are currently {{ team.status }}.</p>
-              {% endif %}
+            <div class="my-4 d-flex align-items-center">
+              {% for member in team.members.all %}
+                <img src="{{ member.avatar_url|escape }}" width="32" height="32" class="rounded-circle bg-primary me-n2" alt="" role="presentation" style="border: 2px solid #fff;">
+              {% endfor %}
+                <p class="h4 lh-sm mb-0 ms-3">{{ team.members_count }} {{ team.members_count|pluralize:"member,members" }}</p>
             </div>
+
+            <p class="h4 mb-5 mw-40rem">Hello! We are currently {{ team.status }}.</p>
 
             <div class="mb-4">
               {% if is_team_applicant %}
