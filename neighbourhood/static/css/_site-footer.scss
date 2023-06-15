@@ -1,0 +1,7 @@
+.site-footer {
+    --bs-link-color: #{$gray-500};
+    --bs-link-hover-color: #{$white};
+    color: $gray-500;
+    background-color: $gray-800;
+    box-shadow: 0 1000px 0 1000px $gray-800;
+}

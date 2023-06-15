@@ -1,0 +1,17 @@
+<div class="py-5 site-footer">
+    <div class="container">
+        <div class="d-md-flex align-items-center">
+            <a href="{% url 'home' %}">
+                {% include "neighbourhood/includes/logo.html" with classes="d-block" width="330" height="30" %}
+            </a>
+            <ul class="nav mt-3 mt-md-0 ms-md-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'privacy' %}">Privacy Policy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/mysociety/neighbourhood-warmth/">Source code</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

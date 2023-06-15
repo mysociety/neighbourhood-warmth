@@ -159,6 +159,11 @@ class AboutView(TitleMixin, TemplateView):
     template_name = "neighbourhood/about.html"
 
 
+class PrivacyView(TitleMixin, TemplateView):
+    page_title = "Privacy policy"
+    template_name = "neighbourhood/privacy.html"
+
+
 class ConfirmEmailView(TitleMixin, TemplateView):
     page_title = "Email Confirmation"
     template_name = "neighbourhood/accounts/email_confirmation.html"
