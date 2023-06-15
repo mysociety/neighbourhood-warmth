@@ -12,16 +12,6 @@
             <span class="mark" data-typewriter='["stay warm", "save energy", "save money", "improve health", "save the planet"]'>stay warm</span>
         </h1>
 
-        <!-- 
-
-            Three priorities: 1) understand the house, 2) reduce energy use, 3) decarbonise energy supply
-
-            Why understand the house together? – 1) small cost savings out of efficiency of multiple surveys in one go, 2) discussing and understanding the surveys together, with people in houses like yours, 3) potential future group buying discounts on retrofit actions/supplies
-
-            Can we evidence why it’s better to not go alone?
-
-        -->
-
         <h2 class="h4 mb-3">Find out what’s going on in your area</h2>
         {% include 'neighbourhood/includes/postcode_search_form.html' with default='' %}
     </div>
@@ -30,30 +20,34 @@
 <div class="py-4 py-lg-5 bg-white border-bottom">
     <div class="container">
         {% include 'neighbourhood/includes/generic_promo.html' %}
-    </div>
-</div>
 
-<div class="py-4 py-lg-5 bg-white border-bottom">
-    <div class="container">
-        <div class="mw-40rem">
-            <h2>It starts with understanding your&nbsp;home</h2>
+        <h2 class="h4 mb-3 mt-5">Don’t know where to start?</h2>
+        <p class="fs-5 mw-35rem">Read more about our curated challenges, and then find teams already working on them near you:</p>
 
-            <p>Whether it’s a whole house assessment, thermal imaging, or something else – knowing more about your home and how you use it will help you make an informed decision on the right way forward for you and your household.</p>
-
-            <p>Neighbourhood Warmth guides you through the process via a series of simple steps, with personalised advice. By the end of the process, you’ll have a clearer idea of:</p>
-
-            <ul>
-                <li>the home energy improvements you could make</li>
-                <li>the ways to prioritise and plan them</li>
-                <li>how long they typically take</li>
-                <li>and what they might cost</li>
-            </ul>
-
-            <p>See for example: <a href="https://www.youtube.com/watch?v=gS2Iq-7ZAsM">CSE Bristol Retrofit Stories 1950 detached</a></p>
-
-            <h2 class="h4 mt-5 mb-3">Find or start a team in your area</h2>
-            {% include 'neighbourhood/includes/postcode_search_form.html' with default='' %}
+        <div class="row gx-xl-5 mt-4 mt-lg-5">
+            <div class="col-sm-4 mb-4 d-flex flex-column">
+                <div class="d-flex flex-column align-items-start bg-white border rounded flex-grow-1 p-3 p-lg-4">
+                    <h3 class="h5 mb-3">Understand your home</h3>
+                    <p>This is the best, most comprehensive way to find out what’s right for you and your home.</p>
+                    <a href="{% url 'about' %}" class="mt-auto">Read more…</a>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-4 d-flex flex-column">
+                <div class="d-flex flex-column align-items-start bg-white border rounded flex-grow-1 p-3 p-lg-4">
+                    <h3 class="h5 mb-3">Get draft proofing</h3>
+                    <p>A quick, easy way to improve your home and make new energy saving friends in your neighbourhood.</p>
+                    <a href="{% url 'about' %}" class="mt-auto">Read more…</a>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-4 d-flex flex-column">
+                <div class="d-flex flex-column align-items-start bg-white border rounded flex-grow-1 p-3 p-lg-4">
+                    <h3 class="h5 mb-3">Adjust your boiler</h3>
+                    <p>Turning down your boiler just a few degrees could save you almost £10 a month.</p>
+                    <a href="{% url 'about' %}" class="mt-auto">Read more…</a>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
 
