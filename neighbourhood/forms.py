@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 
 from neighbourhood.models import Membership, Team, User
 from neighbourhood.tokens import make_token_for_user
-from neighbourhood.utils import get_postcode_centroid
+from neighbourhood.utils import get_postcode_data
 
 
 class NewTeamForm(ModelForm):
@@ -28,16 +28,15 @@ class NewTeamForm(ModelForm):
         data = self.cleaned_data
         pc = data["base_pc"]
 
-        lat_lon = get_postcode_centroid(pc)
-        if "error" in lat_lon:
-            raise ValidationError(lat_lon["error"], code="invalid")
+        data = get_postcode_data(pc)
+        if "error" in data:
+            raise ValidationError(data["error"], code="invalid")
 
-        self.lat_lon = lat_lon
+        self.postcode_data = data
 
         return pc
 
     def send_confirmation_email(self, request=None, user=None):
-        print(self.instance)
         t = make_token_for_user(user, domain="new_team", obj=self.instance)
 
         current_site = get_current_site(request)

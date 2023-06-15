@@ -1,5 +1,8 @@
 import logging
+import re
+from unittest.mock import MagicMock, patch
 
+from django.core import mail
 from django.shortcuts import reverse
 from django.test import TestCase
 
@@ -14,6 +17,107 @@ class CorePageTest(TestCase):
     def test_about_page(self):
         response = self.client.get("/about/")
         self.assertEqual(response.status_code, 200)
+
+
+class CreateTeamTest(TestCase):
+    @patch("neighbourhood.mapit.session.get")
+    def test_create_team(self, mapit_get):
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            "postcode": "SP1 1SP",
+            "wgs84_lon": -3.174588946918464,
+            "wgs84_lat": 55.95206388207891,
+            "coordsyst": "G",
+            "easting": 326751,
+            "northing": 673849,
+            "areas": {
+                "162673": {
+                    "id": 162673,
+                    "name": "Canongate, Southside and Dumbiedykes",
+                    "type": "OMF",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"ons": "S22000059"},
+                },
+                "163747": {
+                    "id": 163747,
+                    "name": "Edinburgh",
+                    "type": "TTW",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"gss": "S22000059"},
+                },
+                "134935": {
+                    "id": 134935,
+                    "name": "Edinburgh Central",
+                    "type": "SPC",
+                    "type_name": "Scottish Parliament constituency",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"gss": "S16000104", "unit_id": "41364"},
+                },
+                "14419": {
+                    "id": 14419,
+                    "name": "Edinburgh East",
+                    "type": "WMC",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"gss": "S14000022", "unit_id": "33667"},
+                },
+            },
+        }
+        mapit_get.return_value = mock_response
+
+        url = reverse("create_team")
+        response = self.client.get(f"{url}?pc=SP1 1SP")
+
+        response = self.client.post(
+            url,
+            {
+                "creator_name": "Team Creator",
+                "email": "team_creator@example.org",
+                "address_1": "",
+                "address_2": "",
+                "address_3": "",
+                "base_pc": "SP1 1SP",
+                "name": "Test Team",
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/confirmation_sent/")
+
+        self.assertEqual(len(mail.outbox), 1)
+
+        t = Team.objects.get(name="Test Team")
+        self.assertFalse(t.confirmed)
+
+        areas = t.areas
+        self.assertEqual(areas.count(), 4)
+        codes = [a.code for a in areas.order_by("code")]
+        self.assertEqual(
+            codes,
+            [
+                "S",
+                "S14000022",
+                "S16000104",
+                "S22000059",
+            ],
+        )
+
+        sent = mail.outbox[0]
+        self.assertEqual(
+            sent.subject, "Neighbourhood Warmth: Verify your email address"
+        )
+
+        g = re.search(r"/activate/([^/]*)/", sent.body, re.MULTILINE)
+        url = reverse("confirm_email", args=(g.group(1),))
+        response = self.client.get(url)
+
+        team_url = reverse("team", args=(t.slug,))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, team_url)
 
 
 class TeamPagesTest(TestCase):

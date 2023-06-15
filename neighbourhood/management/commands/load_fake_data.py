@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import Point
-from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 
 from neighbourhood.models import Membership, Team
-from neighbourhood.utils import get_postcode_centroid
+from neighbourhood.services.teams import add_areas_to_team
+from neighbourhood.utils import get_postcode_data
 
 User = get_user_model()
 
@@ -119,14 +119,6 @@ def postcode(address):
     return address.split(",")[-1].strip()
 
 
-def lat_lon_from_postcode(pc):
-    lat_lon = get_postcode_centroid(pc)
-    if "error" in lat_lon:
-        raise ValidationError(lat_lon["error"], code="invalid")
-    else:
-        return lat_lon
-
-
 class Command(BaseCommand):
     help = "Load fake users and teams into the site"
 
@@ -145,19 +137,23 @@ class Command(BaseCommand):
             self.log("team {}", team_data["name"])
 
             base_pc = postcode(team_data["address"])
-            lat_lon = lat_lon_from_postcode(base_pc)
+            postcode_data = get_postcode_data(base_pc)
 
             team_obj = {
                 "name": team_data["name"],
                 "address_1": address_line(team_data["address"], 1),
                 "address_2": address_line(team_data["address"], 2),
                 "address_3": address_line(team_data["address"], 3),
-                "centroid": Point(lat_lon["lon"], lat_lon["lat"], srid=4326),
+                "centroid": Point(
+                    postcode_data["wgs84_lon"], postcode_data["wgs84_lat"], srid=4326
+                ),
                 "status": team_data["status"],
                 "confirmed": True,
             }
 
             team, _ = Team.objects.update_or_create(base_pc=base_pc, defaults=team_obj)
+
+            add_areas_to_team(team, postcode_data["areas"])
 
             for index, member_name in enumerate(team_data["members"]):
                 self.log("  user {}", member_name)

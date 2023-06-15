@@ -15,6 +15,7 @@ from neighbourhood.forms import (
 from neighbourhood.mixins import TitleMixin
 from neighbourhood.models import Membership, Team
 from neighbourhood.services.teams import (
+    add_areas_to_team,
     notify_membership_confirmed,
     notify_membership_rejected,
     notify_new_member,
@@ -99,7 +100,9 @@ class CreateTeamView(TitleMixin, CreateView):
 
         form.instance.creator = u
 
-        location = Point(form.lat_lon["lon"], form.lat_lon["lat"], srid=4326)
+        location = Point(
+            form.postcode_data["wgs84_lon"], form.postcode_data["wgs84_lat"], srid=4326
+        )
         form.instance.centroid = location
         form.instance.status = "Newly created"
 
@@ -109,6 +112,8 @@ class CreateTeamView(TitleMixin, CreateView):
         Membership.objects.create(
             team=form.instance, user=u, confirmed=True, is_admin=True
         )
+
+        add_areas_to_team(form.instance, form.postcode_data["areas"])
 
         form.send_confirmation_email(request=self.request, user=u)
 
