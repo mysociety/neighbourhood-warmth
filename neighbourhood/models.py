@@ -99,6 +99,7 @@ class Team(models.Model):
     confirmed = models.BooleanField(default=False)
     status = models.CharField(max_length=300, blank=True, null=True)
 
+    # BEWARE! This includes unconfirmed applicants and rejected members!
     members = models.ManyToManyField(
         User, related_name="teams", related_query_name="team", through="Membership"
     )
@@ -106,8 +107,9 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
-    def members_count(self):
-        return self.members.count()
+    @property
+    def confirmed_members(self):
+        return self.members.filter(membership__confirmed=True)
 
     def vicinity(self):
         return self.address_3 if self.address_3 else self.address_2

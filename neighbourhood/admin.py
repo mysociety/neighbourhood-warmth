@@ -24,7 +24,7 @@ class TeamMembershipInline(admin.TabularInline):
 
 @admin.register(Team)
 class TeamAdmin(OSMGeoAdmin):
-    list_display = ("name", "base_pc", "members_count", "status")
+    list_display = ("name", "base_pc", "members_count", "confirmed_members_count", "status")
     inlines = [
         TeamMembershipInline,
     ]
@@ -32,6 +32,10 @@ class TeamAdmin(OSMGeoAdmin):
     @admin.display(description="Members")
     def members_count(self, obj):
         return obj.members.count()
+
+    @admin.display(description="Confirmed members")
+    def confirmed_members_count(self, obj):
+        return obj.confirmed_members.count()
 
 
 class UserCreationForm(forms.ModelForm):

@@ -8,10 +8,10 @@
             <p class="text-muted">A Neighbourhood Warmth team in {{ team.vicinity }}</p>
 
             <div class="my-4 d-flex align-items-center">
-              {% for member in team.members.all %}
+              {% for member in team.confirmed_members.all %}
                 <img src="{{ member.avatar_url|escape }}" width="32" height="32" class="rounded-circle bg-primary me-n2" alt="" role="presentation" style="border: 2px solid #fff;">
               {% endfor %}
-                <p class="h4 lh-sm mb-0 ms-3">{{ team.members_count }} {{ team.members_count|pluralize:"member,members" }}</p>
+                <p class="h4 lh-sm mb-0 ms-3">{{ team.confirmed_members|length }} {{ team.confirmed_members|pluralize:"member,members" }}</p>
             </div>
 
             <p class="h4 mb-5 mw-40rem">Hello! We are currently {{ team.status }}.</p>
