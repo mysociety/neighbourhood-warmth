@@ -241,19 +241,6 @@ class LoginLinkView(TitleMixin, FormView):
         return super().get(request)
 
 
-class EmailView(TemplateView):
-    def get_template_names(self):
-        if self.kwargs["layout"] == "welcome":
-            return "neighbourhood/email_welcome.html"
-        elif self.kwargs["layout"] == "joined":
-            return "neighbourhood/email_joined.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # TODO: Pass team etc into template via context
-        return context
-
-
 class StyleView(TitleMixin, TemplateView):
     page_title = "Style preview"
     template_name = "neighbourhood/style.html"

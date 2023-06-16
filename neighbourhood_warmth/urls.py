@@ -33,9 +33,6 @@ urlpatterns = [
     path("area/<slug:gss>/", views.AreaView.as_view(), name="area"),
     path("about/", views.AboutView.as_view(), name="about"),
     path(
-        "email-preview/<slug:layout>/", views.EmailView.as_view(), name="email_preview"
-    ),
-    path(
         "confirmation_sent/",
         views.ConfirmationSentView.as_view(),
         name="confirmation_sent",

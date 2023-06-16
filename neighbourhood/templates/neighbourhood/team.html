@@ -31,17 +31,6 @@
 <div id="private" class="team-page-section collapse no-transition show">
     {% include 'neighbourhood/team_private.html' %}
 </div>
-
 {% endif %}
-
-<div class="bg-gray-200 py-5 border-top fs-7">
-    <div class="container">
-        <h2 class="h6">Temporary prototype links</h2>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="{% url 'email_preview' 'welcome' %}?team={{ team.slug|urlencode }}">Preview email #1: Welcome</a></li>
-            <li class="list-inline-item"><a href="{% url 'email_preview' 'joined' %}?team={{ team.slug|urlencode }}">Preview email #2: Neighbour joined</a></li>
-        </ul>
-    </div>
-</div>
 
 {% endblock %}
