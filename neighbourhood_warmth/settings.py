@@ -183,6 +183,7 @@ IMPERSONATE = {
     "ALLOW_SUPERUSER": True,
     "SEARCH_FIELDS": ["email", "full_name"],
     "REDIRECT_FIELD_NAME": "next",
+    "ADMIN_DELETE_PERMISSION": True,
 }
 
 if DEBUG and HIDE_DEBUG_TOOLBAR is False:  # pragma: no cover
