@@ -23,17 +23,34 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Email address</th>
+                    <th></th>
+                    <th>Teams</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
               {% for user in page.object_list %}
+              {% for mem in user.membership_set.all %}
                 <tr>
-                    <td>{{ user.full_name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td><a href="{% url 'impersonate-start' user.pk %}{{redirect}}">Switch</a></td>
+                  {% if forloop.counter == 1 %}
+                    <td rowspan="{{ user.membership_set.all|length }}">{{ user.full_name }}</td>
+                    <td rowspan="{{ user.membership_set.all|length }}"><a class="btn btn-secondary btn-xs" href="{% url 'impersonate-start' user.pk %}{{redirect}}">Switch to user</a></td>
+                  {% endif %}
+                    <td>
+                        <a href="{% url 'team' mem.team.slug %}">{{ mem.team.name }}</a>
+                      {% if mem.is_admin %}
+                        (admin)
+                      {% elif mem.rejected %}
+                        (rejected)
+                      {% elif not mem.confirmed %}
+                        (unconfirmed)
+                      {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary btn-xs" href="{% url 'impersonate-start' user.pk %}?next={% url 'team' mem.team.slug %}">Switch to team</a>
+                    </td>
                 </tr>
+              {% endfor %}
               {% endfor %}
             </tbody>
         </table>
