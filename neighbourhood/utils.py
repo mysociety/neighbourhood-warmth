@@ -7,13 +7,11 @@ from neighbourhood.mapit import (
 )
 
 
-def get_postcode_data(postcode):
-    if postcode is None:
-        return {"error": "Postcode is blank"}
-
+def get_mapit_data(call, *args):
     mapit = MapIt()
     try:
-        data = mapit.postcode_point_to_data(postcode)
+        method = getattr(mapit, call)
+        data = method(*args)
 
         return data
     except (
@@ -25,22 +23,19 @@ def get_postcode_data(postcode):
         return {"error": error}
 
 
+def get_postcode_data(postcode):
+    if postcode is None:
+        return {"error": "Postcode is blank"}
+
+    return get_mapit_data("postcode_point_to_data", postcode)
+
+
 def get_postcode_centroid(postcode):
     if postcode is None:
         return {"error": "Postcode is blank"}
 
-    mapit = MapIt()
-    try:
-        lat_lon = mapit.postcode_point_to_centroid(postcode)
+    return get_mapit_data("postcode_point_to_centroid", postcode)
 
-        return lat_lon
-    except (
-        NotFoundException,
-        BadRequestException,
-        InternalServerErrorException,
-        ForbiddenException,
-    ) as error:
-        return {"error": error}
 
 
 def find_where(list_of_dicts, properties):
