@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model, login
 from django.contrib.gis.geos import Point
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
 from django.views.generic.edit import CreateView, FormView
@@ -12,6 +12,7 @@ from neighbourhood.forms import (
     JoinTeamForm,
     LoginLinkForm,
     NewTeamForm,
+    PostcodeForm,
 )
 from neighbourhood.mixins import TitleMixin
 from neighbourhood.models import Area, Membership, Team
@@ -22,7 +23,11 @@ from neighbourhood.services.teams import (
     notify_new_member,
 )
 from neighbourhood.tokens import get_user_for_token
-from neighbourhood.utils import get_area_geometry, get_postcode_centroid
+from neighbourhood.utils import (
+    get_area_geometry,
+    get_postcode_centroid,
+    get_postcode_data,
+)
 
 
 class HomePageView(TitleMixin, TemplateView):
@@ -190,6 +195,20 @@ class ConfirmJoinTeamView(TitleMixin, UpdateView):
             elif data["rejected"]:
                 notify_membership_rejected(m.team, m.user, m, site)
         return super().form_valid(form)
+
+
+class AreaSearchView(TitleMixin, FormView):
+    form_class = PostcodeForm
+    page_title = "Find your area"
+    template_name = "neighbourhood/search_areas.html"
+
+    def form_valid(self, form):
+        pc = form.cleaned_data["pc"]
+        data = get_postcode_data(pc)
+        for area in data["areas"].values():
+            if area["type"] in Area.AREA_TYPES.keys():
+                url = reverse("area", args=(area["codes"]["gss"],))
+                return HttpResponseRedirect(url)
 
 
 class AreaView(TitleMixin, DetailView):

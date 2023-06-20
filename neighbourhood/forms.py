@@ -5,6 +5,7 @@ from django.forms import (
     BaseModelFormSet,
     CharField,
     EmailField,
+    Form,
     ModelForm,
     modelformset_factory,
 )
@@ -158,3 +159,7 @@ ApproveMembershipFormSet = modelformset_factory(
     formset=BaseApproveMembershipFormSet,
     extra=0,
 )
+
+
+class PostcodeForm(Form):
+    pc = CharField(max_length=20)

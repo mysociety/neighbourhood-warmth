@@ -1,6 +1,6 @@
 import logging
 import re
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 from django.core import mail
 from django.shortcuts import reverse
@@ -20,11 +20,9 @@ class CorePageTest(TestCase):
 
 
 class CreateTeamTest(TestCase):
-    @patch("neighbourhood.mapit.session.get")
+    @patch("neighbourhood.utils.get_mapit_data")
     def test_create_team(self, mapit_get):
-        mock_response = MagicMock()
-        mock_response.status_code = 200
-        mock_response.json.return_value = {
+        mapit_get.return_value = {
             "postcode": "SP1 1SP",
             "wgs84_lon": -3.174588946918464,
             "wgs84_lat": 55.95206388207891,
@@ -67,7 +65,6 @@ class CreateTeamTest(TestCase):
                 },
             },
         }
-        mapit_get.return_value = mock_response
 
         url = reverse("create_team")
         response = self.client.get(f"{url}?pc=SP1 1SP")
@@ -167,3 +164,44 @@ class TeamManagementPagesTest(TestCase):
             reverse("confirm_join_team", args=("holyrood-palace",))
         )
         self.assertEqual(response.status_code, 200)
+
+
+class AreaSearchTest(TestCase):
+    @patch("neighbourhood.utils.get_mapit_data")
+    def test_create_team(self, mapit_get):
+        mapit_get.return_value = {
+            "postcode": "SP1 1SP",
+            "wgs84_lon": -3.174588946918464,
+            "wgs84_lat": 55.95206388207891,
+            "coordsyst": "G",
+            "easting": 326751,
+            "northing": 673849,
+            "areas": {
+                "163747": {
+                    "id": 163747,
+                    "name": "Edinburgh",
+                    "type": "TTW",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"gss": "S22000059"},
+                },
+                "2651": {
+                    "id": 2651,
+                    "name": "City of Edinburgh Council",
+                    "type": "UTA",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"gss": "S12000036"},
+                },
+            },
+        }
+
+        url = reverse("area_search")
+        response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
+
+        expected_url = reverse("area", args=("S12000036",))
+        response = self.client.post(url, {"pc": "SP1 1SP"})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, expected_url)

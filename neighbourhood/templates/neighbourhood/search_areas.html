@@ -1,0 +1,24 @@
+{% extends "neighbourhood/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="py-4 py-lg-5" id="areaMapApp">
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <label class="form-label" for="postcode">Postcode</label>
+            <div class="d-flex">
+                <input class="form-control form-control-lg text-uppercase{% if error %} is-invalid{% endif %}" type="text" id="postcode" name="pc" style="max-width: 10em;" value="{{ form.pc.value|default_if_none:""|upper }}">
+              {% if error %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endif %}
+                <button type="submit" class="btn btn-lg btn-primary ms-3">Find council</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
+
