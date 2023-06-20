@@ -37,6 +37,9 @@ def get_postcode_centroid(postcode):
     return get_mapit_data("postcode_point_to_centroid", postcode)
 
 
+def get_area_geometry(mapit_id):
+    return get_mapit_data("area_id_to_geom", mapit_id)
+
 
 def find_where(list_of_dicts, properties):
     """Looks through the list_of_dicts and returns the first dict that matches all of the key-value pairs listed in properties. If no match is found, or if list_of_dicts is empty, None is returned."""

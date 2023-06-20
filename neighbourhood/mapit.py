@@ -27,6 +27,7 @@ class ForbiddenException(BaseException):
 
 class MapIt(object):
     postcode_url = "%s/postcode/%s?api_key=%s"
+    area_geom_url = "%s/area/%s.geojson?api_key=%s&simplify_tolerance=0.00001"
     cache = {}
 
     def __init__(self):
@@ -39,6 +40,11 @@ class MapIt(object):
 
     def postcode_point_to_data(self, pc):
         url = self.postcode_url % (self.base, pc, settings.MAPIT_API_KEY)
+        data = self.get(url)
+        return data
+
+    def area_id_to_geom(self, gss):
+        url = self.area_geom_url % (self.base, gss, settings.MAPIT_API_KEY)
         data = self.get(url)
         return data
 
