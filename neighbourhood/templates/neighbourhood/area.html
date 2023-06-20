@@ -1,11 +1,23 @@
 {% extends "neighbourhood/base.html" %}
+{% load static %}
 
 {% block content %}
 
-<div class="py-4 py-lg-5">
+<div class="py-4 py-lg-5" id="areaMapApp">
     <div class="container">
-        <h1 class="mb-5">[[ area page content ]]</h1>
+        <div class="map" id="leaflet" style="width: 100%; padding-top: 100%;"></div>
     </div>
-</div>
 
+</div>
+{% endblock %}
+
+{% block extrajs %}
+    <script>
+        var gss = "{{ area.code }}";
+    </script>
+
+    <script type="module" src="{% static 'js/map.js' %}"></script>
+{% endblock %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'leaflet/leaflet-1.8.0.scss' %}">
 {% endblock %}

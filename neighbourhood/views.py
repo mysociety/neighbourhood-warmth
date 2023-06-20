@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model, login
 from django.contrib.gis.geos import Point
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
 from django.shortcuts import redirect, render, reverse
 from django.views.generic import DetailView, TemplateView, UpdateView
 from django.views.generic.edit import CreateView, FormView
@@ -13,7 +14,7 @@ from neighbourhood.forms import (
     NewTeamForm,
 )
 from neighbourhood.mixins import TitleMixin
-from neighbourhood.models import Membership, Team
+from neighbourhood.models import Area, Membership, Team
 from neighbourhood.services.teams import (
     add_areas_to_team,
     notify_membership_confirmed,
@@ -21,7 +22,7 @@ from neighbourhood.services.teams import (
     notify_new_member,
 )
 from neighbourhood.tokens import get_user_for_token
-from neighbourhood.utils import get_postcode_centroid
+from neighbourhood.utils import get_area_geometry, get_postcode_centroid
 
 
 class HomePageView(TitleMixin, TemplateView):
@@ -191,9 +192,64 @@ class ConfirmJoinTeamView(TitleMixin, UpdateView):
         return super().form_valid(form)
 
 
-class AreaView(TitleMixin, TemplateView):
-    page_title = "Exampleshire County Council"
+class AreaView(TitleMixin, DetailView):
+    model = Area
+    context_object_name = "area"
     template_name = "neighbourhood/area.html"
+
+    def get_object(self, **kwargs):
+        return Area.objects.get(code=self.kwargs["gss"])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = context["area"].name
+        return context
+
+
+class AreaJSON(TemplateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        area = Area.objects.get(code=kwargs["gss"])
+        g = get_area_geometry(area.mapit_id)
+        context["geometry"] = g
+
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        return JsonResponse(context["geometry"])
+
+
+class AreaTeamJSON(TemplateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        teams = Team.objects.filter(areas__code=self.kwargs["gss"], confirmed=True)
+
+        context["teams"] = teams
+
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        data = {
+            "type": "FeatureCollection",
+        }
+        features = []
+        for team in context["teams"]:
+            print(team.centroid.coords)
+            features.append(
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": team.centroid.coords,
+                    },
+                    "properties": {
+                        "name": team.name,
+                        "url": reverse("team", args=(team.slug,)),
+                    },
+                }
+            )
+        data["features"] = features
+        return JsonResponse(data)
 
 
 class AboutView(TitleMixin, TemplateView):

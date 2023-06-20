@@ -156,6 +156,9 @@ STATICFILES_DIRS = [
     ("jquery", BASE_DIR / "vendor" / "jquery" / "js"),
     ("party", BASE_DIR / "vendor" / "party" / "js"),
     ("typewriter-effect", BASE_DIR / "vendor" / "typewriter-effect" / "js"),
+    ("leaflet", BASE_DIR / "vendor" / "leaflet" / "scss"),
+    ("leaflet", BASE_DIR / "vendor" / "leaflet" / "js"),
+    ("leaflet/images", BASE_DIR / "vendor" / "leaflet" / "images"),
 ]
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
