@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import Point
 from django.core.management.base import BaseCommand
+from django.template.defaultfilters import pluralize
 from django.utils.text import slugify
 
 from neighbourhood.models import Membership, Team
@@ -124,14 +125,46 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
+            "-d",
+            "--delete",
+            action="store_true",
+            help="Delete all teams and all non-staff users before loading fake data",
+        )
+
+        parser.add_argument(
+            "-D",
+            "--delete-only",
+            action="store_true",
+            help="Delete all teams and all non-staff users, and then stop, without loading any new fake data",
+        )
+
+        parser.add_argument(
             "-q",
             "--quiet",
             action="store_true",
             help="Do not print data as it is loaded",
         )
 
-    def handle(self, quiet=False, *args, **options):
+    def handle(self, quiet=False, delete=False, delete_only=False, *args, **options):
         self._quiet = quiet
+
+        if delete or delete_only:
+            teams = Team.objects.all()
+            users = User.objects.filter(is_staff=False)
+            self.log(
+                "deleting {} {} and {} non-staff {}".format(
+                    teams.count(),
+                    pluralize(teams.count(), "team,teams"),
+                    users.count(),
+                    pluralize(users.count(), "user,users"),
+                )
+            )
+
+            teams.delete()
+            users.delete()
+
+            if delete_only:
+                exit()
 
         for team_data in teams_data:
             self.log("team {}", team_data["name"])
