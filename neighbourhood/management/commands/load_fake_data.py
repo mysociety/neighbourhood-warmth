@@ -138,15 +138,8 @@ class Command(BaseCommand):
             help="Delete all teams and all non-staff users, and then stop, without loading any new fake data",
         )
 
-        parser.add_argument(
-            "-q",
-            "--quiet",
-            action="store_true",
-            help="Do not print data as it is loaded",
-        )
-
-    def handle(self, quiet=False, delete=False, delete_only=False, *args, **options):
-        self._quiet = quiet
+    def handle(self, verbosity, delete=False, delete_only=False, *args, **options):
+        self.verbosity = verbosity
 
         if delete or delete_only:
             teams = Team.objects.all()
@@ -214,5 +207,5 @@ class Command(BaseCommand):
                 )
 
     def log(self, message, *args):
-        if not self._quiet:
+        if self.verbosity != 0:
             self.stdout.write(message.format(*args))
