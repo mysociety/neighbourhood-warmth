@@ -37,6 +37,10 @@ def get_postcode_centroid(postcode):
     return get_mapit_data("postcode_point_to_centroid", postcode)
 
 
+def get_area_data(mapit_id):
+    return get_mapit_data("area_data", mapit_id)
+
+
 def get_area_geometry(mapit_id):
     return get_mapit_data("area_id_to_geom", mapit_id)
 

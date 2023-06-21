@@ -163,3 +163,11 @@ ApproveMembershipFormSet = modelformset_factory(
 
 class PostcodeForm(Form):
     pc = CharField(max_length=20)
+
+    def clean(self):
+        pc = self.cleaned_data["pc"]
+        data = get_postcode_data(pc)
+        if data.get("error", None) is not None:
+            raise ValidationError(data["error"])
+
+        self.postcode_data = data

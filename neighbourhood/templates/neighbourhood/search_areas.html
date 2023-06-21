@@ -5,6 +5,22 @@
 
 <div class="py-4 py-lg-5" id="areaMapApp">
     <div class="container">
+        {% if matching_areas %}
+            {% for area in matching_areas %}
+              {% if forloop.first %}
+                <p>Multiple councils matched that postcode:</p>
+
+                <ul>
+              {% endif %}
+                    <li><a href="{% url 'area' area.codes.gss %}">{{ area.name }}</a></li>
+              {% if forloop.last %}
+                </ul>
+              {% endif %}
+            {% empty %}
+                <p>No councils matched that postcode.</p>
+            {% endfor %}
+        {% endif %}
+
         <form method="POST">
             {% csrf_token %}
             <label class="form-label" for="postcode">Postcode</label>
@@ -21,4 +37,4 @@
 </div>
 
 {% endblock %}
-
+area

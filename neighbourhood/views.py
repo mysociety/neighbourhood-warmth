@@ -23,11 +23,7 @@ from neighbourhood.services.teams import (
     notify_new_member,
 )
 from neighbourhood.tokens import get_user_for_token
-from neighbourhood.utils import (
-    get_area_geometry,
-    get_postcode_centroid,
-    get_postcode_data,
-)
+from neighbourhood.utils import get_area_data, get_area_geometry, get_postcode_centroid
 
 
 class HomePageView(TitleMixin, TemplateView):
@@ -203,17 +199,24 @@ class AreaSearchView(TitleMixin, FormView):
     template_name = "neighbourhood/search_areas.html"
 
     def form_valid(self, form):
-        pc = form.cleaned_data["pc"]
-        data = get_postcode_data(pc)
+        data = form.postcode_data
+        matching_areas = []
         for area in data["areas"].values():
-            if area["type"] in Area.AREA_TYPES.keys():
-                url = reverse("area", args=(area["codes"]["gss"],))
-                return HttpResponseRedirect(url)
+            if area["type"] in Area.COUNCIL_TYPES:
+                matching_areas.append(area)
+        num_areas = len(matching_areas)
+        if num_areas == 1:
+            url = reverse("area", args=(matching_areas[0]["codes"]["gss"],))
+            return HttpResponseRedirect(url)
+        else:
+            return render(
+                self.request,
+                self.template_name,
+                context={"form": form, "matching_areas": matching_areas},
+            )
 
 
-class AreaView(TitleMixin, DetailView):
-    model = Area
-    context_object_name = "area"
+class AreaView(TitleMixin, TemplateView):
     template_name = "neighbourhood/area.html"
 
     def get_object(self, **kwargs):
@@ -221,15 +224,27 @@ class AreaView(TitleMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["page_title"] = context["area"].name
+
+        try:
+            area = Area.objects.get(code=self.kwargs["gss"])
+            name = area.name
+            code = area.mapit_id
+        except Area.DoesNotExist:
+            area = get_area_data(self.kwargs["gss"])
+            print(area)
+            name = area["name"]
+            code = area["id"]
+
+        context["area"] = area
+        context["page_title"] = name
+        context["area_code"] = code
         return context
 
 
 class AreaJSON(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        area = Area.objects.get(code=kwargs["gss"])
-        g = get_area_geometry(area.mapit_id)
+        g = get_area_geometry(kwargs["mapit_id"])
         context["geometry"] = g
 
         return context

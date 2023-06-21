@@ -168,7 +168,7 @@ class TeamManagementPagesTest(TestCase):
 
 class AreaSearchTest(TestCase):
     @patch("neighbourhood.utils.get_mapit_data")
-    def test_create_team(self, mapit_get):
+    def test_search_for_area(self, mapit_get):
         mapit_get.return_value = {
             "postcode": "SP1 1SP",
             "wgs84_lon": -3.174588946918464,
@@ -184,6 +184,15 @@ class AreaSearchTest(TestCase):
                     "country": "S",
                     "country_name": "Scotland",
                     "codes": {"gss": "S22000059"},
+                },
+                "134935": {
+                    "id": 134935,
+                    "name": "Edinburgh Central",
+                    "type": "SPC",
+                    "type_name": "Scottish Parliament constituency",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"gss": "S16000104", "unit_id": "41364"},
                 },
                 "2651": {
                     "id": 2651,
@@ -205,3 +214,43 @@ class AreaSearchTest(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, expected_url)
+
+    @patch("neighbourhood.utils.get_mapit_data")
+    def test_area_search_multi_match(self, mapit_get):
+        mapit_get.return_value = {
+            "postcode": "SP1 1SP",
+            "wgs84_lon": -3.174588946918464,
+            "wgs84_lat": 55.95206388207891,
+            "coordsyst": "G",
+            "easting": 326751,
+            "northing": 673849,
+            "areas": {
+                "134935": {
+                    "id": 134935,
+                    "name": "Edinburgh Central",
+                    "type": "DIS",
+                    "type_name": "Fake Edinburgh Council",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"gss": "S16000104", "unit_id": "41364"},
+                },
+                "2651": {
+                    "id": 2651,
+                    "name": "City of Edinburgh Council",
+                    "type": "UTA",
+                    "country": "S",
+                    "country_name": "Scotland",
+                    "codes": {"gss": "S12000036"},
+                },
+            },
+        }
+
+        url = reverse("area_search")
+        response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
+
+        response = self.client.post(url, {"pc": "SP1 1SP"})
+
+        self.assertEqual(response.status_code, 200)
+        context = response.context
+        self.assertEqual(2, len(context["matching_areas"]))

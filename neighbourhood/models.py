@@ -110,6 +110,15 @@ class Area(models.Model):
         "WMC": "UK Parliamentary constituency",
     }
 
+    COUNCIL_TYPES = [
+        "CTY",
+        "DIS",
+        "LBO",
+        "LGD",
+        "MTD",
+        "UTA",
+    ]
+
     code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=300)
     area_type = models.CharField(max_length=20)
