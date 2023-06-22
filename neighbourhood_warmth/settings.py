@@ -148,6 +148,13 @@ STATICFILES_FINDERS = (
     "compressor.finders.CompressorFinder",
 )
 
+# only want to do this for live really
+if not DEBUG:  # pragma: no cover
+    STATICFILES_STORAGE = (
+        "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    )
+
+
 STATICFILES_DIRS = [
     BASE_DIR / "neighbourhood" / "static",
     ("bootstrap", BASE_DIR / "vendor" / "bootstrap" / "scss"),
