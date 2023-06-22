@@ -3,25 +3,11 @@
 
 {% block content %}
 
-<div class="py-4 py-lg-5" id="areaMapApp">
+<div class="py-4 py-lg-5">
     <div class="container">
-        {% if matching_areas %}
-            {% for area in matching_areas %}
-              {% if forloop.first %}
-                <p>Multiple councils matched that postcode:</p>
+        <h1>See demand in an area</h1>
 
-                <ul>
-              {% endif %}
-                    <li><a href="{% url 'area' area.codes.gss %}">{{ area.name }}</a></li>
-              {% if forloop.last %}
-                </ul>
-              {% endif %}
-            {% empty %}
-                <p>No councils matched that postcode.</p>
-            {% endfor %}
-        {% endif %}
-
-        <form method="POST">
+        <form method="POST" class="mb-5">
             {% csrf_token %}
             <label class="form-label" for="postcode">Postcode</label>
             <div class="d-flex">
@@ -32,6 +18,17 @@
                 <button type="submit" class="btn btn-lg btn-primary ms-3">Find council</a>
             </div>
         </form>
+
+      {% if matching_areas %}
+        <p>Multiple councils matched that postcode:</p>
+        <ul>
+          {% for area in matching_areas %}
+            <li><a href="{% url 'area' area.codes.gss %}">{{ area.name }}</a></li>
+          {% endfor %}
+        </ul>
+      {% elif form.pc.value %}
+        <p>No councils matched that postcode.</p>
+      {% endif %}
     </div>
 
 </div>
