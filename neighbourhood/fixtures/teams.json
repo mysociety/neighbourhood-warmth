@@ -8,6 +8,8 @@
       "centroid": "SRID=4326;POINT (-3.174673318421379 55.95194509015482)",
       "slug": "scottish-parliament",
       "areas": [ 1 ],
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
       "confirmed": true
     }
   },
@@ -20,6 +22,8 @@
       "centroid": "SRID=4326;POINT (-3.171958922898396 55.95270796489685)",
       "slug": "holyrood-palace",
       "areas": [ 1 ],
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
       "confirmed": true
     }
   },
@@ -32,6 +36,8 @@
       "centroid": "SRID=4326;POINT (-3.200368880780104 55.94862310599335)",
       "slug": "edinburgh-castle",
       "areas": [ 1 ],
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
       "confirmed": true
     }
   },
@@ -44,6 +50,8 @@
       "centroid": "SRID=4326;POINT (-3.200368880780104 55.94862310599335)",
       "slug": "edinburgh-castle-2",
       "areas": [ 1 ],
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
       "confirmed": false
     }
   },
@@ -54,6 +62,8 @@
       "code": "S12000036",
       "name": "City of Edinburgh Council",
       "area_type": "UTA",
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
       "mapit_id": 2651
     }
   }

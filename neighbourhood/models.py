@@ -124,6 +124,8 @@ class Area(models.Model):
     area_type = models.CharField(max_length=20)
     # need this to look up geometry
     mapit_id = models.IntegerField(null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         indexes = [
@@ -154,6 +156,9 @@ class Team(models.Model):
 
     confirmed = models.BooleanField(default=False)
     status = models.CharField(max_length=300, blank=True, null=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
     # BEWARE! This includes unconfirmed applicants and rejected members!
     members = models.ManyToManyField(
@@ -210,6 +215,8 @@ class Membership(models.Model):
     rejected = models.BooleanField(default=False)
     date_joined = models.DateField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
 
 class Token(models.Model):

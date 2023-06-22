@@ -37,6 +37,8 @@
       "user_id": 1,
       "confirmed": true,
       "is_admin": true,
+      "created": "2023-01-01T14:23:00Z",
+      "last_updated": "2023-01-01T14:23:00Z",
       "date_joined": "2023-01-01"
     }
   },
@@ -46,6 +48,8 @@
     "fields": {
       "team_id": 2,
       "user_id": 2,
+      "created": "2023-01-01T14:23:00Z",
+      "last_updated": "2023-01-01T14:23:00Z",
       "date_joined": "2023-01-01"
     }
   },
@@ -57,6 +61,8 @@
       "user_id": 3,
       "confirmed": true,
       "is_admin": true,
+      "created": "2023-01-01T14:23:00Z",
+      "last_updated": "2023-01-01T14:23:00Z",
       "date_joined": "2023-01-01"
     }
   }
