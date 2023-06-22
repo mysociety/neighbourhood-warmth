@@ -13,7 +13,8 @@
 
 {% block extrajs %}
     <script>
-        var gss = "{{ area_code }}";
+        var gss = "{{ gss }}";
+        var mapit_id = "{{ mapit_id }}";
     </script>
 
     <script type="module" src="{% static 'js/map.js' %}"></script>

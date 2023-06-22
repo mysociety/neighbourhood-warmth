@@ -33,7 +33,7 @@ $(function(){
 
     $.ajax({
       dataType: "json",
-      url: "/area/" + gss + "/geometry",
+      url: "/area/" + mapit_id + "/geometry",
       success: mapit.area_loaded
     });
 

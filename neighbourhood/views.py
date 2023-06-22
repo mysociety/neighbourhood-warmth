@@ -228,16 +228,20 @@ class AreaView(TitleMixin, TemplateView):
         try:
             area = Area.objects.get(code=self.kwargs["gss"])
             name = area.name
-            code = area.mapit_id
+            gss = area.code
+            mapit_id = area.mapit_id
         except Area.DoesNotExist:
             area = get_area_data(self.kwargs["gss"])
             print(area)
             name = area["name"]
-            code = area["id"]
+            if "codes" in area:
+                gss = area["codes"].get("gss", None)
+            mapit_id = area["id"]
 
         context["area"] = area
         context["page_title"] = name
-        context["area_code"] = code
+        context["gss"] = gss
+        context["mapit_id"] = mapit_id
         return context
 
 
