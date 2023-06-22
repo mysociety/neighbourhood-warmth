@@ -2,6 +2,9 @@ import $ from '../jquery/jquery.esm.js'
 import L from '../leaflet/leaflet-1.9.3.esm.js'
 
 $(function(){
+    /* for some reason leaflet's icon path detection is failing for some icons
+     * so hard code it for now */
+    L.Icon.Default.prototype.options["imagePath"] = "/static/leaflet/images/";
     var map = new L.Map("leaflet");
     map.attributionControl.setPrefix('');
     var osm = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
