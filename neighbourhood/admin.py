@@ -18,6 +18,7 @@ class TokenAdmin(admin.ModelAdmin):
 
 class TeamMembershipInline(admin.TabularInline):
     model = Team.members.through
+    readonly_fields = ["created"]
 
 
 @admin.register(Team)
@@ -28,7 +29,10 @@ class TeamAdmin(OSMGeoAdmin):
         "members_count",
         "confirmed_members_count",
         "status",
+        "created",
     )
+    list_filter = ["status", "created"]
+    readonly_fields = ["created"]
     inlines = [
         TeamMembershipInline,
     ]
@@ -86,6 +90,7 @@ class UserChangeForm(forms.ModelForm):
 
 class UserMembershipInline(admin.TabularInline):
     model = User.teams.through
+    readonly_fields = ["created"]
 
 
 class UserAdmin(BaseUserAdmin):
@@ -98,12 +103,13 @@ class UserAdmin(BaseUserAdmin):
         "is_active",
         "email_confirmed",
         "is_staff",
+        "date_joined",
         "team_names",
     ]
-    list_filter = ["is_active", "email_confirmed", "is_staff"]
+    list_filter = ["is_active", "email_confirmed", "is_staff", "date_joined"]
+    readonly_fields = ["date_joined"]
     fieldsets = [
-        (None, {"fields": ["email", "password"]}),
-        ("Personal info", {"fields": ["full_name"]}),
+        (None, {"fields": ["email", "password", "full_name", "date_joined"]}),
         (
             "Permissions",
             {

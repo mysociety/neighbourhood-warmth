@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import socket
 from pathlib import Path
 
+from django.conf.locale.en import formats as en_formats
+
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -134,6 +136,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+en_formats.DATETIME_FORMAT = "d M Y, H:i:s"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
