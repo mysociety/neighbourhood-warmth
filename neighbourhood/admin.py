@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.utils.html import format_html, mark_safe
 
-from .models import Team, Token, User
+from .models import Challenge, Team, Token, User
 
 
 @admin.register(Token)
@@ -44,6 +44,11 @@ class TeamAdmin(OSMGeoAdmin):
     @admin.display(description="Confirmed members")
     def confirmed_members_count(self, obj):
         return obj.confirmed_members.count()
+
+
+@admin.register(Challenge)
+class ChallengeAdmin(admin.ModelAdmin):
+    list_display = ("name", "description", "order", "is_active")
 
 
 class UserCreationForm(forms.ModelForm):
