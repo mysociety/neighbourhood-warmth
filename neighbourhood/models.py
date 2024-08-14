@@ -143,6 +143,10 @@ class Challenge(models.Model):
     is_active = models.BooleanField(default=True)
     order = models.IntegerField()
 
+    has_rich_description = models.BooleanField(
+        default=False, help_text="True if description is raw html"
+    )
+
     created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
