@@ -136,6 +136,20 @@ class Area(models.Model):
         return "{} ({} {})".format(self.name, self.area_type, self.mapit_id)
 
 
+class Challenge(models.Model):
+    name = models.CharField(max_length=300)
+    description = models.TextField()
+    template = models.CharField(max_length=300)
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField()
+
+    created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Team(models.Model):
     name = models.CharField(max_length=100)
     base_pc = models.CharField(max_length=10)
