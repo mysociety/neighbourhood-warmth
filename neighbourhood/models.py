@@ -201,6 +201,32 @@ class Team(models.Model):
     def admins(self):
         return User.objects.filter(team=self, membership__is_admin=True)
 
+    def available_challenges(self):
+        # if there's no challenge set then use the default ones
+        if self.challenge is None:
+            return []
+
+        challenges = Challenge.objects.filter(is_active=True).order_by("order")
+
+        current_place = 0
+        if self.challenge:
+            current_place = self.challenge.order
+
+        challenge_details = []
+        for challenge in challenges:
+            details = {
+                "challenge": challenge,
+            }
+
+            if challenge.order < current_place:
+                details["done"] = True
+            elif challenge.order == current_place:
+                details["active"] = True
+
+            challenge_details.append(details)
+
+        return challenge_details
+
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
         if latitude is None or longitude is None:
