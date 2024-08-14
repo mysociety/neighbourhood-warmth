@@ -166,6 +166,16 @@ class TeamPagesTest(TestCase):
 
         self.assertContains(response, "Use the share buttons below")
 
+    def test_team_with_bad_template_challenge_set(self):
+        challenge = Challenge.objects.get(name="Recruit first team member")
+        challenge.template = "neighbourhood/challenges/_missing.html"
+        challenge.save()
+
+        self.client.force_login(User.objects.get(email="holyrood-admin@example.org"))
+        response = self.client.get(reverse("team", args=("holyrood-palace",)))
+
+        self.assertContains(response, "Recruit your first team member")
+
     def test_team_with_no_challenge_set(self):
         self.client.force_login(
             User.objects.get(email="scottishparliament-admin@example.org")

@@ -111,7 +111,7 @@
             <h2 class="h4 mb-4">Current challenge</h2>
 
             {% if team.challenge %}
-              {% include team.challenge.template with challenge=team.challenge %}
+              {% include team.challenge.get_template_safe with challenge=team.challenge %}
             {% else %}
             <div class="mb-5 p-4 p-md-5 border rounded shadow-lg">
                 <!-- TODO: Customise the current/next step based on member_count etc -->

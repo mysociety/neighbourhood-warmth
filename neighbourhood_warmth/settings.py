@@ -26,6 +26,7 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, []),
     HIDE_DEBUG_TOOLBAR=(bool, False),
     LOG_LEVEL=(str, "WARNING"),
+    DEFAULT_CHALLENGE_TEMPLATE=(str, "neighbourhood/challenges/_default.html"),
 )
 environ.Env.read_env(BASE_DIR / ".env")
 
@@ -36,6 +37,7 @@ CACHE_FILE = env("CACHE_FILE")
 HIDE_DEBUG_TOOLBAR = env("HIDE_DEBUG_TOOLBAR")
 MAPIT_URL = env("MAPIT_URL")
 MAPIT_API_KEY = env("MAPIT_API_KEY")
+DEFAULT_CHALLENGE_TEMPLATE = env("DEFAULT_CHALLENGE_TEMPLATE")
 
 # make sure CSRF checking still works behind load balancers
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

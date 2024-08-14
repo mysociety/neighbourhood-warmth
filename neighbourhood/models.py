@@ -1,6 +1,7 @@
 from hashlib import sha256
 from random import randrange
 
+from django import template
 from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -11,6 +12,7 @@ from django.contrib.gis import measure
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
+from django.core.mail import mail_admins
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils import timezone
@@ -149,6 +151,17 @@ class Challenge(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+
+    def get_template_safe(self):
+        try:
+            template.loader.get_template(self.template)
+            return self.template
+        except template.TemplateDoesNotExist:
+            mail_admins(
+                "Bad challenge template",
+                f"Challenge {self.name} template not found: {self.template}",
+            )
+            return settings.DEFAULT_CHALLENGE_TEMPLATE
 
     def __str__(self):
         return self.name
