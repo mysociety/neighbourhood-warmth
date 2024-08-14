@@ -220,12 +220,14 @@ class Team(models.Model):
     def admins(self):
         return User.objects.filter(team=self, membership__is_admin=True)
 
-    def available_challenges(self):
+    def available_challenges(self, public_only=False):
         # if there's no challenge set then use the default ones
         if self.challenge is None:
             return []
 
         challenges = Challenge.objects.filter(is_active=True).order_by("order")
+        if public_only:
+            challenges = challenges.filter(is_public=True)
 
         current_place = 0
         if self.challenge:
