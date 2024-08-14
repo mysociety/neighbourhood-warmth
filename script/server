@@ -15,9 +15,9 @@ case "$ACTION" in
         source .env
         if [ "$DEVENV" == "docker" ] ; then
             echo "==> Removing any stopped or crashed containers..."
-            docker-compose rm
+            docker compose rm
             echo "==> Starting development environment, hit ^C to stop..."
-            docker-compose up
+            docker compose up
         else
             echo "==> Starting development server..."
             script/server --development

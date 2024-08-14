@@ -1,5 +1,5 @@
 name: 'Cached build'
-description: 'Assuming a top-level Dockerfile and docker-compose, build cached images to the current repo register'
+description: 'Assuming a top-level Dockerfile and docker compose, build cached images to the current repo register'
 inputs:
   registry: 
     description: 'Registry to upload to (default ghcr.io)'
@@ -60,10 +60,10 @@ runs:
       DOCKER_BUILDKIT: 1
       COMPOSE_DOCKER_CLI_BUILD: 1
 
-  - name: Build and tag relevant app from docker-compose
+  - name: Build and tag relevant app from docker compose
     shell: bash
     run: |
-      docker-compose -f  ${{ inputs.docker_compose_file }} build ${{ inputs.docker_compose_file_app }}
+      docker compose -f  ${{ inputs.docker_compose_file }} build ${{ inputs.docker_compose_file_app }}
       docker tag "$IMAGE_NAME" "$REGISTRY/$IMAGE_NAME"
       for val in $TAGS; do
         docker tag "$IMAGE_NAME" "$val"

@@ -21,6 +21,6 @@ This will create a `.env` file (from `.env-example`) if one doesn’t already ex
 
 You may want to add your own `SECRET_KEY` and `MAPIT_API_KEY` to `.env`. You can get the latter from https://mapit.mysociety.org/account/signup/
 
-If Python complains about missing libraries, chances are the Python requirements have changed since your Docker image was last built. You can rebuild it with, eg: `docker-compose build web`.
+If Python complains about missing libraries, chances are the Python requirements have changed since your Docker image was last built. You can rebuild it with, eg: `docker compose build web`.
 
 You can run Django management commands inside the Docker container with `script/manage`, and you can create your first Django superuser with `script/createsuperuser` (which will use the `DJANGO_SUPERUSER_*` environment variables from `docker-compose.yml`).
