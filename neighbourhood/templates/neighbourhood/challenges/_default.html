@@ -1,5 +1,11 @@
 <div class="mb-5 p-4 p-md-5 border rounded shadow-lg">
     <h2 class="h4 mb-3 mw-40rem">{{ challenge.name }}</h2>
 
-    <p class="mw-40rem">{{ challenge.description }}</p>
+    {% if challenge.has_rich_description %}
+        {% autoescape off %}
+            {{ challenge.description }}
+        {% endautoescape %}
+    {% else %}
+        {{ challenge.description|linebreaks }}
+    {% endif %}
 </div>

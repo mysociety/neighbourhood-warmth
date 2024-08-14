@@ -1,5 +1,32 @@
 [
   {
+    "model": "neighbourhood.challenge",
+    "pk": 1,
+    "fields": {
+      "name": "Recruit first team member",
+      "description": "Recruit your first team member",
+      "template": "neighbourhood/challenges/_default.html",
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
+      "is_active": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "neighbourhood.challenge",
+    "pk": 2,
+    "fields": {
+      "name": "Recruit second team member",
+      "description": "<p>Recruit your <b>second</b> team member</p>",
+      "has_rich_description": true,
+      "template": "neighbourhood/challenges/_default.html",
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
+      "is_active": true,
+      "order": 2
+    }
+  },
+  {
     "model": "neighbourhood.team",
     "pk": 1,
     "fields": {
@@ -24,6 +51,7 @@
       "areas": [ 1 ],
       "created": "2023-06-22T14:23:00Z",
       "last_updated": "2023-06-22T14:23:00Z",
+      "challenge_id": 1,
       "confirmed": true
     }
   },

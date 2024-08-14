@@ -30,6 +30,16 @@
     }
   },
   {
+    "model": "neighbourhood.user",
+    "pk": 4,
+    "fields": {
+      "email": "scottishparliament-admin@example.org",
+      "full_name": "Scottish Parliament Admin",
+      "is_active": true,
+      "email_confirmed": true
+    }
+  },
+  {
     "model": "neighbourhood.membership",
     "pk": 1,
     "fields": {
@@ -59,6 +69,19 @@
     "fields": {
       "team_id": 2,
       "user_id": 3,
+      "confirmed": true,
+      "is_admin": true,
+      "created": "2023-01-01T14:23:00Z",
+      "last_updated": "2023-01-01T14:23:00Z",
+      "date_joined": "2023-01-01"
+    }
+  },
+  {
+    "model": "neighbourhood.membership",
+    "pk": 4,
+    "fields": {
+      "team_id": 1,
+      "user_id": 4,
       "confirmed": true,
       "is_admin": true,
       "created": "2023-01-01T14:23:00Z",

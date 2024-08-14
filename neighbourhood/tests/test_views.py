@@ -6,7 +6,7 @@ from django.core import mail
 from django.shortcuts import reverse
 from django.test import TestCase
 
-from neighbourhood.models import Team, User
+from neighbourhood.models import Challenge, Team, User
 
 
 class CorePageTest(TestCase):
@@ -118,7 +118,7 @@ class CreateTeamTest(TestCase):
 
 
 class TeamPagesTest(TestCase):
-    fixtures = ["teams.json"]
+    fixtures = ["teams.json", "memberships.json"]
 
     def test_existing_team(self):
         team = Team.objects.get(slug="holyrood-palace")
@@ -136,6 +136,45 @@ class TeamPagesTest(TestCase):
     def test_non_confirmed_team(self):
         response = self.client.get(reverse("team", args=("holyrood-palace-2",)))
         self.assertEqual(response.status_code, 404)
+
+    def test_team_with_challenge_set(self):
+        self.client.force_login(User.objects.get(email="holyrood-admin@example.org"))
+        response = self.client.get(reverse("team", args=("holyrood-palace",)))
+
+        self.assertContains(response, "Recruit your first team member")
+        self.assertContains(response, "Recruit second team member")
+        self.assertNotContains(response, "Find second member")
+
+    def test_team_with_rich_challenge_set(self):
+        challenge = Challenge.objects.get(name="Recruit second team member")
+        team = Team.objects.get(slug="holyrood-palace")
+        team.challenge = challenge
+        team.save()
+
+        self.client.force_login(User.objects.get(email="holyrood-admin@example.org"))
+        response = self.client.get(reverse("team", args=("holyrood-palace",)))
+
+        self.assertContains(response, "<p>Recruit your <b>second</b> team member")
+
+    def test_team_with_non_default_template_challenge_set(self):
+        challenge = Challenge.objects.get(name="Recruit first team member")
+        challenge.template = "neighbourhood/challenges/_recruit_members.html"
+        challenge.save()
+
+        self.client.force_login(User.objects.get(email="holyrood-admin@example.org"))
+        response = self.client.get(reverse("team", args=("holyrood-palace",)))
+
+        self.assertContains(response, "Use the share buttons below")
+
+    def test_team_with_no_challenge_set(self):
+        self.client.force_login(
+            User.objects.get(email="scottishparliament-admin@example.org")
+        )
+
+        response = self.client.get(reverse("team", args=("scottish-parliament",)))
+
+        self.assertNotContains(response, "Recruit second team member")
+        self.assertContains(response, "Find second member")
 
 
 class TeamManagementPagesTest(TestCase):
