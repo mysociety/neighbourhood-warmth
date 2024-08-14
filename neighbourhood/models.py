@@ -140,9 +140,11 @@ class Area(models.Model):
 
 class Challenge(models.Model):
     name = models.CharField(max_length=300)
+    short_description = models.CharField(max_length=1000, null=True, blank=True)
     description = models.TextField()
     template = models.CharField(max_length=300)
     is_active = models.BooleanField(default=True)
+    is_public = models.BooleanField(default=True)
     order = models.IntegerField()
 
     has_rich_description = models.BooleanField(
