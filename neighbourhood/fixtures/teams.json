@@ -84,6 +84,20 @@
     }
   },
   {
+    "model": "neighbourhood.team",
+    "pk": 5,
+    "fields": {
+      "name": "southwark 1",
+      "base_pc": "se17 3he",
+      "centroid": "SRID=4326;POINT (-0.096961 51.484853)",
+      "slug": "southwark 1",
+      "areas": [ 2 ],
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
+      "confirmed": true
+    }
+  },
+  {
     "model": "neighbourhood.area",
     "pk": 1,
     "fields": {
@@ -93,6 +107,18 @@
       "created": "2023-06-22T14:23:00Z",
       "last_updated": "2023-06-22T14:23:00Z",
       "mapit_id": 2651
+    }
+  },
+  {
+    "model": "neighbourhood.area",
+    "pk": 2,
+    "fields": {
+      "code": "E09000028",
+      "name": "Southwark Borough Council",
+      "area_type": "LBO",
+      "created": "2023-06-22T14:23:00Z",
+      "last_updated": "2023-06-22T14:23:00Z",
+      "mapit_id": 2491
     }
   }
 ]

@@ -7,8 +7,8 @@ class TeamTest(TestCase):
     fixtures = ["teams.json"]
 
     def test_group_count(self):
-        self.assertEqual(4, Team.objects.count())
-        self.assertEqual(3, Team.objects.filter(confirmed=True).count())
+        self.assertEqual(5, Team.objects.count())
+        self.assertEqual(4, Team.objects.filter(confirmed=True).count())
 
     def test_find_nearest(self):
         nearest = Team.find_nearest_teams(

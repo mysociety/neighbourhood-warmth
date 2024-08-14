@@ -59,7 +59,7 @@
 
       {% endif %}
 
-      {% comment %}
+      {% if can_create_teams %}
         <div class="row">
             <div class="col-sm-6 d-flex">
                 <div class="p-3 p-md-4 bg-white border rounded mt-4 mw-40rem">
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-        {% endcomment %}
+        {% endif %}
         <div class="row">
             <div class="col-sm-6 d-flex">
                 <div class="p-3 p-md-4 bg-white border rounded mt-4 mw-40rem">

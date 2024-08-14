@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.gis.geos import Point
 from django.contrib.sites.shortcuts import get_current_site
@@ -52,6 +53,7 @@ class SearchView(TitleMixin, TemplateView):
             )
             context["teams"] = nearest
 
+        context["can_create_teams"] = settings.CAN_CREATE_TEAMS
         return context
 
 
@@ -101,6 +103,14 @@ class CreateTeamView(TitleMixin, CreateView):
     page_title = "Create a team"
     form_class = NewTeamForm
     template_name = "neighbourhood/create_team.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        # redirect to home page if creating teams is disabled
+        if not settings.CAN_CREATE_TEAMS:
+            url = reverse("home")
+            return HttpResponseRedirect(url)
+
+        return super().dispatch(request, args, kwargs)
 
     def get_initial(self):
         return {"base_pc": self.request.GET.get("pc", "")}

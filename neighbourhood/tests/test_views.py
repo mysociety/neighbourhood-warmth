@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from django.core import mail
 from django.shortcuts import reverse
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from neighbourhood.models import Challenge, Team, User
 
@@ -20,6 +20,7 @@ class CorePageTest(TestCase):
 
 
 class CreateTeamTest(TestCase):
+    @override_settings(CAN_CREATE_TEAMS=True)
     @patch("neighbourhood.utils.get_mapit_data")
     def test_create_team(self, mapit_get):
         mapit_get.return_value = {
@@ -67,6 +68,11 @@ class CreateTeamTest(TestCase):
         }
 
         url = reverse("create_team")
+
+        with self.settings(CAN_CREATE_TEAMS=False):
+            response = self.client.get(f"{url}?pc=SP1 1SP")
+            self.assertRedirects(response, "/")
+
         response = self.client.get(f"{url}?pc=SP1 1SP")
 
         response = self.client.post(
@@ -115,6 +121,32 @@ class CreateTeamTest(TestCase):
         team_url = reverse("team", args=(t.slug,))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, team_url)
+
+
+class TeamSearchTest(TestCase):
+    fixtures = ["teams.json"]
+
+    @patch("neighbourhood.utils.get_mapit_data")
+    def test_search_for_area(self, mapit_get):
+        mapit_get.return_value = {
+            "postcode": "SP1 1SP",
+            "lon": -3.174588946918464,
+            "lat": 55.95206388207891,
+        }
+
+        url = reverse("search_results")
+        response = self.client.get(url, {"pc": "SP1 1SP"})
+        self.assertEqual(200, response.status_code)
+
+        self.assertFalse(response.context["can_create_teams"])
+        self.assertEquals(len(response.context["teams"]), 3)
+
+        team_names = [t.name for t in response.context["teams"]]
+        self.assertFalse("southwark 1" in team_names)
+
+        with self.settings(CAN_CREATE_TEAMS=True):
+            response = self.client.get(url, {"pc": "SP1 1SP"})
+            self.assertTrue(response.context["can_create_teams"])
 
 
 class TeamPagesTest(TestCase):
