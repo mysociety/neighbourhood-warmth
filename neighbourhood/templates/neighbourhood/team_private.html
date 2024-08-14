@@ -96,6 +96,9 @@
 
             <h2 class="h4 mb-4">Current challenge</h2>
 
+            {% if team.challenge %}
+              {% include team.challenge.template with challenge=team.challenge %}
+            {% else %}
             <div class="mb-5 p-4 p-md-5 border rounded shadow-lg">
                 <!-- TODO: Customise the current/next step based on member_count etc -->
                 <h2 class="h4 mb-3 mw-40rem">Recruit at least one more team member from your neighbourhood</h2>
@@ -145,6 +148,7 @@
                     <li>You could even <a href="#">ask your local councillor</a> for help</li>
                 </ul>
             </div>
+            {% endif %}
         
           {% if is_team_admin %}
             <div class="mb-5 border rounded overflow-hidden">
