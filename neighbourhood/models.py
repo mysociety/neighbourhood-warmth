@@ -171,6 +171,10 @@ class Team(models.Model):
     confirmed = models.BooleanField(default=False)
     status = models.CharField(max_length=300, blank=True, null=True)
 
+    challenge = models.ForeignKey(
+        Challenge, on_delete=models.SET_NULL, blank=True, null=True
+    )
+
     created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
