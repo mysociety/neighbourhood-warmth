@@ -49,6 +49,9 @@ class TeamAdmin(OSMGeoAdmin):
 @admin.register(Challenge)
 class ChallengeAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "order", "is_active")
+    list_editable = ("order", "is_active")
+    list_filter = ["is_active", "has_rich_description"]
+    ordering = ["order"]
 
 
 class UserCreationForm(forms.ModelForm):
