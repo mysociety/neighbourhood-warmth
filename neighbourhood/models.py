@@ -134,15 +134,29 @@ class Area(models.Model):
 
 class Challenge(models.Model):
     name = models.CharField(max_length=300)
-    short_description = models.CharField(max_length=1000, null=True, blank=True)
-    description = models.TextField()
-    template = models.CharField(max_length=300)
-    is_active = models.BooleanField(default=True)
-    is_public = models.BooleanField(default=True)
+    short_description = models.CharField(
+        max_length=1000,
+        null=True,
+        blank=True,
+        help_text="A one line summary of the challenge, suitable for public view",
+    )
+    description = models.TextField(
+        help_text="Detailed text content (plain text or HTML) shown to signed-in team members"
+    )
+    template = models.CharField(
+        max_length=300, help_text=f"Default: {settings.DEFAULT_CHALLENGE_TEMPLATE}"
+    )
+    is_active = models.BooleanField(
+        default=True, help_text="Inactive challenges are not displayed anywhere"
+    )
+    is_public = models.BooleanField(
+        default=True,
+        help_text="Private challenges are shown only to signed-in team members",
+    )
     order = models.IntegerField()
 
     has_rich_description = models.BooleanField(
-        default=False, help_text="True if description is raw html"
+        default=False, help_text="True if description is raw HTML"
     )
 
     created = models.DateTimeField(auto_now_add=True)
