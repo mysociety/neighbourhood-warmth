@@ -1,8 +1,10 @@
+{% load boring_avatars %}
+
 <div class="p-3 p-md-4 bg-white border rounded d-block mb-3 mb-md-4 position-relative">
     <h2 class="mb-4"><a href="{% url 'team' team.slug %}" class="stretched-link">{{ team.name }}</a></h2>
     <div class="mb-3 d-flex align-items-center">
       {% for member in team.confirmed_members.all %}
-        <img src="{{ member.avatar_url|escape }}" width="24" height="24" class="rounded-circle bg-primary me-n2" alt="" role="presentation" style="border: 2px solid #fff;">
+        {% boring_avatar name=member.email width="24" height="24" class="rounded-circle bg-primary me-n2" alt="" role="presentation" style="border: 2px solid #fff;" %}
       {% endfor %}
         <p class="fw-bold mb-0 ms-3">{{ team.confirmed_members|length }} {{ team.confirmed_members|pluralize:"member,members" }}</p>
     </div>

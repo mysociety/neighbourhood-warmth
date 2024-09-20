@@ -1,4 +1,3 @@
-from hashlib import sha256
 from random import randrange
 
 from django import template
@@ -76,11 +75,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(max_length=200, blank=True, null=True)
 
     objects = MyUserManager()
-
-    @property
-    def avatar_url(self):
-        colours = ["fcbf49", "eae2b7", "198754", "d62828", "ccc7ab"]
-        return f"https://source.boringavatars.com/beam/120/{sha256(self.email.encode('utf-8')).hexdigest()}?square&colors={','.join(colours)}"
 
 
 class Area(models.Model):

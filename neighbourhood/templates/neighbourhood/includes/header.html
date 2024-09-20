@@ -1,3 +1,5 @@
+{% load boring_avatars %}
+
 <div class="bg-dark text-light py-3 fs-7">
     <div class="container">
         <div class="d-sm-flex">
@@ -22,7 +24,7 @@
               {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ request.user.avatar_url|escape }}" width="32" height="32" class="rounded-circle bg-primary" alt="{{ request.user.full_name }}">
+                        {% boring_avatar name=request.user.email width="32" height="32" class="rounded-circle bg-primary" alt="{{ request.user.full_name }}" role="presentation" %}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><h6 class="dropdown-header">Signed in as</h6></li>

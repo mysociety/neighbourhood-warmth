@@ -1,7 +1,7 @@
 {% load static %}
+{% load boring_avatars %}
 
 <div class="container py-4 py-lg-5">
-
     <div class="row">
         <div class="col-sm-6 col-md-5 mb-3 mb-sm-0">
             <h1 class="mb-2">{{ team.name }}</h1>
@@ -9,7 +9,7 @@
 
             <div class="my-4 d-flex align-items-center">
               {% for member in team.confirmed_members.all %}
-                <img src="{{ member.avatar_url|escape }}" width="32" height="32" class="rounded-circle bg-primary me-n2" alt="" role="presentation" style="border: 2px solid #fff;">
+                {% boring_avatar name=member.email width="32" height="32" class="rounded-circle bg-primary me-n2" alt="" role="presentation" style="border: 2px solid #fff;" %}
               {% endfor %}
                 <p class="h4 lh-sm mb-0 ms-3">{{ team.confirmed_members|length }} {{ team.confirmed_members|pluralize:"member,members" }}</p>
             </div>
