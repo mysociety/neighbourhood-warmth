@@ -15,9 +15,10 @@ $(function(){
     });
     map.addLayer(OpenStreetMap_HOT);
 
+    var features = L.featureGroup().addTo(map);
+
     if ( window.gss && window.mapit_id ) {
         // Local authority area page
-        var areas = L.featureGroup().addTo(map);
 
         function area_loaded(data) {
             var area = new L.GeoJSON(data);
@@ -25,8 +26,8 @@ $(function(){
                 var z = map.getZoom() + (e.originalEvent.shiftKey ? -1 : 1);
                 map.setZoomAround(e.containerPoint, z);
             });
-            areas.addLayer(area);
-            map.fitBounds(areas.getBounds());
+            features.addLayer(area);
+            map.fitBounds(features.getBounds());
         };
 
         function teams_loaded(data) {
@@ -35,7 +36,7 @@ $(function(){
                     layer.bindPopup('<p><a href="'+feature.properties.url+'">'+feature.properties.name+'</a></p>');
                 }
             });
-            areas.addLayer(area);
+            features.addLayer(area);
         }
 
         $.ajax({
@@ -63,7 +64,7 @@ $(function(){
                 pane: "markerPane",
                 interactive: false
             }
-        ).addTo(map);
+        ).addTo(features);
         map.setView(window.user_latlon, 14);
     } else if ( window.team_latlon ) {
         map.setView(window.team_latlon, 14);
@@ -83,8 +84,8 @@ $(function(){
                     fillOpacity: 0.6
                 }
             }
-        ).addTo(map);
-        map.fitBounds(team_boundary.getBounds());
+        ).addTo(features);
+        map.fitBounds(features.getBounds());
     }
 
     // Reload map, if it is inside a bootstrap collapse element
@@ -94,7 +95,7 @@ $(function(){
         if ( map && e.target.contains(map._container) ) {
             map.invalidateSize();
             if ( team_boundary ) {
-                map.fitBounds(team_boundary.getBounds());
+                map.fitBounds(features.getBounds());
             } else if ( window.user_latlon ) {
                 map.setView(window.user_latlon, 14);
             } else if ( window.team_latlon ) {
