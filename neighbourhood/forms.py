@@ -1,3 +1,6 @@
+import json
+
+from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage
@@ -5,6 +8,7 @@ from django.forms import (
     BaseModelFormSet,
     CharField,
     EmailField,
+    FileField,
     Form,
     ModelForm,
     modelformset_factory,
@@ -171,3 +175,25 @@ class PostcodeForm(Form):
             raise ValidationError(data["error"])
 
         self.postcode_data = data
+
+
+class GeoJsonUploadFormMixin(ModelForm):
+    geojson_file = FileField(required=False, label="Upload GeoJSON")
+
+    def clean_geojson_file(self):
+        file = self.cleaned_data.get("geojson_file")
+        if file:
+            try:
+                geojson_data = json.load(file)
+                if geojson_data["type"] == "FeatureCollection":
+                    feature = geojson_data["features"][0]
+                elif geojson_data["type"] == "Feature":
+                    feature = geojson_data
+                else:
+                    raise ValidationError(
+                        "GeoJSON file must contain a single Feature or FeatureCollection."
+                    )
+                return GEOSGeometry(json.dumps(feature["geometry"]))
+            except (KeyError, TypeError, json.JSONDecodeError):
+                raise ValidationError("Invalid GeoJSON file format.")
+        return None

@@ -4,9 +4,11 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.gis.admin import OSMGeoAdmin
 from django.core.exceptions import ValidationError
+from django.forms import ModelForm
 from django.urls import reverse
 from django.utils.html import format_html, mark_safe
 
+from .forms import GeoJsonUploadFormMixin
 from .models import Challenge, Team, Token, User
 
 
@@ -21,8 +23,15 @@ class TeamMembershipInline(admin.TabularInline):
     readonly_fields = ["created"]
 
 
+class TeamAdminForm(GeoJsonUploadFormMixin, ModelForm):
+    class Meta:
+        model = Team
+        fields = "__all__"  # This includes all fields from the model
+
+
 @admin.register(Team)
 class TeamAdmin(OSMGeoAdmin):
+    form = TeamAdminForm
     list_display = (
         "name",
         "base_pc",
@@ -36,6 +45,13 @@ class TeamAdmin(OSMGeoAdmin):
     inlines = [
         TeamMembershipInline,
     ]
+
+    def save_model(self, request, obj, form, change):
+        if form.cleaned_data.get("geojson_file"):
+            obj.boundary = form.cleaned_data[
+                "geojson_file"
+            ]  # Set the geometry from the uploaded GeoJSON
+        super().save_model(request, obj, form, change)
 
     @admin.display(description="Members")
     def members_count(self, obj):

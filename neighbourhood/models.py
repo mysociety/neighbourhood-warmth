@@ -181,6 +181,7 @@ class Team(models.Model):
     name = models.CharField(max_length=100)
     base_pc = models.CharField(max_length=10)
     centroid = models.PointField()
+    boundary = models.PolygonField(blank=True, null=True)
     slug = models.CharField(
         max_length=100, blank=True, null=True, default="", unique=True
     )
