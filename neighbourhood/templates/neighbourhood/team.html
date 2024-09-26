@@ -34,3 +34,19 @@
 {% endif %}
 
 {% endblock %}
+
+{% block extrajs %}
+    <script>
+        window.team_latlon = [{{ team.centroid.y }},{{ team.centroid.x }}];
+      {% if team.boundary_geojson %}
+        window.team_boundary_geojson = {{ team.boundary_geojson|safe }};
+      {% endif %}
+      {% if request.session.user_latlon %}
+        window.user_latlon = [{{ request.session.user_latlon|join:"," }}];
+      {% endif %}
+    </script>
+    <script type="module" src="{% static 'js/map.js' %}"></script>
+{% endblock %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'leaflet/leaflet-1.8.0.scss' %}">
+{% endblock %}

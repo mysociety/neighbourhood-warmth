@@ -48,6 +48,8 @@ class SearchView(TitleMixin, TemplateView):
         if "error" in lat_lon:
             context["error"] = lat_lon["error"]
         else:
+            # Store user location for maps on subsequent pages
+            self.request.session["user_latlon"] = (lat_lon["lat"], lat_lon["lon"])
             nearest = Team.find_nearest_teams(
                 latitude=lat_lon["lat"], longitude=lat_lon["lon"]
             )

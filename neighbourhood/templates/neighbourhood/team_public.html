@@ -30,9 +30,7 @@
 
         </div>
         <div class="col-sm-5 col-md-6 ms-auto d-flex flex-column">
-            <div class="flex-grow-1 d-flex align-items-center justify-content-center rounded border" style="min-height: 10rem; background-image: url('{% static 'img/map.svg' %}'); background-size: cover;">
-                {% include 'neighbourhood/icons/pin.html' with width="3rem" height="auto" classes="text-danger" %}
-            </div>
+            <div id="leaflet" class="flex-grow-1 d-flex align-items-center justify-content-center rounded border" style="min-height: 10rem;"></div>
         </div>
     </div>
 

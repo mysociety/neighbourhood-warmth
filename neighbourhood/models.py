@@ -1,3 +1,4 @@
+import json
 from random import randrange
 
 from django import template
@@ -256,6 +257,15 @@ class Team(models.Model):
             challenge_details.append(details)
 
         return challenge_details
+
+    @property
+    def boundary_geojson(self):
+        if self.boundary:
+            return json.dumps(
+                {"type": "Feature", "geometry": json.loads(self.boundary.geojson)}
+            )
+        else:
+            return None
 
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):
