@@ -38,6 +38,9 @@ urlpatterns = [
     path("area/<slug:gss>/teams", views.AreaTeamJSON.as_view(), name="area_team_json"),
     path("about/", views.AboutView.as_view(), name="about"),
     path(
+        "forget_postcode/", views.ForgetPostcodeView.as_view(), name="forget_postcode"
+    ),
+    path(
         "confirmation_sent/",
         views.ConfirmationSentView.as_view(),
         name="confirmation_sent",

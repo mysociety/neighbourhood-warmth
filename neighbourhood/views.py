@@ -5,7 +5,12 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, reverse
-from django.views.generic import DetailView, TemplateView, UpdateView
+from django.views.generic import (
+    DetailView,
+    RedirectView,
+    TemplateView,
+    UpdateView,
+)
 from django.views.generic.edit import CreateView, FormView
 
 from neighbourhood.forms import (
@@ -50,6 +55,8 @@ class SearchView(TitleMixin, TemplateView):
         else:
             # Store user location for maps on subsequent pages
             self.request.session["user_latlon"] = (lat_lon["lat"], lat_lon["lon"])
+            self.request.session["user_postcode"] = postcode
+
             nearest = Team.find_nearest_teams(
                 latitude=lat_lon["lat"], longitude=lat_lon["lon"]
             )
@@ -81,6 +88,7 @@ class TeamView(TitleMixin, DetailView):
             else:
                 # Store user location for map on page
                 self.request.session["user_latlon"] = (lat_lon["lat"], lat_lon["lon"])
+                self.request.session["user_postcode"] = postcode
 
         return self.render_to_response(context)
 
@@ -331,6 +339,19 @@ class AreaTeamJSON(TemplateView):
             )
         data["features"] = features
         return JsonResponse(data)
+
+
+class ForgetPostcodeView(RedirectView):
+    permanent = False
+
+    def get(self, request, *args, **kwargs):
+        request.session.pop("user_latlon", None)
+        request.session.pop("user_postcode", None)
+
+        return super().get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        return self.request.META.get("HTTP_REFERER", reverse("home"))
 
 
 class AboutView(TitleMixin, TemplateView):
