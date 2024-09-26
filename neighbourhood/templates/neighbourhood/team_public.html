@@ -19,8 +19,12 @@
             <div class="mb-4">
               {% if is_team_applicant %}
                 <p class="fs-7 p-3 bg-gray-200 rounded">You have requested to join this team. One of the team’s organisers should approve or reject your request shortly. We’ll email you when this happens.</p>
+              {% elif is_team_member %}
+                <a href="#" class="btn btn-secondary btn-lg w-100 disabled">You are already in this team</a>
+              {% elif team.boundary_geojson and not request.session.user_latlon %}
+                <button type="button" class="btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#postcodeModal">Am I in this team’s area?</a>
               {% else %}
-                <a href="{% url 'join_team' team.slug %}" class="btn btn-primary btn-lg w-100 {% if is_team_member %}disabled{% endif %}">Request to join this team</a>
+                <a href="{% url 'join_team' team.slug %}" class="btn btn-primary btn-lg w-100">Request to join this team</a>
               {% endif %}
             </div>
 
@@ -90,4 +94,15 @@
 
     {% include 'neighbourhood/includes/generic_promo.html' with testimonials=1 %}
 
+</div>
+
+<div class="modal fade" tabindex="-1" id="postcodeModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg bg-gray-100">
+            <div class="modal-body d-flex justify-content-center p-4 p-lg-5">
+                <button type="button" class="btn-close p-4 position-absolute top-0" style="right: 0;" data-bs-dismiss="modal" aria-label="Close"></button>
+                {% include 'neighbourhood/includes/postcode_search_form.html' with action="." method="post" default=postcode error=postcode_error %}
+            </div>
+        </div>
+    </div>
 </div>

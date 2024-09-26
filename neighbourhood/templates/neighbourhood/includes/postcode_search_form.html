@@ -1,10 +1,13 @@
-<form action="{% url 'search_results' %}" class="{{ classes }}">
+<form action="{% if action %}{{ action }}{% else %}{% url 'search_results' %}{% endif %}" method="{{ method|default:'get' }}" class="{{ classes }}">
+  {% if method and method != "GET" and method != "get" %}
+    {% csrf_token %}
+  {% endif %}
     <label class="form-label" for="postcode">{{ label|default:'Your postcode' }}</label>
     <div class="d-flex">
         <input class="form-control form-control-lg text-uppercase{% if error %} is-invalid{% endif %}" type="text" id="postcode" name="pc" style="max-width: 10em;" value="{{ request.GET.pc|default:default|upper }}">
-        {% if error %}
-        <div class="invalid-feedback">{{ error }}</div>
-        {% endif %}
         <button type="submit" class="btn btn-lg btn-primary ms-3">Search</a>
     </div>
+  {% if error %}
+    <div class="invalid-feedback d-block">{{ error }}</div>
+  {% endif %}
 </form>

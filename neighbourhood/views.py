@@ -66,6 +66,24 @@ class TeamView(TitleMixin, DetailView):
     page_title = "Team profile"
     template_name = "neighbourhood/team.html"
 
+    def post(self, request, *args, **kwargs):
+        self.object = (
+            self.get_object()
+        )  # Django doesn't automatically do this for POST requests
+        context = self.get_context_data(**kwargs)
+
+        postcode = self.request.POST.get("pc", None)
+        if postcode:
+            lat_lon = get_postcode_centroid(postcode)
+            if "error" in lat_lon:
+                context["postcode_error"] = lat_lon["error"]
+                context["postcode"] = postcode
+            else:
+                # Store user location for map on page
+                self.request.session["user_latlon"] = (lat_lon["lat"], lat_lon["lon"])
+
+        return self.render_to_response(context)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
