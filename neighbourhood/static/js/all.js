@@ -37,4 +37,23 @@ $(function(){
     }).on('shown.bs.modal', function(){
         $(this).find('#postcode').focus();
     });
+
+    $('[data-copy-text]').on('click', function(e){
+        e.stopPropagation();
+        if (navigator.clipboard) {
+            var $el = $(this);
+            var $feedback = $el.find('[data-copy-feedback]');
+            var copyText = $el.attr('data-copy-text');
+            var successHTML = $el.attr('data-copy-success');
+            var originalHTML = $feedback.html();
+            navigator.clipboard.writeText(copyText).then(function(){
+                $feedback.html(successHTML);
+                $el.attr('data-copied', true);
+                setTimeout(function(){
+                    $feedback.html(originalHTML);
+                    $el.removeAttr('data-copied');
+                }, 2000);
+            });
+        }
+    });
 });
