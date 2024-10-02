@@ -11,12 +11,12 @@
 
         <div style="max-width: 30em">
 
-            <h1 class="mb-4">Join team {{ team.name }}</h1>
+            <h1 class="mb-4">Join {{ team.name }}</h1>
+
+            <p class="mb-4">Once the team’s organiser has approved your request to join the team, you’ll be able to see the progress this team has made already, and access step-by-step guidance to join them on their journey.</p>
 
             <form method="POST" action="">
                 {% csrf_token %}
-                <h2>Your personal account</h2>
-
                 <div class="mb-4">
                     {% bootstrap_field form.name %}
                 </div>
