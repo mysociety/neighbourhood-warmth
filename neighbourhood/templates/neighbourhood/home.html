@@ -19,35 +19,7 @@
 
 <div class="py-4 py-lg-5 bg-white">
     <div class="container">
-        {% include 'neighbourhood/includes/generic_promo.html' %}
-
-        <h2 class="h4 mb-3 mt-5">Don’t know where to start?</h2>
-        <p class="fs-5 mw-35rem">Read more about our curated challenges, and then find teams already working on them near you:</p>
-
-        <div class="row gx-xl-5 mt-4 mt-lg-5">
-            <div class="col-sm-4 mb-4 d-flex flex-column">
-                <div class="d-flex flex-column align-items-start bg-white border rounded flex-grow-1 p-3 p-lg-4">
-                    <h3 class="h5 mb-3">Understand your home</h3>
-                    <p>This is the best, most comprehensive way to find out what’s right for you and your home.</p>
-                    <a href="{% url 'about' %}" class="mt-auto">Read more…</a>
-                </div>
-            </div>
-            <div class="col-sm-4 mb-4 d-flex flex-column">
-                <div class="d-flex flex-column align-items-start bg-white border rounded flex-grow-1 p-3 p-lg-4">
-                    <h3 class="h5 mb-3">Get draft proofing</h3>
-                    <p>A quick, easy way to improve your home and make new energy saving friends in your neighbourhood.</p>
-                    <a href="{% url 'about' %}" class="mt-auto">Read more…</a>
-                </div>
-            </div>
-            <div class="col-sm-4 mb-4 d-flex flex-column">
-                <div class="d-flex flex-column align-items-start bg-white border rounded flex-grow-1 p-3 p-lg-4">
-                    <h3 class="h5 mb-3">Adjust your boiler</h3>
-                    <p>Turning down your boiler just a few degrees could save you almost £10 a month.</p>
-                    <a href="{% url 'about' %}" class="mt-auto">Read more…</a>
-                </div>
-            </div>
-        </div>
-
+        {% include 'neighbourhood/includes/generic_promo.html' with testimonials=1 %}
     </div>
 </div>
 

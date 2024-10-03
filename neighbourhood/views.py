@@ -363,6 +363,13 @@ class PrivacyView(TitleMixin, TemplateView):
     page_title = "Privacy policy"
     template_name = "neighbourhood/privacy.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["session_cookie_age_string"] = "{} days".format(
+            settings.SESSION_COOKIE_AGE // 86400
+        )
+        return context
+
 
 class ConfirmEmailView(TitleMixin, TemplateView):
     page_title = "Email Confirmation"
