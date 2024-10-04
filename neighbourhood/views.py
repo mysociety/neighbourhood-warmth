@@ -112,19 +112,19 @@ class TeamView(TitleMixin, DetailView):
             context["applicant_count"] = Membership.objects.filter(
                 team=team, confirmed=False, rejected=False
             ).count()
-        else:
-            if team.challenge:
-                challenges = team.available_challenges(public_only=True)
-                context["challenge_count"] = len(challenges)
-                position = next(
-                    i
-                    for i, c in enumerate(challenges)
-                    if c["challenge"].name == team.challenge.name
-                )
-                position += 1
-                progress = int((position / context["challenge_count"]) * 100)
-                context["progress"] = progress
-                context["challenges"] = challenges
+
+        if team.challenge:
+            challenges = team.available_challenges(public_only=True)
+            context["challenge_count"] = len(challenges)
+            position = next(
+                i
+                for i, c in enumerate(challenges)
+                if c["challenge"].name == team.challenge.name
+            )
+            position += 1
+            progress = int((position / context["challenge_count"]) * 100)
+            context["progress"] = progress
+            context["public_challenges"] = challenges
 
         return context
 

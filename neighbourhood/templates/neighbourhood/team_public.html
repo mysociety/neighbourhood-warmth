@@ -44,20 +44,23 @@
 
         <h2>This team’s progress so far</h2>
 
-        {% if challenges %}
+      {% if public_challenges %}
         <div class="progress mt-4 bg-white" style="box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.2);">
           <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Team progress" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%"></div>
         </div>
         <div class="row g-0 mt-2 text-end align-items-start">
-            {% for challenge in challenges %}
+          {% for challenge in public_challenges %}
             <div class="col border-end px-3 pt-3">
-              <p class="fw-bold mb-0">{{ challenge.challenge.name }}</p>
               {% if challenge.challenge.short_description %}
-              <p class="mb-0 fs-7">{{ challenge.challenge.short_description }}</p>
+                <p class="fw-bold mb-0">{{ challenge.challenge.short_description }}</p>
+                <p class="mb-0 fs-7">{{ challenge.challenge.name }}</p>
+              {% else %}
+                <p class="mb-0 fs-7">{{ challenge.challenge.short_description }}</p>
               {% endif %}
             </div>
-            {% endfor %}
-        {% else %}
+          {% endfor %}
+        </div>
+      {% else %}
         <div class="progress mt-4 bg-white" style="box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.2);">
           {% if 'looking' in team.status %}
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Team progress" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
@@ -67,7 +70,6 @@
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Team progress" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
           {% endif %}
         </div>
-
         <div class="row g-0 mt-2 text-end align-items-start">
             <div class="col-3 border-end px-3 pt-3">
                 <p class="fw-bold mb-0">Two to tango</p>
@@ -86,7 +88,7 @@
                 <p class="mb-0 fs-7">Complete retrofit assessments and discuss next steps</p>
             </div>
         </div>
-        {% endif %}
+      {% endif %}
     </div>
 </div>
 
