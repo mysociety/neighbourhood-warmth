@@ -1,10 +1,18 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.gis.geos import Point
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, reverse
-from django.views.generic import DetailView, TemplateView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import (
+    DeleteView,
+    DetailView,
+    RedirectView,
+    TemplateView,
+    UpdateView,
+)
 from django.views.generic.edit import CreateView, FormView
 
 from neighbourhood.forms import (
@@ -47,11 +55,16 @@ class SearchView(TitleMixin, TemplateView):
         if "error" in lat_lon:
             context["error"] = lat_lon["error"]
         else:
+            # Store user location for maps on subsequent pages
+            self.request.session["user_latlon"] = (lat_lon["lat"], lat_lon["lon"])
+            self.request.session["user_postcode"] = postcode
+
             nearest = Team.find_nearest_teams(
                 latitude=lat_lon["lat"], longitude=lat_lon["lon"]
             )
             context["teams"] = nearest
 
+        context["can_create_teams"] = settings.CAN_CREATE_TEAMS
         return context
 
 
@@ -61,6 +74,25 @@ class TeamView(TitleMixin, DetailView):
     context_object_name = "team"
     page_title = "Team profile"
     template_name = "neighbourhood/team.html"
+
+    def post(self, request, *args, **kwargs):
+        self.object = (
+            self.get_object()
+        )  # Django doesn't automatically do this for POST requests
+        context = self.get_context_data(**kwargs)
+
+        postcode = self.request.POST.get("pc", None)
+        if postcode:
+            lat_lon = get_postcode_centroid(postcode)
+            if "error" in lat_lon:
+                context["postcode_error"] = lat_lon["error"]
+                context["postcode"] = postcode
+            else:
+                # Store user location for map on page
+                self.request.session["user_latlon"] = (lat_lon["lat"], lat_lon["lon"])
+                self.request.session["user_postcode"] = postcode
+
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -81,6 +113,19 @@ class TeamView(TitleMixin, DetailView):
                 team=team, confirmed=False, rejected=False
             ).count()
 
+        if team.challenge:
+            challenges = team.available_challenges(public_only=True)
+            context["challenge_count"] = len(challenges)
+            position = next(
+                i
+                for i, c in enumerate(challenges)
+                if c["challenge"].name == team.challenge.name
+            )
+            position += 1
+            progress = int((position / context["challenge_count"]) * 100)
+            context["progress"] = progress
+            context["public_challenges"] = challenges
+
         return context
 
 
@@ -88,6 +133,14 @@ class CreateTeamView(TitleMixin, CreateView):
     page_title = "Create a team"
     form_class = NewTeamForm
     template_name = "neighbourhood/create_team.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        # redirect to home page if creating teams is disabled
+        if not settings.CAN_CREATE_TEAMS:
+            url = reverse("home")
+            return HttpResponseRedirect(url)
+
+        return super().dispatch(request, args, kwargs)
 
     def get_initial(self):
         return {"base_pc": self.request.GET.get("pc", "")}
@@ -290,6 +343,29 @@ class AreaTeamJSON(TemplateView):
         return JsonResponse(data)
 
 
+class ForgetPostcodeView(RedirectView):
+    permanent = False
+
+    def get(self, request, *args, **kwargs):
+        request.session.pop("user_latlon", None)
+        request.session.pop("user_postcode", None)
+
+        return super().get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        return self.request.META.get("HTTP_REFERER", reverse("home"))
+
+
+class MyAccountView(TitleMixin, DeleteView):
+    page_title = "Your account"
+    model = get_user_model()
+    template_name = "neighbourhood/accounts/my_account.html"
+    success_url = reverse_lazy("home")
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
 class AboutView(TitleMixin, TemplateView):
     page_title = "About"
     template_name = "neighbourhood/about.html"
@@ -298,6 +374,13 @@ class AboutView(TitleMixin, TemplateView):
 class PrivacyView(TitleMixin, TemplateView):
     page_title = "Privacy policy"
     template_name = "neighbourhood/privacy.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["session_cookie_age_string"] = "{} days".format(
+            settings.SESSION_COOKIE_AGE // 86400
+        )
+        return context
 
 
 class ConfirmEmailView(TitleMixin, TemplateView):

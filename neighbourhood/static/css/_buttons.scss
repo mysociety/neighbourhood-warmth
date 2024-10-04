@@ -1,3 +1,16 @@
 .btn-xs {
     @include button-size(0.1rem, 0.4rem, $font-size-base * 0.75, $btn-border-radius-sm);
 }
+
+@keyframes success-ping {
+    0% {
+        box-shadow: 0 0 0 0rem rgba($yellow, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 10rem rgba($yellow, 0);
+    }
+}
+
+[data-copy-text][data-copied] {
+    animation: 500ms linear success-ping;
+}

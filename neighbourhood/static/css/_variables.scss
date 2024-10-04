@@ -20,8 +20,10 @@ $green: #198754 !default;
 $teal: #20c997 !default;
 $cyan: #0dcaf0 !default;
 
-$color-facebook-blue: #3b5998;
-$color-twitter-blue: #1da1f2;
+$color-facebook-blue: #1877f2;
+$color-twitter-black: #14171a;
+$color-threads-black: #000;
+$color-linkedin-blue: #0a66c2;
 $color-whatsapp-green: #25d366;
 $color-gmail-red: #ea4335;
 
@@ -44,7 +46,9 @@ $theme-colors: (
   "light":      $light,
   "dark":       $dark,
   "facebook":   $color-facebook-blue,
-  "twitter":    $color-twitter-blue,
+  "twitter":    $color-twitter-black,
+  "threads":    $color-threads-black,
+  "linkedin":   $color-linkedin-blue,
   "whatsapp":   $color-whatsapp-green,
   "gmail":      $color-gmail-red,
 );

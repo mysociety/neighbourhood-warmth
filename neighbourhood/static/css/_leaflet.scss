@@ -1,0 +1,14 @@
+.current-location-marker {
+    stroke-width: 2px;
+    filter: drop-shadow(0 0 5px #{$blue});
+    animation: ease-in-out 2s infinite alternate current-location-throb;
+}
+
+@keyframes current-location-throb {
+    from {
+        stroke-width: 2px;
+    }
+    to {
+        stroke-width: 4px;
+    }
+}

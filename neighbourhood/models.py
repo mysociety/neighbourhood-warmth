@@ -1,6 +1,7 @@
-from hashlib import sha256
+import json
 from random import randrange
 
+from django import template
 from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -11,6 +12,7 @@ from django.contrib.gis import measure
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
+from django.core.mail import mail_admins
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils import timezone
@@ -75,11 +77,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = MyUserManager()
 
-    @property
-    def avatar_url(self):
-        colours = ["fcbf49", "eae2b7", "198754", "d62828", "ccc7ab"]
-        return f"https://source.boringavatars.com/beam/120/{sha256(self.email.encode('utf-8')).hexdigest()}?square&colors={','.join(colours)}"
-
 
 class Area(models.Model):
     AREA_TYPES = {
@@ -136,10 +133,56 @@ class Area(models.Model):
         return "{} ({} {})".format(self.name, self.area_type, self.mapit_id)
 
 
+class Challenge(models.Model):
+    name = models.CharField(max_length=300)
+    short_description = models.CharField(
+        max_length=1000,
+        null=True,
+        blank=True,
+        help_text="A one line summary of the challenge, suitable for public view",
+    )
+    description = models.TextField(
+        help_text="Detailed text content (plain text or HTML) shown to signed-in team members"
+    )
+    template = models.CharField(
+        max_length=300, help_text=f"Default: {settings.DEFAULT_CHALLENGE_TEMPLATE}"
+    )
+    is_active = models.BooleanField(
+        default=True, help_text="Inactive challenges are not displayed anywhere"
+    )
+    is_public = models.BooleanField(
+        default=True,
+        help_text="Private challenges are shown only to signed-in team members",
+    )
+    order = models.IntegerField()
+
+    has_rich_description = models.BooleanField(
+        default=False, help_text="True if description is raw HTML"
+    )
+
+    created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def get_template_safe(self):
+        try:
+            template.loader.get_template(self.template)
+            return self.template
+        except template.TemplateDoesNotExist:
+            mail_admins(
+                "Bad challenge template",
+                f"Challenge {self.name} template not found: {self.template}",
+            )
+            return settings.DEFAULT_CHALLENGE_TEMPLATE
+
+    def __str__(self):
+        return self.name
+
+
 class Team(models.Model):
     name = models.CharField(max_length=100)
     base_pc = models.CharField(max_length=10)
     centroid = models.PointField()
+    boundary = models.PolygonField(blank=True, null=True)
     slug = models.CharField(
         max_length=100, blank=True, null=True, default="", unique=True
     )
@@ -156,6 +199,17 @@ class Team(models.Model):
 
     confirmed = models.BooleanField(default=False)
     status = models.CharField(max_length=300, blank=True, null=True)
+    description = models.TextField(
+        blank=True,
+        help_text="Detailed text content (plain text or HTML) shown on the public team page",
+    )
+    has_rich_description = models.BooleanField(
+        default=False, help_text="True if description is raw HTML"
+    )
+
+    challenge = models.ForeignKey(
+        Challenge, on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
@@ -182,6 +236,43 @@ class Team(models.Model):
     @property
     def admins(self):
         return User.objects.filter(team=self, membership__is_admin=True)
+
+    def available_challenges(self, public_only=False):
+        # if there's no challenge set then use the default ones
+        if self.challenge is None:
+            return []
+
+        challenges = Challenge.objects.filter(is_active=True).order_by("order")
+        if public_only:
+            challenges = challenges.filter(is_public=True)
+
+        current_place = 0
+        if self.challenge:
+            current_place = self.challenge.order
+
+        challenge_details = []
+        for challenge in challenges:
+            details = {
+                "challenge": challenge,
+            }
+
+            if challenge.order < current_place:
+                details["done"] = True
+            elif challenge.order == current_place:
+                details["active"] = True
+
+            challenge_details.append(details)
+
+        return challenge_details
+
+    @property
+    def boundary_geojson(self):
+        if self.boundary:
+            return json.dumps(
+                {"type": "Feature", "geometry": json.loads(self.boundary.geojson)}
+            )
+        else:
+            return None
 
     @classmethod
     def find_nearest_teams(self, latitude=None, longitude=None, distance=5):

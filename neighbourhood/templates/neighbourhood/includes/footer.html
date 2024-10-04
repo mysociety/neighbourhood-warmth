@@ -1,3 +1,14 @@
+{% if request.session.user_latlon or request.session.user_postcode %}
+<div class="bg-gray-100 border-top py-3">
+    <div class="container">
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3">
+            <p class="mb-0">You told us your postcode is <strong>{{ request.session.user_postcode }}</strong></p>
+            <a href="{% url 'forget_postcode' %}" class="btn btn-xs btn-secondary">Forget me</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <div class="py-5 site-footer">
     <div class="container">
         <div class="d-md-flex align-items-center">

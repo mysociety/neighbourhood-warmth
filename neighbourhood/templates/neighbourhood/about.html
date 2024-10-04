@@ -1,10 +1,65 @@
 {% extends "neighbourhood/base.html" %}
 
+{% load static %}
+
 {% block content %}
 
-<div class="py-4 py-lg-5 site-content">
+<div class="py-4 py-lg-5">
     <div class="container">
-        <h1 class="mb-5">[[ about page content ]]</h1>
+        <h1 class="mb-5 mw-40rem">Neighbourhood Warmth is about taking action – together</h1>
+        {% include 'neighbourhood/includes/generic_promo.html' %}
+    </div>
+</div>
+
+<div class="py-4 py-lg-5 bg-gray-200 border-top border-bottom">
+    <div class="container">
+        <h2>What can I use Neighbourhood Warmth for?</h2>
+        <p class="mw-40rem">Right now, we’re piloting Neighbourhood Warmth in a few specific areas around the UK, with local partners like <a href="https://www.carbon.coop">Carbon Co-op</a> in Greater Manchester.</p>
+        <p class="mw-40rem">But, eventually, our aim is that Neighbourhood Warmth will be able to support “teams” of neighbours through “challenges” including:</p>
+
+        <div class="row row-cols-1 row-cols-md-3 gx-xl-5 mt-4 mt-lg-5">
+            <div class="col">
+                <div class="card">
+                    <img src="{% static 'img/flickr-28558546374-david-dodge-green-energy-futures-CC-BY-NC.jpg' %}" class="card-img-top" width="799" height="533" alt="">
+                    <div class="card-body p-lg-4">
+                        <h3 class="card-title h5 mb-3">Understand your home</h3>
+                        <p class="card-text">We’ll walk you through the steps of getting a Whole House Retrofit Assessment, the most comprehensive way to find out what’s right for you and your home.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="{% static 'img/flickr-13975813631-energysmart-academy-CC0.jpg' %}" class="card-img-top" width="799" height="533" alt="">
+                    <div class="card-body p-lg-4">
+                        <h3 class="card-title h5 mb-3">Get draft proofing</h3>
+                        <p class="card-text">There’s no need to suffer in a cold, leaky home. Draft proofing is a quick, easy way to improve your home and make new energy saving friends in your neighbourhood.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="{% static 'img/flickr-28892760260-consumers-energy-CC-BY-NC.jpg' %}" class="card-img-top" width="799" height="533" alt="">
+                    <div class="card-body p-lg-4">
+                        <h3 class="card-title h5 mb-3">Flex your energy use</h3>
+                        <p class="card-text">Homes with storage heaters, solar panels, batteries, or electric vehicles are ideal candidates for Energy Flexibility schemes, which can save both money and the environment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-4 py-lg-5">
+    <div class="container">
+        <h2>Who runs Neighbourhood Warmth?</h2>
+        <p class="mw-40rem">Neighbourhood Warmth is run by mySociety, the charity behind websites like <a href="https://www.fixmystreet.com">FixMyStreet</a>, <a href="https://www.theyworkforyou.com">TheyWorkForYou</a>, and <a href="https://www.whatdotheyknow.com">WhatDoTheyKnow</a>.</p>
+        <p class="mw-40rem">Our free online services exist to put more power into more people’s hands, for a fairer, healthier society. Enabling more community-led home energy action is a big part of that.</p>
+        <p class="mw-40rem">But we’re also massively grateful to the organisations who have helped us design and test Neighbourhood Warmth over the last few years, including <a href="https://darkmatterlabs.org">Dark Matter Labs</a> (with whom we ran the first alpha explorations for the site in 2023) and <a href="https://www.carbon.coop">Carbon Co-op</a> (with whom we’re running a pilot around energy flexibility in Marple, Greater Manchester).</p>
+        <p class="mw-40rem">Our work on Neighbourhood Warmth so far has been funded by <a href="https://www.qc.foundation">Quadrature Climate Foundation</a>, <a href="https://www.tnlcommunityfund.org.uk">the National Lottery Community Fund</a>, and <a href="https://auroratrust.org.uk">Aurora Trust</a>.</p>
+
+        <div class="mt-6 fs-7 text-muted mw-40rem">
+            <p>Image credits: <a href="https://flickr.com/photos/117168856@N06/13975813631" class="text-reset">The EnergySmart Academy, Public Domain</a>, <a href="https://www.flickr.com/photos/eeimagedatabase/28892760260/" class="text-reset">Consumers Energy, CC-BY-NC</a>, <a href="https://www.flickr.com/photos/eeimagedatabase/28558546374" class="text-reset">David Dodge, Green Energy Futures, CC-BY-NC</a>.</p>
+        </div>
     </div>
 </div>
 

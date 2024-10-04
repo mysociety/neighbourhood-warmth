@@ -1,11 +1,4 @@
-<div class="bg-dark text-light py-3 fs-7">
-    <div class="container">
-        <div class="d-sm-flex">
-            <strong class="d-block mb-2 mb-sm-0 me-sm-3">ALPHA</strong>
-            <p class="mb-0">This is a pre-release preview of a service under active development. <a href="https://www.mysociety.org/tag/neighbourhood-warmth/" class="text-white">Read more about our plans for this service.</a></p>
-        </div>
-    </div>
-</div>
+{% load boring_avatars %}
 
 <nav class="navbar navbar-expand-lg bg-white border-bottom py-md-4">
     <div class="container">
@@ -22,12 +15,11 @@
               {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ request.user.avatar_url|escape }}" width="32" height="32" class="rounded-circle bg-primary" alt="{{ request.user.full_name }}">
+                        {% boring_avatar name=request.user.email width="32" height="32" class="rounded-circle bg-primary" alt="{{ request.user.full_name }}" role="presentation" %}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><h6 class="dropdown-header">Signed in as</h6></li>
-                        <!-- TODO: Make this a link, once we have profile pages -->
-                        <li><span class="dropdown-item-text">{{ request.user.full_name }}</span></li>
+                        <li><a class="dropdown-item" href="{% url 'my_account' %}">{{ request.user.full_name }}</a></li>
                       {% if request.user.teams.all %}
                         <li><hr class="dropdown-divider"></li>
                         <li><h6 class="dropdown-header">Your team{{ request.user.teams.all|pluralize }}</h6></li>
