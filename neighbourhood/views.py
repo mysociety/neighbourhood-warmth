@@ -5,7 +5,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, reverse
+from django.urls import reverse_lazy
 from django.views.generic import (
+    DeleteView,
     DetailView,
     RedirectView,
     TemplateView,
@@ -352,6 +354,16 @@ class ForgetPostcodeView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         return self.request.META.get("HTTP_REFERER", reverse("home"))
+
+
+class MyAccountView(TitleMixin, DeleteView):
+    page_title = "Your account"
+    model = get_user_model()
+    template_name = "neighbourhood/accounts/my_account.html"
+    success_url = reverse_lazy("home")
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class AboutView(TitleMixin, TemplateView):

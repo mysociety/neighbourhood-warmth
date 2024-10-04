@@ -19,8 +19,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><h6 class="dropdown-header">Signed in as</h6></li>
-                        <!-- TODO: Make this a link, once we have profile pages -->
-                        <li><span class="dropdown-item-text">{{ request.user.full_name }}</span></li>
+                        <li><a class="dropdown-item" href="{% url 'my_account' %}">{{ request.user.full_name }}</a></li>
                       {% if request.user.teams.all %}
                         <li><hr class="dropdown-divider"></li>
                         <li><h6 class="dropdown-header">Your team{{ request.user.teams.all|pluralize }}</h6></li>

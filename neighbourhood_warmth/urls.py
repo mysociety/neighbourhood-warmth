@@ -40,6 +40,7 @@ urlpatterns = [
     path(
         "forget_postcode/", views.ForgetPostcodeView.as_view(), name="forget_postcode"
     ),
+    path("me/", views.MyAccountView.as_view(), name="my_account"),
     path(
         "confirmation_sent/",
         views.ConfirmationSentView.as_view(),
