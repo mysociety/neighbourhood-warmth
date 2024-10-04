@@ -199,6 +199,13 @@ class Team(models.Model):
 
     confirmed = models.BooleanField(default=False)
     status = models.CharField(max_length=300, blank=True, null=True)
+    description = models.TextField(
+        blank=True,
+        help_text="Detailed text content (plain text or HTML) shown on the public team page",
+    )
+    has_rich_description = models.BooleanField(
+        default=False, help_text="True if description is raw HTML"
+    )
 
     challenge = models.ForeignKey(
         Challenge, on_delete=models.SET_NULL, blank=True, null=True

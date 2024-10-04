@@ -94,6 +94,14 @@
 
 <div class="container py-4 py-lg-5">
 
-    {% include 'neighbourhood/includes/generic_promo.html' with testimonials=1 %}
+    {% if team.description and team.has_rich_description %}
+        {% autoescape off %}
+            {{ team.description }}
+        {% endautoescape %}
+    {% elif team.description %}
+        {{ team.description|linebreaks }}
+    {% else %}
+        {% include 'neighbourhood/includes/generic_promo.html' with testimonials=1 %}
+    {% endif %}
 
 </div>
