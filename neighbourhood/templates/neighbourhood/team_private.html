@@ -16,84 +16,83 @@
     <hr class="my-4 my-lg-5">
 
     <div class="row justify-content-between">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4">
 
             <h2 class="h4 mb-4">Team progress</h2>
             <ul class="list-group mb-5">
             {% if team.available_challenges %}
               {% for details in team.available_challenges %}
-              <li class="list-group-item py-3 lh-sm d-flex align-items-center {% if details.done %}text-decoration-line-through text-success{% endif %}">
-                    {% if details.done %}
-                      {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2' %}
-                    {% else %}
-                      <span class="me-2" style="width: 1em;"></span>
-                    {% endif %}
+                <li class="list-group-item py-3 lh-sm d-flex align-items-center {% if details.done %}text-decoration-line-through text-success{% endif %}">
+                  {% if details.done %}
+                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2 flex-shrink-0 flex-grow-0' %}
+                  {% else %}
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
+                  {% endif %}
                     {{ details.challenge.name }}
                 </li>
-
               {% endfor %}
             {% else %}
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center text-decoration-line-through text-success">
-                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2' %}
+                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2 flex-shrink-0 flex-grow-0' %}
                     Create team
                 </li>
               {% if 'recruiting' in team.status %}
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center text-decoration-line-through text-success">
-                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2' %}
+                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2 flex-shrink-0 flex-grow-0' %}
                     Find second member
                 </li>
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center text-decoration-line-through text-success">
-                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2' %}
+                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2 flex-shrink-0 flex-grow-0' %}
                     Research local retrofit options
                 </li>
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center text-decoration-line-through text-success">
-                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2' %}
+                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2 flex-shrink-0 flex-grow-0' %}
                     Choose an assessment type
                 </li>
               {% elif 'researching' in team.status %}
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center text-decoration-line-through text-success">
-                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2' %}
+                    {% include 'neighbourhood/icons/fa-check-solid.html' with classes='me-2 flex-shrink-0 flex-grow-0' %}
                     Find second member
                 </li>
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center">
-                    <span class="me-2" style="width: 1em;"></span>
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
                     Research local retrofit options
                 </li>
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center">
-                    <span class="me-2" style="width: 1em;"></span>
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
                     Choose an assessment type
                 </li>
               {% else %}
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center">
-                    <span class="me-2" style="width: 1em;"></span>
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
                     Find second member
                 </li>
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center">
-                    <span class="me-2" style="width: 1em;"></span>
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
                     Research local retrofit options
                 </li>
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center">
-                    <span class="me-2" style="width: 1em;"></span>
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
                     Choose an assessment type
                 </li>
               {% endif %}
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center">
-                    <span class="me-2" style="width: 1em;"></span>
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
                     Invite neighbours to join
                 </li>
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center">
-                    <span class="me-2" style="width: 1em;"></span>
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
                     Carry out assessments
                 </li>
                 <li class="list-group-item py-3 lh-sm d-flex align-items-center">
-                    <span class="me-2" style="width: 1em;"></span>
+                    <span class="me-2 flex-shrink-0 flex-grow-0" style="width: 1em;"></span>
                     Discuss next steps
                 </li>
             {% endif %}
             </ul>
 
         </div>
-        <div class="col-md-8 col-lg-9 ps-lg-5">
+        <div class="col-md-8 ps-lg-5">
 
             <h2 class="h4 mb-4">Current challenge</h2>
 
